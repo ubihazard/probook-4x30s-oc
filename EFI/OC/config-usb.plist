@@ -66,7 +66,7 @@
 				<key>Comment</key>
 				<string>Battery fixes</string>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>Path</key>
 				<string>SSDT-BATT.aml</string>
 			</dict>
@@ -80,11 +80,11 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>Quiet fan patch (needs ACPIPoller.kext)</string>
+				<string>Fan readings (needs ACPIPoller.kext)</string>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>Path</key>
-				<string>SSDT-FANUBI.aml</string>
+				<string>SSDT-FANREAD.aml</string>
 			</dict>
 		</array>
 		<key>Delete</key>
@@ -550,7 +550,7 @@
 				<key>Count</key>
 				<integer>0</integer>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>Find</key>
 				<data>SVRMQgB4cg==</data>
 				<key>Limit</key>
@@ -580,7 +580,7 @@
 				<key>Count</key>
 				<integer>0</integer>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>Find</key>
 				<data>QlRJRgl5Cg==</data>
 				<key>Limit</key>
@@ -610,7 +610,7 @@
 				<key>Count</key>
 				<integer>0</integer>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>Find</key>
 				<data>QlRTVAp5Cg==</data>
 				<key>Limit</key>
@@ -640,7 +640,7 @@
 				<key>Count</key>
 				<integer>0</integer>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>Find</key>
 				<data>U0JUQwNwDQ==</data>
 				<key>Limit</key>
@@ -670,7 +670,7 @@
 				<key>Count</key>
 				<integer>0</integer>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>Find</key>
 				<data>R0JUSQFwDQ==</data>
 				<key>Limit</key>
@@ -700,7 +700,7 @@
 				<key>Count</key>
 				<integer>0</integer>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>Find</key>
 				<data>R0JUQwBwDQ==</data>
 				<key>Limit</key>
@@ -730,7 +730,7 @@
 				<key>Count</key>
 				<integer>0</integer>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>Find</key>
 				<data>CE5CVEk=</data>
 				<key>Limit</key>
@@ -760,7 +760,7 @@
 				<key>Count</key>
 				<integer>0</integer>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>Find</key>
 				<data>hlwuX1NCX0JBVDA=</data>
 				<key>Limit</key>
@@ -790,7 +790,7 @@
 				<key>Count</key>
 				<integer>0</integer>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>Find</key>
 				<data>hlwuX1NCX0JBVDE=</data>
 				<key>Limit</key>
@@ -820,7 +820,7 @@
 				<key>Count</key>
 				<integer>0</integer>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>Find</key>
 				<data>hkJBVDA=</data>
 				<key>Limit</key>
@@ -850,7 +850,7 @@
 				<key>Count</key>
 				<integer>0</integer>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>Find</key>
 				<data>hkJBVDE=</data>
 				<key>Limit</key>
@@ -1095,8 +1095,6 @@
 			<dict>
 				<key>AAPL,snb-platform-id</key>
 				<data>AAABAA==</data>
-				<key>AAPL00,DualLink</key>
-				<data>AQAAAA==</data>
 				<key>hda-gfx</key>
 				<string>onboard-1</string>
 				<key>framebuffer-con1-enable</key>
@@ -1453,7 +1451,7 @@
 				<key>Comment</key>
 				<string>Needs EHC1, EHC2 ACPI renames</string>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>ExecutablePath</key>
 				<string></string>
 				<key>MaxKernel</key>
@@ -1471,7 +1469,7 @@
 				<key>Comment</key>
 				<string>Needs EHC1, EHC2 ACPI renames</string>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>ExecutablePath</key>
 				<string></string>
 				<key>MaxKernel</key>
@@ -1489,7 +1487,7 @@
 				<key>Comment</key>
 				<string>Needs EHC1, EHC2 ACPI renames</string>
 				<key>Enabled</key>
-				<false/>
+				<true/>
 				<key>ExecutablePath</key>
 				<string>Contents/MacOS/USBInjectAll</string>
 				<key>MaxKernel</key>
@@ -1543,7 +1541,7 @@
 				<key>Comment</key>
 				<string>IOath3kfrmwr.kext</string>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>ExecutablePath</key>
 				<string>Contents/MacOS/IOath3kfrmwr</string>
 				<key>MaxKernel</key>
@@ -1561,7 +1559,7 @@
 				<key>Comment</key>
 				<string>IOath3kfrmwr.kext</string>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>ExecutablePath</key>
 				<string>Contents/MacOS/IOath3kfrmwr</string>
 				<key>MaxKernel</key>
@@ -1579,7 +1577,7 @@
 				<key>Comment</key>
 				<string>IOath3kdevice.kext</string>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>ExecutablePath</key>
 				<string>Contents/MacOS/IOath3kdevice</string>
 				<key>MaxKernel</key>
@@ -1597,7 +1595,7 @@
 				<key>Comment</key>
 				<string>HS80211Family.kext</string>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>ExecutablePath</key>
 				<string>Contents/MacOS/HS80211Family</string>
 				<key>MaxKernel</key>
@@ -1615,7 +1613,7 @@
 				<key>Comment</key>
 				<string>AirPortAtheros40.kext</string>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>ExecutablePath</key>
 				<string>Contents/MacOS/AirPortAtheros40</string>
 				<key>MaxKernel</key>
@@ -1633,7 +1631,7 @@
 				<key>Comment</key>
 				<string>ProBookAtheros.kext</string>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>ExecutablePath</key>
 				<string></string>
 				<key>MaxKernel</key>
@@ -1651,7 +1649,7 @@
 				<key>Comment</key>
 				<string>WifiLocFix.kext</string>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>ExecutablePath</key>
 				<string></string>
 				<key>MaxKernel</key>
@@ -1759,7 +1757,7 @@
 				<key>Comment</key>
 				<string>Needed for quiet fan patch</string>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>ExecutablePath</key>
 				<string>Contents/MacOS/ACPIPoller</string>
 				<key>MaxKernel</key>
@@ -1802,7 +1800,7 @@
 			<key>CustomPciSerialDevice</key>
 			<false/>
 			<key>CustomSMBIOSGuid</key>
-			<true/>
+			<false/>
 			<key>DisableIoMapper</key>
 			<true/>
 			<key>DisableIoMapperMapping</key>
@@ -1993,17 +1991,13 @@
 				<key>SystemAudioVolume</key>
 				<data>UA==</data>
 				<key>boot-args</key>
-				<string>-no_compat_check amfi=0x80 ipc_control_port_options=0</string>
+				<string>-v</string>
 				<key>csr-active-config</key>
-				<data>AwgAAA==</data>
+				<data>AAAAAA==</data>
 				<key>prev-lang:kbd</key>
 				<data>ZW4tVVM6MA==</data>
 				<key>run-efi-updater</key>
 				<string>No</string>
-				<key>bluetoothExternalDongleFailed</key>
-				<data>AA==</data>
-				<key>bluetoothInternalControllerInfo</key>
-				<data>AAAAAAAAAAAAAAAAAAA=</data>
 			</dict>
 		</dict>
 		<key>Delete</key>
@@ -2079,7 +2073,7 @@
 			<key>SystemMemoryStatus</key>
 			<string>Auto</string>
 			<key>SystemProductName</key>
-			<string>MacBookPro8,1</string>
+			<string>MacBookAir7,1</string>
 			<key>SystemSerialNumber</key>
 			<string>W00000000001</string>
 			<key>SystemUUID</key>
@@ -2092,7 +2086,7 @@
 		<key>UpdateSMBIOS</key>
 		<true/>
 		<key>UpdateSMBIOSMode</key>
-		<string>Custom</string>
+		<string>Create</string>
 		<key>UseRawUuidEncoding</key>
 		<false/>
 	</dict>
@@ -2109,9 +2103,9 @@
 			<key>JumpstartHotPlug</key>
 			<false/>
 			<key>MinDate</key>
-			<integer>0</integer>
+			<integer>-1</integer>
 			<key>MinVersion</key>
-			<integer>0</integer>
+			<integer>-1</integer>
 		</dict>
 		<key>AppleInput</key>
 		<dict>
@@ -2189,7 +2183,7 @@
 				<key>Comment</key>
 				<string>OpenCanopy.efi</string>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>LoadEarly</key>
 				<false/>
 				<key>Path</key>
@@ -2237,7 +2231,7 @@
 				<key>Comment</key>
 				<string>Restore automatic BIOS fan control on boot</string>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>LoadEarly</key>
 				<false/>
 				<key>Path</key>
@@ -2249,7 +2243,7 @@
 				<key>Comment</key>
 				<string>Defeat ProBook 4x30s Wi-Fi whitelist</string>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>LoadEarly</key>
 				<false/>
 				<key>Path</key>
