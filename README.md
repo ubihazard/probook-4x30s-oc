@@ -68,4 +68,4 @@ Note that Clover and OpenCore don’t mix well together. In my experience a NVRA
 Credits
 -------
 
-All credits go to @RehabMan, @chris1111, @acidanthera, @dortania, @moraea, and the rest of talented individuals who worked hard to make running macOS on regular PCs and unsupported hardware a reality.
+All credits go to [RehabMan](https://github.com/RehabMan), [chris1111](https://github.com/chris1111), [acidanthera](https://github.com/acidanthera), [dortania](https://github.com/dortania), [moraea](https://github.com/moraea), and the rest of talented individuals who worked hard to make running macOS on regular PCs and unsupported hardware a reality.
