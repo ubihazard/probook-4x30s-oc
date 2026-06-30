@@ -1,0 +1,3 @@
+EFI/BOOT
+EFI/OC/*
+!EFI/OC/*.plist
