@@ -9,6 +9,6 @@ Do What the Fuck You Want to Public License
 -->
 
 Terms and conditions for usage, copying, modification,
-and distribution of the included work:
+and distribution of the licensed work:
 
   * Just do what the fuck you want to.

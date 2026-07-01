@@ -7,7 +7,7 @@ Detailed instructions on how to install recent version of [macOS](https://en.wik
 ![macOS Installed on a ProBook 4530s](Resources/about-this-probook.png)
 
 > [!IMPORTANT]
-> An [expanded guide](https://github.com/ubihazard/probook-4x40s-oc "macOS for ProBook 4x40s") for 40s series laptops with third generation Intel Ivy Bridge CPUs and Metal-capable graphics is now available with much better support for modern macOS.
+> A [new guide](https://github.com/ubihazard/probook-4x40s-oc "macOS for ProBook 4x40s") for 40s series laptops with third generation Intel Ivy Bridge CPUs and Metal-capable graphics is now available with much better support for modern macOS.
 
 > [!NOTE]
 > In the process some little adjustments for your particular laptop will need to be made because ProBooks shipped in many different configurations. Therefore it is highly recommended that you read the official OpenCore [install guide](https://dortania.github.io/OpenCore-Install-Guide/ "OpenCore install guide") first to get familiar with the process. That will make it much easier for you to adapt this guide as you progress.
@@ -368,10 +368,10 @@ AMFI is disabled via `boot-args`:
 
 ```xml
 <key>boot-args</key>
-<string>... amfi=0x80 amfi_get_out_of_my_way=1 ...</string>
+<string>... amfi=0x80 amfi_get_out_of_my_way=1</string>
 ```
 
-These modifications are already done in provided `config.plist`. I’m just making it obvious here.
+These modifications are already done in the provided `config.plist`, I’m just making it obvious here. The `amfi_get_out_of_my_way=1` parameter appears to be redundant.
 
 ### Restoring Graphics Acceleration
 
@@ -411,7 +411,7 @@ Log out and back in to apply the changes. Some of these [commands](https://morae
 
 ### Enabling Wi-Fi and Bluetooth
 
-By default Atheros wireless is already configured in `config.plist`. You can verify that the following kexts are enabled (`Enabled` -> `true`):
+By default Atheros wireless is already configured in `config.plist`. You can verify that the following kexts are enabled in `config.plist`:
 
   * `IOath3kfrmwr.kext`,
   * `Legacy/IOath3kfrmwr.kext`,
@@ -422,33 +422,139 @@ By default Atheros wireless is already configured in `config.plist`. You can ver
   * `WifiLocFix.kext`.
 
 <details>
-<summary><strong>Example</strong></summary><br>
+<summary><strong>Atheros wireless config</strong></summary><br>
 
 ```xml
-...
 <dict>
-  <key>Arch</key>
-  <string>Any</string>
-  <key>BundlePath</key>
-  <string>AirPortAtheros40.kext</string>
-  <key>Comment</key>
-  <string>AirPortAtheros40.kext</string>
-  <key>Enabled</key>
-  <true/>
-  <key>ExecutablePath</key>
-  <string>Contents/MacOS/AirPortAtheros40</string>
-  <key>MaxKernel</key>
-  <string>20.9.9</string>
-  <key>MinKernel</key>
-  <string>18.0.0</string>
-  <key>PlistPath</key>
-  <string>Contents/Info.plist</string>
+	<key>Arch</key>
+	<string>Any</string>
+	<key>BundlePath</key>
+	<string>IOath3kfrmwr.kext</string>
+	<key>Comment</key>
+	<string>IOath3kfrmwr.kext</string>
+	<key>Enabled</key>
+	<true/>
+	<key>ExecutablePath</key>
+	<string>Contents/MacOS/IOath3kfrmwr</string>
+	<key>MaxKernel</key>
+	<string></string>
+	<key>MinKernel</key>
+	<string>18.0.0</string>
+	<key>PlistPath</key>
+	<string>Contents/Info.plist</string>
 </dict>
-...
+<dict>
+	<key>Arch</key>
+	<string>Any</string>
+	<key>BundlePath</key>
+	<string>Legacy/IOath3kfrmwr.kext</string>
+	<key>Comment</key>
+	<string>IOath3kfrmwr.kext</string>
+	<key>Enabled</key>
+	<true/>
+	<key>ExecutablePath</key>
+	<string>Contents/MacOS/IOath3kfrmwr</string>
+	<key>MaxKernel</key>
+	<string>17.9.9</string>
+	<key>MinKernel</key>
+	<string></string>
+	<key>PlistPath</key>
+	<string>Contents/Info.plist</string>
+</dict>
+<dict>
+	<key>Arch</key>
+	<string>Any</string>
+	<key>BundlePath</key>
+	<string>IOath3kdevice.kext</string>
+	<key>Comment</key>
+	<string>IOath3kdevice.kext</string>
+	<key>Enabled</key>
+	<true/>
+	<key>ExecutablePath</key>
+	<string>Contents/MacOS/IOath3kdevice</string>
+	<key>MaxKernel</key>
+	<string>20.9.9</string>
+	<key>MinKernel</key>
+	<string>18.0.0</string>
+	<key>PlistPath</key>
+	<string>Contents/Info.plist</string>
+</dict>
+<dict>
+	<key>Arch</key>
+	<string>Any</string>
+	<key>BundlePath</key>
+	<string>HS80211Family.kext</string>
+	<key>Comment</key>
+	<string>HS80211Family.kext</string>
+	<key>Enabled</key>
+	<true/>
+	<key>ExecutablePath</key>
+	<string>Contents/MacOS/HS80211Family</string>
+	<key>MaxKernel</key>
+	<string>20.9.9</string>
+	<key>MinKernel</key>
+	<string>18.0.0</string>
+	<key>PlistPath</key>
+	<string>Contents/Info.plist</string>
+</dict>
+<dict>
+	<key>Arch</key>
+	<string>Any</string>
+	<key>BundlePath</key>
+	<string>AirPortAtheros40.kext</string>
+	<key>Comment</key>
+	<string>AirPortAtheros40.kext</string>
+	<key>Enabled</key>
+	<true/>
+	<key>ExecutablePath</key>
+	<string>Contents/MacOS/AirPortAtheros40</string>
+	<key>MaxKernel</key>
+	<string>20.9.9</string>
+	<key>MinKernel</key>
+	<string>18.0.0</string>
+	<key>PlistPath</key>
+	<string>Contents/Info.plist</string>
+</dict>
+<dict>
+	<key>Arch</key>
+	<string>Any</string>
+	<key>BundlePath</key>
+	<string>ProBookAtheros.kext</string>
+	<key>Comment</key>
+	<string>ProBookAtheros.kext</string>
+	<key>Enabled</key>
+	<true/>
+	<key>ExecutablePath</key>
+	<string></string>
+	<key>MaxKernel</key>
+	<string>17.9.9</string>
+	<key>MinKernel</key>
+	<string></string>
+	<key>PlistPath</key>
+	<string>Contents/Info.plist</string>
+</dict>
+<dict>
+	<key>Arch</key>
+	<string>Any</string>
+	<key>BundlePath</key>
+	<string>WifiLocFix.kext</string>
+	<key>Comment</key>
+	<string>WifiLocFix.kext</string>
+	<key>Enabled</key>
+	<true/>
+	<key>ExecutablePath</key>
+	<string></string>
+	<key>MaxKernel</key>
+	<string></string>
+	<key>MinKernel</key>
+	<string></string>
+	<key>PlistPath</key>
+	<string>Contents/Info.plist</string>
+</dict>
 ```
 </details>
 
-Optional: open `WifiLocFix.kext/Contents/Info.plist` in a plain text editor and change the country code (`US`) and locale (`FCC` or `ETSI` for Europe):
+Optional: open `WifiLocFix.kext/Contents/Info.plist` in a plain text editor and change the `US` country code and locale (`FCC` for USA or `ETSI` for Europe):
 
 ```xml
 <dict>
@@ -459,7 +565,7 @@ Optional: open `WifiLocFix.kext/Contents/Info.plist` in a plain text editor and 
 </dict>
 ```
 
-If you opted to install Broadcom card in your ProBook head over to a [dedicated section](#enabling-broadcom-wireless) for your wireless configuration.
+If you opted to install Broadcom card in your ProBook head over to a [dedicated section](#enabling-broadcom-wireless) for your wireless configuration. Otherwise, make sure to remove Broadcom kexts from your `config.plist` if they are present.
 
 ### Configuring Trackpad
 
@@ -580,6 +686,34 @@ You will need to mask certain PCB contacts with tiny pieces of kapton tape to pr
 > [!NOTE]
 > This guide assumes you are using Broadcom BCM94352HMB, which is the best wireless module you can put in your ProBook laptop. If you’ve got another compatible Broadcom adapter the pin out might be different. In that case you need to find a datasheet for your card and determine where equivalent contacts are located.
 
+### Defeating 30s Series Wi-Fi Whitelist
+
+Next, enable BIOS Wi-Fi whitelist bypass EFI driver in `UEFI/Drivers`:
+
+<details>
+<summary><strong>Example</strong></summary><br>
+
+```xml
+<dict>
+  <key>Arguments</key>
+  <string></string>
+  <key>Comment</key>
+  <string>ProBookWifiWhlistOff.efi</string>
+  <key>Enabled</key>
+  <true/>
+  <key>LoadEarly</key>
+  <false/>
+  <key>Path</key>
+  <string>ProBookWifiUnblock.efi</string>
+</dict>
+```
+</details>
+
+> [!IMPORTANT]
+> **Do not use this module with any other laptop other than ProBook 30s series: doing so can brick your device!**
+
+The laptop firmware will still warn you about incompatible wireless card installed, but it would no longer be actually disabled, despite what the warning says (just skip it with <kbd>Enter</kbd>).
+
 ### Configuration
 
 Remove Atheros wireless kexts entries from `config.plist`:
@@ -594,7 +728,7 @@ Remove Atheros wireless kexts entries from `config.plist`:
 
 Add the following kexts to `EFI/OC/Kexts` by copying them from [4x40s OC EFI folder](https://github.com/ubihazard/probook-4x40s-oc/releases/latest "40s series OpenCore EFI folder"):
 
-  * `AirportBrcmFixup.kext` together with its plugins:
+  * `AirportBrcmFixup.kext` (includes plugins):
       * `AirPortBrcmNIC_Injector.kext`,
       * `AirPortBrcm4360_Injector.kext`,
   * `BlueToolFixup.kext`,
@@ -602,7 +736,7 @@ Add the following kexts to `EFI/OC/Kexts` by copying them from [4x40s OC EFI fol
   * `BrcmFirmwareData.kext`
   * `BrcmPatchRAM3.kext`.
 
-Copy and paste the following section where Atheros configuration was previously:
+Finally, copy and paste the following section where Atheros configuration was previously:
 
 <details>
 <summary><strong>Broadcom wireless config</strong></summary><br>
@@ -752,34 +886,6 @@ Add Broadcom configuration parameters to `boot-args` under `NVRAM/Add/7C436110-A
 Optional: add your country code with `brcmfx-country=US` parameter. In my experience this parameter is not needed and is actually harmful because adding it causes Wi-Fi to loose 5 GHz band networks.
 
 If you don‘t get Wi-Fi you can try to experiment with different values for `brcmfx-driver` parameter or your card might need a firmware uploader. Check out the [official docs](https://github.com/acidanthera/BrcmPatchRAM) for further assistance in configuration.
-
-### Defeating 30s Series Wi-Fi Whitelist
-
-Enable BIOS Wi-Fi whitelist bypass EFI driver in `UEFI/Drivers`:
-
-<details>
-<summary><strong>Example</strong></summary><br>
-
-```xml
-<dict>
-  <key>Arguments</key>
-  <string></string>
-  <key>Comment</key>
-  <string>ProBookWifiWhlistOff.efi</string>
-  <key>Enabled</key>
-  <true/>
-  <key>LoadEarly</key>
-  <false/>
-  <key>Path</key>
-  <string>ProBookWifiUnblock.efi</string>
-</dict>
-```
-</details>
-
-> [!IMPORTANT]
-> **Do not use this module with any other laptop other than ProBook 30s series: doing so can brick your device!**
-
-The laptop firmware will still warn you about incompatible wireless card installed, but it would no longer be actually disabled, despite what the warning says (just skip it with <kbd>Enter</kbd>).
 
 Continue with [other post-install tasks](#configuring-tackpad).
 
