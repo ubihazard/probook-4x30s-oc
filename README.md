@@ -83,15 +83,15 @@ All required kexts are already assembled in one place in the provided OpenCore [
       * `USBInjectAll.kext`: initial setup and port mapping
   * `mXHCD.kext`: Renesas USB 3.0
       * `GenericUSBXHCI.kext`: Renesas USB 3.0 (legacy)
-  * `IOath3kfrmwr.kext`: Wireless (Bluetooth)
+  * `IOath3kfrmwr.kext`: wireless (Bluetooth)
       * `IOath3kdevice.kext`
       * `HS80211Family.kext`
-  * `AirPortAtheros40.kext`: Wireless (Wi-Fi)
+  * `AirPortAtheros40.kext`: wireless (Wi-Fi)
       * `ProBookAtheros.kext`
       * `WifiLocFix.kext`
   * `JMB38X.kext`: SD card reader
       * `HSSDBlockStorage.kext`
-  * `ASPP-Override.kext`: CPU power management (legacy)
+  * `ASPP-Override.kext`: legacy power management
   * `ACPIPoller.kext`: laptop fan control
   * `NoTouchID.kext`: disable Touch ID
 
