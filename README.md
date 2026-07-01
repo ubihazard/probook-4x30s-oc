@@ -344,11 +344,11 @@ Alternatively, `-wegnoegpu` [WhateverGreen boot argument](https://github.com/aci
 
 Notice that this is *not* a proper patch because it does not actually turn the discrete GPU off so it doesn’t consume power, – it merely hides it from macOS so it doesn’t cause conflict and boot issues. And power consumption is very important, especially in a laptop. A GPU without drivers loaded for it will run with no power saving features enabled and will consume lots of power and overheat for no reason.
 
-Or simply disable dGPU in your laptop‘s BIOS, – although in this case it would obviously be no longer available in other operating systems, not just macOS. On the other hand, this approach is definitely the easiest.
+Or simply disable dGPU in your laptop‘s BIOS, – although in this case it would obviously be no longer available in other operating systems too, not just macOS. On the other hand, this approach is definitely the easiest.
 
 ### Fixing USB
 
-The USB port map kext in this repo is for ProBook 4530s models with USB 3.0 port. If you have a different mainboard (such as with all USB 2.0 ports only) or if port mapping doesn‘t match for some other reason, you would have to re-map your USB ports by means of creating your own version of `USBMap.kext` while still booted from USB. This procedure is fully covered in Dortania [guide](https://dortania.github.io/OpenCore-Post-Install/usb/ "USB port mapping guide") and I won‘t be duplicating it here. [USBMap](https://github.com/corpnewt/USBMap) is the route you want to take. Otherwise, jump to the next step.
+The USB port map kext in this repo is for ProBook 4530s models with USB 3.0 port. If you have a different mainboard (such as with all USB 2.0 ports only) or if port mapping doesn‘t match for some other reason, you would have to re-map your USB ports by means of creating your own version of `USBMap.kext` while still booted from USB. This procedure is fully covered in Dortania [guide](https://dortania.github.io/OpenCore-Post-Install/usb/ "USB port mapping guide") and I won‘t be duplicating it here. [USBMap](https://github.com/corpnewt/USBMap) is the tool you want to utilize. Otherwise, jump to the next step.
 
 Post-install
 ------------
@@ -379,11 +379,11 @@ These modifications are already done in the provided `config.plist`, I’m just 
 
 ### Restoring Graphics Acceleration
 
-One of the first [post-installation](https://dortania.github.io/OpenCore-Post-Install/ "Post-installation guide") tasks you will have to perform, unless you decided to stay on High Sierra, is restoring graphics acceleration along with native desktop resolution.
+One of the first [post-installation](https://dortania.github.io/OpenCore-Post-Install/ "Post-installation guide") tasks you will have to perform, unless you decided to stick with High Sierra, is restoring graphics acceleration along with native desktop resolution.
 
 Intel HD 3000 doesn‘t support Metal graphics acceleration API used by macOS since El Capitan. And since Mojave, HD 3000 itself isn‘t supported at all: you need to use [OpenCore Legacy Patcher](https://github.com/dortania/OpenCore-Legacy-Patcher "OCLP") to install patched kexts that restore graphics acceleration and work-around lack of Metal requirement.
 
-Reboot without USB installer (this is important because USB config doesn’t use proper SMBIOS model and doesn’t disable SIP and AMFI required for patcher to work), download the patcher and allow it to install root patches. Reboot one more time and you should be greeted by a proper desktop in glorious native resolution.
+Reboot without USB installer: this is important because USB config doesn’t use proper SMBIOS model and doesn’t disable SIP and AMFI required for patcher to work. Download OCLP and allow it to install root patches. Reboot one more time and you should be greeted by a proper desktop in glorious native resolution.
 
 Note that patcher only enables macOS graphical interface to function properly (mostly). Applications, such as iWork suite or Microsoft Office, that *do* use Metal cannot be worked around but can be replaced with their older non-Metal versions. Usually they work on Big Sur and Monterey just fine.
 
