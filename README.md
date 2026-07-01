@@ -383,7 +383,7 @@ Reboot without USB installer (this is important because USB config doesn’t use
 
 Note that patcher only enables macOS graphical interface to function properly (mostly). Applications, such as iWork suite or Microsoft Office, that *do* use Metal cannot be worked around but can be replaced with their older non-Metal versions. Usually they work on Big Sur and Monterey just fine.
 
-There’s additional information about [Intel HD 3000 graphics](2.&#32;HD&#32;3000&#32;Issues.md) that you need to be aware of.
+There’s additional information about [Intel HD 3000 graphics](Guide/2.&#32;HD&#32;3000&#32;Issues.md) that you need to be aware of.
 
 ### Fixing Blur Effects in Big Sur and Monterey
 
