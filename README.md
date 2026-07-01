@@ -69,10 +69,10 @@ All required kexts are already assembled in one place in the provided OpenCore [
   * `Lilu.kext`: basic kext required for patching
   * `WhateverGreen.kext`: graphics patches
   * `VirtualSMC.kext`: SMC emulation
-  * `SMCProcessor.kext`: CPU support
-  * `SMCSuperIO.kext`: EC support
-  * `SMCBatteryManager.kext`: battery fixes
-  * `SMCLightSensor.kext`: laptop lid light sensor
+      * `SMCProcessor.kext`: CPU support
+      * `SMCSuperIO.kext`: EC support
+      * `SMCBatteryManager.kext`: battery fixes
+      * `SMCLightSensor.kext`: laptop lid light sensor
   * `VoodooPS2Controller.kext`: PS/2 input support
       * `VoodooPS2Keyboard.kext`
       * `VoodooPS2Mouse.kext`
