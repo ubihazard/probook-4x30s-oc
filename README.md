@@ -357,7 +357,7 @@ OpenCore from the provided EFI folder will load any APFS driver available. This 
 
 ### Disabling SIP and AMFI
 
-Due to extensive modifications required to support this laptop on modern macOS it is better to disable both SIP and AMFI right away in `NVRAM/Add/7C436110-AB2A-4BBB-A880-FE41995C9F82` (The configured value is `0x803`.):
+Due to extensive modifications required to support this laptop on modern macOS it is better to disable both SIP and AMFI right away in `NVRAM/Add/7C436110-AB2A-4BBB-A880-FE41995C9F82` (the configured value is `0x803`):
 
 ```xml
 <key>csr-active-config</key>
