@@ -80,17 +80,17 @@ All required kexts are already assembled in one place in the provided OpenCore [
   * `RealtekRTL8111.kext`: wired ethernet
   * `AppleALC.kext`: audio patches
   * `USBMap.kext`: USB port map
-  * `USBInjectAll.kext`: initial setup and port mapping
+      * `USBInjectAll.kext`: initial setup and port mapping
   * `mXHCD.kext`: Renesas USB 3.0
-  * `GenericUSBXHCI.kext`: Renesas USB 3.0 (legacy)
+      * `GenericUSBXHCI.kext`: Renesas USB 3.0 (legacy)
   * `IOath3kfrmwr.kext`: Wireless (Bluetooth)
-  * `IOath3kdevice.kext`
-  * `HS80211Family.kext`
+      * `IOath3kdevice.kext`
+      * `HS80211Family.kext`
   * `AirPortAtheros40.kext`: Wireless (Wi-Fi)
-  * `ProBookAtheros.kext`
-  * `WifiLocFix.kext`
+      * `ProBookAtheros.kext`
+      * `WifiLocFix.kext`
   * `JMB38X.kext`: SD card reader
-  * `HSSDBlockStorage.kext`
+      * `HSSDBlockStorage.kext`
   * `ASPP-Override.kext`: CPU power management (legacy)
   * `ACPIPoller.kext`: laptop fan control
   * `NoTouchID.kext`: disable Touch ID
