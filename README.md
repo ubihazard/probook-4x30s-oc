@@ -7,7 +7,7 @@ Detailed instructions on how to install recent version of [macOS](https://en.wik
 ![macOS Installed on a ProBook 4530s](Resources/about-this-probook.png)
 
 > [!IMPORTANT]
-> A [newer guide](https://github.com/ubihazard/probook-4x40s-oc "macOS for ProBook 4x40s") for 40s series laptops with third generation Intel Ivy Bridge CPUs and Metal-capable graphics is now available with much better support for modern macOS.
+> There is a [newer guide](https://github.com/ubihazard/probook-4x40s-oc "macOS for ProBook 4x40s") for 40s series laptops with third generation Intel Ivy Bridge CPUs and Metal-capable graphics now available with much better support for modern macOS.
 
 > [!NOTE]
 > In the process some little adjustments for your particular laptop will need to be made because ProBooks shipped in many different configurations. Therefore it is highly recommended that you read the official OpenCore [install guide](https://dortania.github.io/OpenCore-Install-Guide/ "OpenCore install guide") first to get familiar with the process. That will make it much easier for you to adapt this guide as you progress.
