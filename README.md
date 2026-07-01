@@ -95,7 +95,7 @@ All required kexts are already assembled in one place in the provided OpenCore [
   * `ASPP-Override.kext`: legacy power management
   * `ACPIPoller.kext`: laptop fan control
   * `NoTouchID.kext`: disable Touch ID
-  * `SimpleMSR.kext`: fix BD PROCHOT due to lack of or dead battery
+  * `SimpleMSR.kext`: fix BD PROCHOT due to lack of working battery
 
 Installation
 ------------
