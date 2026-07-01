@@ -1095,8 +1095,6 @@
 			<dict>
 				<key>AAPL,snb-platform-id</key>
 				<data>AAABAA==</data>
-				<key>AAPL00,DualLink</key>
-				<data>AQAAAA==</data>
 				<key>hda-gfx</key>
 				<string>onboard-1</string>
 				<key>framebuffer-con1-enable</key>
@@ -1766,6 +1764,24 @@
 				<string></string>
 				<key>MinKernel</key>
 				<string></string>
+				<key>PlistPath</key>
+				<string>Contents/Info.plist</string>
+			</dict>
+			<dict>
+				<key>Arch</key>
+				<string>Any</string>
+				<key>BundlePath</key>
+				<string>NoTouchID.kext</string>
+				<key>Comment</key>
+				<string>NoTouchID.kext</string>
+				<key>Enabled</key>
+				<true/>
+				<key>ExecutablePath</key>
+				<string>Contents/MacOS/NoTouchID</string>
+				<key>MaxKernel</key>
+				<string>18.9.9</string>
+				<key>MinKernel</key>
+				<string>17.0.0</string>
 				<key>PlistPath</key>
 				<string>Contents/Info.plist</string>
 			</dict>
