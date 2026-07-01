@@ -19,7 +19,7 @@ Despite effort was made to ensure all steps are as easy to follow and clear as p
 Introduction
 ------------
 
-ProBook 4530s is an old laptop from Sandy Bridge era made by HP. With a handful of [aftermarket upgrades](Guide/1.&#32;Upgrading&#32;Your&#32;ProBook.md) it can still make a powerful machine for simple daily tasks. More importantly, even in stock condition it is fairly compatible with macOS. So this is what we are going to do – putting macOS on it by means of [OpenCore](https://github.com/acidanthera/OpenCorePkg) bootloader and a collection of [kernel extensions](#kernel-extensions) made by talented individuals from hackintosh community.
+ProBook 4530s is an old laptop from Sandy Bridge era made by HP. With a handful of [aftermarket upgrades](#upgrading-your-probook) it can still make a powerful machine for simple daily tasks. More importantly, even in stock condition it is fairly compatible with macOS. So this is what we are going to do – putting macOS on it by means of [OpenCore](https://github.com/acidanthera/OpenCorePkg) bootloader and a collection of [kernel extensions](#kernel-extensions) made by talented individuals from hackintosh community.
 
 So this is the configuration[^1] we are going to work with:
 
@@ -387,7 +387,7 @@ Reboot without USB installer: this is important because USB config doesn’t use
 
 Note that patcher only enables macOS graphical interface to function properly (mostly). Applications, such as iWork suite or Microsoft Office, that *do* use Metal cannot be worked around but can be replaced with their older non-Metal versions. Usually they work on Big Sur and Monterey just fine.
 
-There’s additional information about [Intel HD 3000 graphics](Guide/2.&#32;HD&#32;3000&#32;Issues.md) that you need to be aware of.
+There’s additional information about [Intel HD 3000 graphics](#hd-3000-issues) that you need to be aware of.
 
 ### Fixing Blur Effects in Big Sur and Monterey
 
@@ -606,7 +606,7 @@ A pre-made trackpad configuration file with tap to click is [provided](/Library/
 
 The final step to setting up your new hackintosh laptop is generating unique serial number and system UUID. You can skip this step if you don‘t plan to use App store or connect with Apple, otherwise it is required to make iCloud or iMessage to work.
 
-First, you need to choose the Mac SMBIOS product name that resembles your hardware most closely. For this laptop model it would be `MacBookPro8,1`. If you opted to upgrade your ProBook with quad-core CPU (against [my advice](Guide/1.&#32;Upgrading&#32;Your&#32;ProBook.md#cpu)), `MacBookPro8,2` would be a preferred choice, – but see a note below for USB port mapping adjustment. Now you can use `macserial` tool from OpenCore utilities to generate serials (`SystemSerialNumber` and `MLB`, or “motherboard serial number”):
+First, you need to choose the Mac SMBIOS product name that resembles your hardware most closely. For this laptop model it would be `MacBookPro8,1`. If you opted to upgrade your ProBook with quad-core CPU (against [my advice](#cpu)), `MacBookPro8,2` would be a preferred choice, – but see a note below for USB port mapping adjustment. Now you can use `macserial` tool from OpenCore utilities to generate serials (`SystemSerialNumber` and `MLB`, or “motherboard serial number”):
 
 ```bash
 ./macserial -m 'MacBookPro8,1' -n 1
@@ -893,7 +893,92 @@ Optional: add your country code with `brcmfx-country=US` parameter. In my experi
 
 If you don‘t get Wi-Fi you can try to experiment with different values for `brcmfx-driver` parameter or your card might need a firmware uploader. Check out the [official docs](https://github.com/acidanthera/BrcmPatchRAM) for further assistance in configuration.
 
-Continue with [other post-install tasks](#configuring-tackpad).
+Now continue with [other post-install tasks](#configuring-tackpad).
+
+HD 3000 Issues
+--------------
+
+Unfortunately, Intel HD 3000 isn’t exactly the best fit for a hackintosh system. But being on a laptop you don’t have much choice about it. There are couple things you need to be aware of.
+
+### Graphical Glitches
+
+Intel HD 3000 on non-Apple hardware is known to be plagued by graphical artifacts. They can occur even with 8GB+ of RAM installed and are manifested in the form of grey lines or blocks suddenly popping around. Most annoyingly, the system eventually freezes and becomes completely unresponsive, except mouse cursor still moving on the screen.
+
+Unfortunately, there’s no working fix for this issue and the only way to recover is a hard system reset.
+
+### VRAM Patch
+
+With HD 3000 it is possible to change the maximum amount of video ram macOS allocates for the GPU. The patch must be applied manually by hex-editing `AppleIntelSNBGraphicsFB.kext` (“Sandy Bridge graphics framebuffer”). Additionally, the `AppleIntelHD3000Graphics` kext `Contents/Info.plist` has to be [modified](https://github.com/ubihazard/macos-scripts/tree/main/Scripts#root-patching "Root patching guide") to complete the patch:
+
+```xml
+<key>VRAMOverride</key>
+<integer>0</integer>
+<key>VRAMSize</key>
+<integer>1536</integer>
+```
+
+Open the `AppleIntelSNBGraphicsFB.kext/Contents/MacOS/AppleIntelSNBGraphicsFB` in a binary hexadecimal editor and patch it according to your installed RAM amount and the tables below.
+
+If you got 8 GB of system RAM:
+
+| **VRAM size** | Hex find   | Hex replace | Base64 find | Base64 replace
+| ------------- | ---------- | ----------- | ----------- | --------------
+| **768**       | d000000020 | d000000030  | 0AAAACA=    | 0AAAADA=
+| **1024**      | d000000020 | d000000040  | 0AAAACA=    | 0AAAAEA=
+| **1536**      | d000000020 | d000000060  | 0AAAACA=    | 0AAAAGA=
+
+For 4 GB of system RAM (not recommended):
+
+| **VRAM size** | Hex find   | Hex replace | Base64 find | Base64 replace
+| ------------- | ---------- | ----------- | ----------- | --------------
+| **512**       | d000000018 | d000000020  | 0AAAABg=    | 0AAAACA=
+| **768**       | d000000018 | d000000030  | 0AAAABg=    | 0AAAADA=
+| **1024**      | d000000018 | d000000040  | 0AAAABg=    | 0AAAAEA=
+
+The provided values are for High Sierra version of the kext. Don’t forget to [rebuild the kernel cache](https://github.com/ubihazard/macos-scripts/tree/main/Scripts#rebuild-kernel-cache "Kernel cache rebuild guide") after the patch and then reboot to test your changes.
+
+[Continue](#fixing-blur-effects-in-big-sur-and-monterey) fixing your graphics.
+
+Upgrading Your ProBook
+----------------------
+
+Before you begin it is recommended that you consider upgrading your ProBook as all of its off-the-shelf configurations are hopelessly outdated.
+
+### SSD
+
+Swapping the hard disk for a solid-state drive should be your first upgrade. This alone will massively increase performance and responsiveness of the whole system. Modern versions of macOS use APFS file system which is specifically designed for solid-state drives. Although you can install macOS on a HDD, the performance penalty would likely be too high. Install a minimum of 256 GB SATA SSD drive, preferably with DRAM cache. 128 GB can be enough for very light use. Larger drive will allow for multiple operating systems in a dual-boot configuration.
+
+### RAM
+
+It is highly recommended that you install at least 8 GB of RAM. This is the minimum amount required for macOS to operate smoothly. ProBooks based on Sandy Bridge CPUs use DDR3 RAM which, thankfully, isn’t much affected by RAM crisis and can still be found for cheap.
+
+### CPU
+
+Although not strictly required, changing your processor to at least Core i5 with Turbo Boost, in case if you are stuck with Core i3, is a worthy consideration. You would want to disassemble your laptop anyway to clean it and change thermal paste, so why not upgrade CPU in the process? My personal CPU recommendation, however, would be a dual-core Core i7, namely [2.8 GHz 2640M](https://ark.intel.com/content/www/us/en/ark/products/53464/intel-core-i72640m-processor-4m-cache-up-to-3-50-ghz.html "Core i7-2640M") or 2.7 GHz 2620M (whichever you can still find). I would advice against quad-core 2670QM and especially 2760QM or higher for several reasons. For one, your laptop‘s power adapter might no longer provide enough juice for the whole system. Then, ProBook‘s mainboard doesn‘t possess VRM strong enough to properly feed power hungry quad-core i7 CPUs with TDP of 45W. Lastly, the cooling system is simply inadequate for a quad-core CPU: having just one short heat pipe.
+
+Failure to observe these hardware restrictions will result in your CPU quickly overheating, not having Turbo Boost or not running even at its stock advertised speed, VRM running very hot, and laptop abruptly shutting down. And on top of all that, even the fastest 45W Core i7 CPU, 2860QM, is still whole 300 MHz slower on all cores than 35W 2640M, resulting in a noticeably lower single-thread performance. Taking power and thermal limits into account, a 2640M with two but powerful cores is just a better overall option. This is especially true when compared to 2670QM with its miserable (by modern standards) 2.2 GHz stock clock speed.
+
+For reference, my dual-core Core i7-2640M with high-quality TIM applied hits **95** degrees under full continuous load (compilation of a big C/C++ project), – just a couple degrees shy of thermal throttling.
+
+### Wi-Fi
+
+Depending on a version of macOS you would choose to install, you might also need to change your wireless adapter to a compatible one. This is not going to be easy because ProBook 30s series suffer from a dreaded BIOS Wi-Fi whitelist. Luckily, there are workarounds.
+
+Chances are you already have a compatible Atheros AR9285 adapter so you can just install Big Sur without bothering with hardware modding. If not, you can try installing a compatible Atheros card and [rebrand it](https://web.archive.org/web/20230315063103/https://www.tonymacx86.com/threads/rebranding-the-atheros-928x-cards-the-guide.115110/) to pass whitelist check.
+
+However, at this point a much better alternative would be going for Broadcom BCM94352HMB module. Although it would need BIOS Wi-Fi whitelist [bypass hack](#defeating-30s-series-wi-fi-whitelist) and a [hardware mod](#hardware-mod) on a card itself, it would allow you to bump installed macOS version to Monterey, which offers better compatibility with software.
+
+Alternatively, Intel Wi-Fi modules have recently became a viable option with [itlwm](https://github.com/OpenIntelWireless/itlwm "macOS Intel wireless kexts"). Refer to GitHub project page for installation and configuration instructions for different macOS versions.
+
+Whatever your choice of card would be, it must be of *half-size mini PCIe* form factor, *not M2*.
+
+### Full HD Screen Upgrade for 15" Models
+
+One of the coolest upgrades you can perform on ProBook 4530s is equipping it with higher quality full HD aftermarket LCD panel replacing ugly stock 1366x768 screen with poor color reproduction that it comes with. This upgrade is quite hard to perform as it requires full laptop disassembly, which is not easy at all on these old laptops, and you will also need a compatible dual-link LVDS LCD cable from 4730s, but the result is very much worth it. Some full HD screens with wider color gamut can completely transform how machine looks and feels.
+
+The details of this upgrade are beyond the scope of this guide but you can find all necessary information on relevant hackintosh forums. If you do manage to install full HD screen, don’t forget to adjust iGPU device properties to enable dual-link operation or you will experience broken image.
+
+Once you are done with upgrades it’s time to [start the installation process](#installation).
 
 Credits
 -------
