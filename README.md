@@ -569,7 +569,7 @@ Add `ipc_control_port_options=0` to `boot-args` config section:
 Enabling Broadcom Wireless
 --------------------------
 
-As already [mentioned](#opencore-for-legacy-probook), ProBook 4530s suffers from a dreaded Wi-Fi BIOS whitelist preventing you from changing wireless adapter to a native Broadcom card. Fortunately, there’s a two-step solution to this problem. First, a simple hardware mod must be performed on a card itself.
+As already [mentioned](#opencore-for-legacy-probook), ProBook 4530s suffers from a dreaded Wi-Fi BIOS whitelist preventing you from changing wireless adapter to a native Broadcom card. Fortunately, there’s a two-step solution to this problem. First, a simple hardware mod must be performed on a card.
 
 ### Hardware Mod
 
