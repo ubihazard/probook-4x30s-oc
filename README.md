@@ -960,7 +960,7 @@ Failure to observe these hardware restrictions will result in your CPU quickly o
 
 For reference, my dual-core Core i7-2640M with high-quality TIM applied hits **95** degrees under full continuous load (compilation of a big C/C++ project), – just a couple degrees shy of thermal throttling.
 
-### Wi-Fi
+### Wireless
 
 Depending on a version of macOS you would choose to install, you might also need to change your wireless adapter to a compatible one. This is not going to be easy because ProBook 30s series suffer from a dreaded BIOS Wi-Fi whitelist. Luckily, there are workarounds.
 
