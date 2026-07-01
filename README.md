@@ -23,7 +23,7 @@ ProBook 4530s is an old laptop from Sandy Bridge era made by HP. With a handful 
 
 So this is the configuration[^1] we are going to work with:
 
-| **Name**     | Description
+| Item         | Description
 | ------------ | -----------
 | **CPU**      | Intel Core i7-2640M
 | **GPU**      | Intel HD 3000
@@ -119,7 +119,7 @@ Unless your ProBook already comes with a Core i7-2640M, like mine, you need to d
 
     <details>
     <summary><strong>Example</strong></summary><br>
-    
+
     ```xml
     <dict>
       <key>Comment</key>
@@ -136,7 +136,7 @@ Unless your ProBook already comes with a Core i7-2640M, like mine, you need to d
 
     <details>
     <summary><strong>Example</strong></summary><br>
-    
+
     ```xml
     <key>Delete</key>
     <array>
@@ -176,7 +176,7 @@ Unless your ProBook already comes with a Core i7-2640M, like mine, you need to d
 
     <details>
     <summary><strong>Example</strong></summary><br>
-    
+
     ```xml
     <dict>
       <key>Arch</key>
@@ -259,7 +259,7 @@ Without proper CPU PM `AppleIntelCPUPowerManagement.kext` would cause kernel pan
 
     <details>
     <summary><strong>Example</strong></summary><br>
-    
+
     ```xml
     <dict>
       <key>Comment</key>
@@ -276,7 +276,7 @@ Without proper CPU PM `AppleIntelCPUPowerManagement.kext` would cause kernel pan
 
     <details>
     <summary><strong>Example</strong></summary><br>
-    
+
     ```xml
     <key>Delete</key>
     <array>
@@ -316,7 +316,7 @@ Without proper CPU PM `AppleIntelCPUPowerManagement.kext` would cause kernel pan
 
     <details>
     <summary><strong>Example</strong></summary><br>
-    
+
     ```xml
     <dict>
       <key>Arch</key>
