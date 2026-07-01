@@ -66,6 +66,35 @@ Or “kexts” are equivalent of “drivers” in Windows and are required for p
 
 All required kexts are already assembled in one place in the provided OpenCore [EFI folder](https://github.com/ubihazard/probook-4x30s-oc/releases/latest). Though you might need to disable some and enable others to adjust for your own laptop configuration. This is done during the [post-install](#post-install) stage.
 
+  * `Lilu.kext`: basic required kext
+  * `WhateverGreen.kext`: graphics patches
+  * `VirtualSMC.kext`: SMC emulation
+  * `SMCProcessor.kext`: CPU support
+  * `SMCSuperIO.kext`: EC support
+  * `SMCBatteryManager.kext`: battery fixes
+  * `SMCLightSensor.kext`: laptop lid light sensor
+  * `VoodooPS2Controller.kext`: PS/2 input support
+      * `VoodooPS2Keyboard.kext`
+      * `VoodooPS2Mouse.kext`
+      * `VoodooPS2Trackpad.kext`
+  * `RealtekRTL8111.kext`: wired ethernet
+  * `AppleALC.kext`: audio patches
+  * `USBMap.kext`: USB port map
+  * `USBInjectAll.kext`: initial setup and port mapping
+  * `mXHCD.kext`: Renesas USB 3.0
+  * `GenericUSBXHCI.kext`: Renesas USB 3.0 (legacy)
+  * `IOath3kfrmwr.kext`: Wireless (Bluetooth)
+  * `IOath3kdevice.kext`
+  * `HS80211Family.kext`
+  * `AirPortAtheros40.kext`: Wireless (Wi-Fi)
+  * `ProBookAtheros.kext`
+  * `WifiLocFix.kext`
+  * `JMB38X.kext`: SD card reader
+  * `HSSDBlockStorage.kext`
+  * `ASPP-Override.kext`: CPU power management (legacy)
+  * `ACPIPoller.kext`: laptop fan control
+  * `NoTouchID.kext`: disable Touch ID
+
 Installation
 ------------
 
