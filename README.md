@@ -7,7 +7,7 @@ Detailed instructions on how to install recent version of [macOS](https://en.wik
 ![macOS Installed on a ProBook 4530s](Resources/about-this-probook.png)
 
 > [!IMPORTANT]
-> A [new guide](https://github.com/ubihazard/probook-4x40s-oc "macOS for ProBook 4x40s") for 40s series laptops with third generation Intel Ivy Bridge CPUs and Metal-capable graphics is now available with much better support for modern macOS.
+> A [newer guide](https://github.com/ubihazard/probook-4x40s-oc "macOS for ProBook 4x40s") for 40s series laptops with third generation Intel Ivy Bridge CPUs and Metal-capable graphics is now available with much better support for modern macOS.
 
 > [!NOTE]
 > In the process some little adjustments for your particular laptop will need to be made because ProBooks shipped in many different configurations. Therefore it is highly recommended that you read the official OpenCore [install guide](https://dortania.github.io/OpenCore-Install-Guide/ "OpenCore install guide") first to get familiar with the process. That will make it much easier for you to adapt this guide as you progress.
@@ -49,7 +49,7 @@ This guide now uses a [custom build](https://github.com/ubihazard/OpenCorePkg-Pr
 
   * `ProBookFanReset.efi` resets fan control from macOS back to automatic BIOS management. This needs to be done every time after using quiet fan patch to restore embedded controller state, and the best place to do it is during boot up.
 
-  * `ProBookWifiUnblock.efi` is necessary if you plan to install a [non-whitelisted](#broadcom-wireless) (not approved by HP) Wi-Fi card in your ProBook 4x30s laptop. Thankfully, this module *is not needed* for 4x40s because in an unusual move by HP they did not cripple 40s series laptops with a BIOS Wi-Fi whitelist.
+  * `ProBookWifiUnblock.efi` is necessary if you plan to install a [non-whitelisted](#enabling-broadcom-wireless) (not approved by HP) Wi-Fi card in your ProBook 4x30s laptop. Thankfully, this module *is not needed* for 4x40s because in an unusual move by HP they did not cripple 40s series laptops with a BIOS Wi-Fi whitelist.
 
 > [!IMPORTANT]
 > **Do not use these EFI modules with any other laptop other than ProBook 30s or 40s series. Doing so can brick your device!**
@@ -82,7 +82,7 @@ If you own a 4730s model ProBook with HD+ 1600x900 screen or replaced your 4530s
 
 ### Resetting Power Management
 
-Unless your ProBook already comes with a Core i7-2640M, like mine, you need to disable CPU power management for your very first setup. This step is required for legacy Intel CPUs such as used in Sandy Bridge and Ivy Bridge ProBooks.
+Unless your ProBook already comes with a Core i7-2640M, like mine, you need to disable CPU power management for your very first setup. This step is required for legacy Intel CPUs used in Sandy Bridge and Ivy Bridge era ProBooks.
 
   * Open `config.plist` copied to EFI partition on a USB drive. Disable the `SSDT-PM.aml` ACPI table: under `ACPI/Add` set `Enabled` to `false`.
 
@@ -172,15 +172,17 @@ We will [re-enable](#restoring-power-management) proper CPU power management dur
 
 ### What macOS Version to Install
 
-A few notes on what macOS to choose for installation. Typically, the recommended macOS version to install is Big Sur. It is modern enough for everyday use and has decent software support, including modern browser (Firefox is recommended due to much longer support of older macOS than Chrome).
+A few notes on what macOS to choose for installation. Typically, the recommended macOS version to install is Big Sur. It is modern enough for everyday use and has decent software support, including modern browser (Firefox is recommended for having much longer support of older macOS than Chrome).
 
-Mojave and everything older is *not recommended* due to being way too outdated and having no modern browser support making it difficult just to get on the Internet. Catalina and Mojave also aren‘t supported well by OCLP, which is required to restore legacy HD 3000 graphics acceleration.
+Mojave and everything older is *not recommended* due to being way too outdated and having no decent modern browser support, making it difficult just to get on the Internet. Catalina and Mojave also aren‘t supported well by OCLP, which is required to restore legacy HD 3000 graphics acceleration.
 
 However, if you managed to find and swapped in a compatible Broadcom Wi-Fi card, you can bump installed macOS version to Monterey. The caveat is that support for Bluetooth on these cards (any compatible card you can install in this laptop) on Monterey is sketchy at best: Airdrop, Handoff, and certain Continuity features might not work at all, would work but with issues, or only in one direction (from iPhone to ProBook, but not the other way around).
 
+The minimum macOS version you can install using provided OC EFI folder is High sierra.
+
 ### Installing macOS Ventura
 
-macOS Ventura requires a CPU with AVX2 instructions which all Sandy Bridge and Ivy Bridge CPUs lack. (AVX2 becomes available since Haswell.) Thus, Monterey is the final version of macOS you can *technically* install on this laptop.
+From Ventura onwards macOS requires a CPU with AVX2 instructions which all Sandy Bridge and Ivy Bridge CPUs lack. (AVX2 becomes available since Haswell.) Thus, Monterey is the final version of macOS you can *technically* install on this laptop.
 
 Using [CryptexFixup](https://github.com/acidanthera/CryptexFixup) kext, which enables sort of AVX2 emulation, it is possible to install macOS Ventura (and even later macOS, all the way up to Sequoia). However, this isn‘t supported by this guide and is *not recommended*. macOS past Monterey increasingly rely high on Metal API in various places and bundled applications, and using non-metal GPU can be a real pain on such system. Also keep in mind that pretty much any third-party app designed to run on Ventura would expect AVX2 to be available and likely to experience random crashes due to lack thereof.
 
@@ -300,7 +302,7 @@ Without proper CPU PM `AppleIntelCPUPowerManagement.kext` would cause kernel pan
     ```
     </details>
 
-If you went with Monterey make sure `ASPP-Override.kext` is enabled too, because it is required to restore legacy CPU power management which was at some point removed in Monterey:
+If you’ve installed Monterey make sure `ASPP-Override.kext` is enabled too, because it is required to restore legacy CPU power management support which was at some point removed in Monterey:
 
 <details>
 <summary><strong>Example</strong></summary><br>
@@ -329,7 +331,7 @@ If you went with Monterey make sure `ASPP-Override.kext` is enabled too, because
 
 ### Disabling Dedicated GPU
 
-For laptop configurations with dedicated GPU soldered onto motherboard an additional step of disabling (or “turning off”) of this unsupported GPU is needed. Unfortunately, I did not have a 30s series laptop with dGPU on hand, so I can’t provide direct instructions for ProBook 4530s exactly. I did, however, have an Ivy Bridge 4540s with Radeon dGPU, and because it is very similar with 4530s in terms of ACPI configuration, you can grab my [dGPU off patch](https://github.com/ubihazard/probook-4x40s-oc/Guide/Disabling&#32;Radeon.md) for 4540s and adapt it for 4530s quite easily.
+For laptop configurations with dedicated GPU soldered onto motherboard an additional step of disabling (or “turning off”) of this unsupported GPU is needed. Unfortunately, I did not have a 30s series laptop with dGPU on hand, so I can’t provide direct instructions for ProBook 4530s exactly. I did, however, have an Ivy Bridge 4540s with Radeon dGPU, and because it is very similar with 4530s in terms of ACPI configuration, you can grab my [dGPU off patch](https://github.com/ubihazard/probook-4x40s-oc#disabling-radeon) for 4540s and adapt it for 4530s quite easily.
 
 Alternatively, `-wegnoegpu` [WhateverGreen boot argument](https://github.com/acidanthera/WhateverGreen "WhateverGreen configuration") can be used temporarily in `config.plist` while you are working on a real patch:
 
@@ -349,7 +351,7 @@ The USB port map kext in this repo is for ProBook 4530s models with USB 3.0 port
 Post-install
 ------------
 
-We still got stuff to do to make the system usable. Unless you decided to install very old macOS version for some reason, e.g. High Sierra, you’d be stuck without hardware graphics acceleration and, as a result, very slow and unusable user interface. This and other stuff, like Wi-Fi, is fixed in this step.
+We still got stuff to do to make the system usable. Unless you decided to install very old macOS version for some reason, e.g. High Sierra, you’d be stuck without hardware graphics acceleration and, as a result, very slow and unusable user interface. This and other stuff, like Wi-Fi and Bluetooth, is fixed in this step.
 
 ### Quick Note on APFS
 
