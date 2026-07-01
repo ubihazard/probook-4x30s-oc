@@ -66,34 +66,36 @@ Or “kexts” are equivalent of “drivers” in Windows and are required for p
 
 All required kexts are already assembled in one place in the provided OpenCore [EFI folder](https://github.com/ubihazard/probook-4x30s-oc/releases/latest). Though you might need to disable some and enable others to adjust for your own laptop configuration. This is done during the [post-install](#post-install) stage.
 
-  * `Lilu.kext`: basic kext required for patching
-  * `WhateverGreen.kext`: graphics patches
-  * `VirtualSMC.kext`: SMC emulation
+  * `Lilu.kext` [1.7.1]: basic kext required for patching
+  * `ECEnabler.kext` [1.0.2]: laptop battery patches
+  * `WhateverGreen.kext` [1.7.0]: graphics patches
+  * `VirtualSMC.kext` [1.3.7]: SMC emulation
       * `SMCProcessor.kext`: CPU support
       * `SMCSuperIO.kext`: EC support
-      * `SMCBatteryManager.kext`: battery fixes
+      * `SMCBatteryManager.kext`: laptop battery
       * `SMCLightSensor.kext`: laptop lid light sensor
-  * `VoodooPS2Controller.kext`: PS/2 input support
+  * `VoodooPS2Controller.kext` [1.9.2]: PS/2 input support
       * `VoodooPS2Keyboard.kext`
       * `VoodooPS2Mouse.kext`
       * `VoodooPS2Trackpad.kext`
-  * `RealtekRTL8111.kext`: wired ethernet
-  * `AppleALC.kext`: audio patches
+  * `RealtekRTL8111.kext` [3.0.0]: wired ethernet
+  * `AppleALC.kext` [1.9.5]: audio patches
   * `USBMap.kext`: USB port map
-      * `USBInjectAll.kext`: initial setup and port mapping
-  * `mXHCD.kext`: Renesas USB 3.0
-      * `GenericUSBXHCI.kext`: Renesas USB 3.0 (legacy)
-  * `IOath3kfrmwr.kext`: wireless (Bluetooth)
+      * `USBInjectAll.kext` [0.8.1]: initial setup and port mapping
+  * `mXHCD.kext` [1.0.0]: Renesas USB 3.0
+      * `GenericUSBXHCI.kext` [1.3.0b1]: Renesas USB 3.0 (legacy)
+  * `HS80211Family.kext` [12.0]: wireless (Bluetooth)
+      * `IOath3kfrmwr.kext` [1.3]
       * `IOath3kdevice.kext`
-      * `HS80211Family.kext`
-  * `AirPortAtheros40.kext`: wireless (Wi-Fi)
-      * `ProBookAtheros.kext`
+  * `AirPortAtheros40.kext` [7.0]: wireless (Wi-Fi)
+      * `ProBookAtheros.kext` [1.0.3]
       * `WifiLocFix.kext`
-  * `JMB38X.kext`: SD card reader
+  * `JMB38X.kext` [1.5.0]: SD card reader
       * `HSSDBlockStorage.kext`
   * `ASPP-Override.kext`: legacy power management
   * `ACPIPoller.kext`: laptop fan control
   * `NoTouchID.kext`: disable Touch ID
+  * `SimpleMSR.kext`: BD PROCHOT fix
 
 Installation
 ------------
