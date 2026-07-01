@@ -349,9 +349,7 @@ The USB port map kext in this repo is for ProBook 4530s models with USB 3.0 port
 Post-install
 ------------
 
-We still got stuff to do to make the system usable.
-
-Unless you opted to install very old macOS version for some reason, e.g. High Sierra, you’d be stuck without hardware graphics acceleration and, as a result, very slow and unusable user interface. This and other stuff, like Wi-Fi, is fixed in this step.
+We still got stuff to do to make the system usable. Unless you decided to install very old macOS version for some reason, e.g. High Sierra, you’d be stuck without hardware graphics acceleration and, as a result, very slow and unusable user interface. This and other stuff, like Wi-Fi, is fixed in this step.
 
 ### Quick Note on APFS
 
@@ -413,41 +411,55 @@ Log out and back in to apply the changes. Some of these [commands](https://morae
 
 ### Enabling Wi-Fi and Bluetooth
 
-By default Atheros wireless is already configured in `config.plist`. You can verify that the following kexts are enabled: `IOath3kfrmwr.kext`, `Legacy/IOath3kfrmwr.kext`, `IOath3kdevice.kext`, `HS80211Family.kext`, `AirPortAtheros40.kext`, `ProBookAtheros.kext`, and `WifiLocFix.kext` (`Enabled` -> `true`). For example:
+By default Atheros wireless is already configured in `config.plist`. You can verify that the following kexts are enabled (`Enabled` -> `true`):
+
+  * `IOath3kfrmwr.kext`,
+  * `Legacy/IOath3kfrmwr.kext`,
+  * `IOath3kdevice.kext`,
+  * `HS80211Family.kext`,
+  * `AirPortAtheros40.kext`,
+  * `ProBookAtheros.kext`
+  * `WifiLocFix.kext`.
+
+<details>
+<summary><strong>Example</strong></summary><br>
 
 ```xml
-      <dict>
-        <key>Arch</key>
-        <string>Any</string>
-        <key>BundlePath</key>
-        <string>AirPortAtheros40.kext</string>
-        <key>Comment</key>
-        <string>AirPortAtheros40.kext</string>
-        <key>Enabled</key>
-        <true/>
-        <key>ExecutablePath</key>
-        <string>Contents/MacOS/AirPortAtheros40</string>
-        <key>MaxKernel</key>
-        <string>20.9.9</string>
-        <key>MinKernel</key>
-        <string>18.0.0</string>
-        <key>PlistPath</key>
-        <string>Contents/Info.plist</string>
-      </dict>
+...
+<dict>
+  <key>Arch</key>
+  <string>Any</string>
+  <key>BundlePath</key>
+  <string>AirPortAtheros40.kext</string>
+  <key>Comment</key>
+  <string>AirPortAtheros40.kext</string>
+  <key>Enabled</key>
+  <true/>
+  <key>ExecutablePath</key>
+  <string>Contents/MacOS/AirPortAtheros40</string>
+  <key>MaxKernel</key>
+  <string>20.9.9</string>
+  <key>MinKernel</key>
+  <string>18.0.0</string>
+  <key>PlistPath</key>
+  <string>Contents/Info.plist</string>
+</dict>
+...
 ```
+</details>
 
 Open `WifiLocFix.kext/Contents/Info.plist` in a plain text editor and change the country code (`US`) and locale (`FCC` or `ETSI` for Europe):
 
 ```xml
-      <dict>
-        <key>IO80211CountryCode</key>
-        <string>US</string>
-        <key>IO80211Locale</key>
-        <string>FCC</string>
-      </dict>
+<dict>
+  <key>IO80211CountryCode</key>
+  <string>US</string>
+  <key>IO80211Locale</key>
+  <string>FCC</string>
+</dict>
 ```
 
-For Broadcom wireless head over to [separate section](5.\ Broadcom\ Wireless.md).
+If you opted to install Broadcom card in your ProBook head over to a [dedicated section](#enabling-broadcom-wireless) for your wireless configuration.
 
 ### Configuring Trackpad
 
@@ -476,23 +488,23 @@ Replace the original file with your edited copy:
 cp com.apple.AppleMultitouchTrackpad.plist ~/Library/Preferences/
 ```
 
-*Rebooting is required to make it work.* (Assuming you also didn‘t make any mistakes while editing the file.)
+*Rebooting is required to make it work.* Assuming you also didn‘t make any mistakes while editing the file.
 
-A pre-made trackpad configuration file with tap to click is [provided](/Library/Preferences/com.apple.AppleMultitouchTrackpad.plist "Trackpad config") and should suit most users well. Copy it to `~/Library/Preferences` replacing the original if you can’t bother editing your own.
+A pre-made trackpad configuration file with tap to click is [provided](/Library/Preferences/com.apple.AppleMultitouchTrackpad.plist "Trackpad config") and should suit most users well. Copy it to `~/Library/Preferences` replacing the original, if you can’t bother editing your own.
 
 ### Filling Your System Information
 
 The final step to setting up your new hackintosh laptop is generating unique serial number and system UUID. You can skip this step if you don‘t plan to use App store or connect with Apple, otherwise it is required to make iCloud or iMessage to work.
 
-First, you need to choose the Mac SMBIOS product name that resembles your hardware most closely. For this laptop model it would be `MacBookPro8,1`. If you opted to upgrade your ProBook with quad-core CPU (against [my advice]()), `MacBookPro8,2` would be a preferred choice, but see a note below for USB port mapping adjustment. Now you can use `macserial` tool from OpenCore utilities to generate serials (`SystemSerialNumber` and `MLB`, or motherboard serial number):
+First, you need to choose the Mac SMBIOS product name that resembles your hardware most closely. For this laptop model it would be `MacBookPro8,1`. If you opted to upgrade your ProBook with quad-core CPU (against [my advice](Guide/1.&#32;Upgrading&#32;Your&#32;ProBook.md#cpu)), `MacBookPro8,2` would be a preferred choice, but see a note below for USB port mapping adjustment. Now you can use `macserial` tool from OpenCore utilities to generate serials (`SystemSerialNumber` and `MLB`, or “motherboard serial number”):
 
 ```bash
 ./macserial -m 'MacBookPro8,1' -n 1
 ```
 
-The system serial number you generated must be reported as “invalid” or “not found” on Apple [support coverage](https://checkcoverage.apple.com/ "Serial number check") page. If it‘s valid, it means `macserial` somehow generated a number that belongs to an actual produced Mac, and you must generate another serial and check it again.
+The system serial number you generated must be reported as “invalid” or “not found” on Apple [support coverage](https://checkcoverage.apple.com/ "Serial number check") page. If it comes back as “valid”, it means `macserial` somehow generated a number that belongs to an actual produced Mac, and you must generate another serial and check it again.
 
-Next, find out your ethernet adapter MAC address and strip it of `:` characters, – this would be your `ROM`:
+Next, find out your ethernet adapter MAC address and strip it of `:` characters, – this would be your `ROM` (it is better to pick wired interface MAC address rather than wireless):
 
 ```bash
 ifconfig
@@ -510,45 +522,266 @@ Finally, generate the `SystemUUID` for your ProBook:
 uuidgen
 ```
 
-Now we can fill this information in `config.plist` (`PlatformInfo/Generic`):
+Now we can fill this information under `PlatformInfo/Generic`:
+
+<details>
+<summary><strong>Example</strong></summary><br>
 
 ```xml
-    <key>Generic</key>
-    <dict>
-      <key>AdviseFeatures</key>
-      <false/>
-      <key>MLB</key>
-      <string>M0000000000000001</string>
-      <key>MaxBIOSVersion</key>
-      <false/>
-      <key>ProcessorType</key>
-      <integer>0</integer>
-      <key>ROM</key>
-      <data>ABCDEF==</data>
-      <key>SpoofVendor</key>
-      <true/>
-      <key>SystemMemoryStatus</key>
-      <string>Auto</string>
-      <key>SystemProductName</key>
-      <string>MacBookPro8,1</string>
-      <key>SystemSerialNumber</key>
-      <string>W00000000001</string>
-      <key>SystemUUID</key>
-      <string>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</string>
-    </dict>
+<key>Generic</key>
+<dict>
+  <key>AdviseFeatures</key>
+  <false/>
+  <key>MLB</key>
+  <string>M0000000000000001</string>
+  <key>MaxBIOSVersion</key>
+  <false/>
+  <key>ProcessorType</key>
+  <integer>0</integer>
+  <key>ROM</key>
+  <data>ABCDEF==</data>
+  <key>SpoofVendor</key>
+  <true/>
+  <key>SystemMemoryStatus</key>
+  <string>Auto</string>
+  <key>SystemProductName</key>
+  <string>MacBookPro8,1</string>
+  <key>SystemSerialNumber</key>
+  <string>W00000000001</string>
+  <key>SystemUUID</key>
+  <string>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</string>
+</dict>
 ```
+</details>
 
 > [!IMPORTANT]
-> If you change your SMBIOS name for any reason `USBMap.kext` must be adjusted because it snapshots SMBIOS at the time of creation and depends on it. Open `USBMap.kext/Contents/Info.plist` in a plain text editor and find and replace all instances of `MacBookPro8,1` with SMBIOS name of your choice.
+> If you change your SMBIOS name for any reason `USBMap.kext` must be adjusted because it depends on it. Open `USBMap.kext/Contents/Info.plist` in a plain text editor and replace all instances of `MacBookPro8,1` with SMBIOS name of your choice.
 
 ### Firefox Not Starting on Monterey
 
-Add `ipc_control_port_options=0` to your OpenCore `boot-args` config section:
+Add `ipc_control_port_options=0` to `boot-args` config section:
 
 ```xml
-        <key>boot-args</key>
-        <string>-no_compat_check amfi_get_out_of_my_way=1 amfi=0x80 ipc_control_port_options=0</string>
+<key>boot-args</key>
+<string>-no_compat_check amfi_get_out_of_my_way=1 amfi=0x80 ipc_control_port_options=0</string>
 ```
+
+Enabling Broadcom Wireless
+--------------------------
+
+As already [mentioned](#opencore-for-legacy-probook), ProBook 4530s suffers from a dreaded Wi-Fi BIOS whitelist preventing you from changing wireless adapter to a native Broadcom card. Fortunately, there’s a two-step solution to this problem. First, a simple hardware mod must be performed on a card itself.
+
+### Hardware Mod
+
+You will need to mask certain PCB contacts with tiny pieces of kapton tape to prevent HP firmware from turning the Wi-Fi module off. Without this mod only Bluetooth side will work.
+
+![BCM94352HMB hardware hack](Resources/bcm94352hmb-whitelist-hack.jpg)
+
+> [!NOTE]
+> This guide assumes you are using Broadcom BCM94352HMB, which is the best wireless module you can put in your ProBook laptop. If you’ve got another compatible Broadcom adapter the pin out might be different. In that case you need to find a datasheet for your card and determine where equivalent contacts are located.
+
+### Configuration
+
+Remove Atheros wireless kexts entries from `config.plist`:
+
+  * `IOath3kfrmwr.kext`,
+  * `Legacy/IOath3kfrmwr.kext`,
+  * `IOath3kdevice.kext`,
+  * `HS80211Family.kext`,
+  * `AirPortAtheros40.kext`,
+  * `ProBookAtheros.kext`,
+  * `WifiLocFix.kext`.
+
+Finally, add the following kexts to `EFI/OC/Kexts`:
+
+  * `AirportBrcmFixup.kext` together with its plugins:
+      * `AirPortBrcmNIC_Injector.kext`,
+      * `AirPortBrcm4360_Injector.kext`,
+  * `BlueToolFixup.kext`,
+  * `BrcmBluetoothInjector.kext`,
+  * `BrcmFirmwareData.kext`
+  * `BrcmPatchRAM3.kext`.
+
+Copy and paste the following section where Atheros configuration was previously:
+
+<details>
+<summary><strong>Broadcom wireless config</strong></summary><br>
+
+```xml
+<dict>
+  <key>Arch</key>
+  <string>Any</string>
+  <key>BundlePath</key>
+  <string>AirportBrcmFixup.kext</string>
+  <key>Comment</key>
+  <string>AirportBrcmFixup.kext</string>
+  <key>Enabled</key>
+  <true/>
+  <key>ExecutablePath</key>
+  <string>Contents/MacOS/AirportBrcmFixup</string>
+  <key>MaxKernel</key>
+  <string></string>
+  <key>MinKernel</key>
+  <string></string>
+  <key>PlistPath</key>
+  <string>Contents/Info.plist</string>
+</dict>
+<dict>
+  <key>Arch</key>
+  <string>Any</string>
+  <key>BundlePath</key>
+  <string>AirportBrcmFixup.kext/Contents/PlugIns/AirPortBrcmNIC_Injector.kext</string>
+  <key>Comment</key>
+  <string>AirPortBrcmNIC_Injector.kext</string>
+  <key>Enabled</key>
+  <true/>
+  <key>ExecutablePath</key>
+  <string></string>
+  <key>MaxKernel</key>
+  <string></string>
+  <key>MinKernel</key>
+  <string>20.0.0</string>
+  <key>PlistPath</key>
+  <string>Contents/Info.plist</string>
+</dict>
+<dict>
+  <key>Arch</key>
+  <string>Any</string>
+  <key>BundlePath</key>
+  <string>AirportBrcmFixup.kext/Contents/PlugIns/AirPortBrcm4360_Injector.kext</string>
+  <key>Comment</key>
+  <string>AirPortBrcm4360_Injector.kext</string>
+  <key>Enabled</key>
+  <true/>
+  <key>ExecutablePath</key>
+  <string></string>
+  <key>MaxKernel</key>
+  <string>19.9.9</string>
+  <key>MinKernel</key>
+  <string></string>
+  <key>PlistPath</key>
+  <string>Contents/Info.plist</string>
+</dict>
+<dict>
+  <key>Arch</key>
+  <string>Any</string>
+  <key>BundlePath</key>
+  <string>BlueToolFixup.kext</string>
+  <key>Comment</key>
+  <string>BlueToolFixup.kext</string>
+  <key>Enabled</key>
+  <true/>
+  <key>ExecutablePath</key>
+  <string>Contents/MacOS/BlueToolFixup</string>
+  <key>MaxKernel</key>
+  <string></string>
+  <key>MinKernel</key>
+  <string>21.0.0</string>
+  <key>PlistPath</key>
+  <string>Contents/Info.plist</string>
+</dict>
+<dict>
+  <key>Arch</key>
+  <string>Any</string>
+  <key>BundlePath</key>
+  <string>BrcmBluetoothInjector.kext</string>
+  <key>Comment</key>
+  <string>BrcmBluetoothInjector.kext</string>
+  <key>Enabled</key>
+  <true/>
+  <key>ExecutablePath</key>
+  <string></string>
+  <key>MaxKernel</key>
+  <string>20.9.9</string>
+  <key>MinKernel</key>
+  <string>18.0.0</string>
+  <key>PlistPath</key>
+  <string>Contents/Info.plist</string>
+</dict>
+<dict>
+  <key>Arch</key>
+  <string>Any</string>
+  <key>BundlePath</key>
+  <string>BrcmFirmwareData.kext</string>
+  <key>Comment</key>
+  <string>BrcmFirmwareData.kext</string>
+  <key>Enabled</key>
+  <true/>
+  <key>ExecutablePath</key>
+  <string>Contents/MacOS/BrcmFirmwareData</string>
+  <key>MaxKernel</key>
+  <string></string>
+  <key>MinKernel</key>
+  <string>19.0.0</string>
+  <key>PlistPath</key>
+  <string>Contents/Info.plist</string>
+</dict>
+<dict>
+  <key>Arch</key>
+  <string>Any</string>
+  <key>BundlePath</key>
+  <string>BrcmPatchRAM3.kext</string>
+  <key>Comment</key>
+  <string>BrcmPatchRAM3.kext</string>
+  <key>Enabled</key>
+  <true/>
+  <key>ExecutablePath</key>
+  <string>Contents/MacOS/BrcmPatchRAM3</string>
+  <key>MaxKernel</key>
+  <string></string>
+  <key>MinKernel</key>
+  <string>19.0.0</string>
+  <key>PlistPath</key>
+  <string>Contents/Info.plist</string>
+</dict>
+```
+</details>
+
+For Mojave and earlier copy `BrcmPatchRAM2.kext` and `BrcmFirmwareRepo.kext` (not “Data”) to `/Library/Extensions`, and rebuild the kernel cache.
+
+> [!NOTE]
+> These two kexts cannot be injected from bootloader and must be installed manually to your system drive.
+
+Add Broadcom configuration parameters to `boot-args` under `NVRAM/Add/7C436110-AB2A-4BBB-A880-FE41995C9F82`:
+
+```xml
+<key>boot-args</key>
+<string>-no_compat_check amfi_get_out_of_my_way=1 amfi=0x80 brcmfx-driver=1</string>
+```
+
+Optional: add your country code with `brcmfx-country=US` parameter. In my experience this parameter is not needed and is actually harmful because adding it causes Wi-Fi to loose 5 GHz band networks.
+
+If you don‘t get Wi-Fi you can try to experiment with different values for `brcmfx-driver` parameter or your card might need a firmware uploader. Check out the [official docs](https://github.com/acidanthera/BrcmPatchRAM) for further assistance in configuration.
+
+### Disable 30s Series Wi-Fi Whitelist
+
+**For ProBook 4x30s series only:** enable Wi-Fi BIOS whitelist bypass EFI driver in `UEFI/Drivers`:
+
+<details>
+<summary><strong>Example</strong></summary><br>
+
+```xml
+      <dict>
+        <key>Arguments</key>
+        <string></string>
+        <key>Comment</key>
+        <string>ProBookWifiWhlistOff.efi</string>
+        <key>Enabled</key>
+        <true/>
+        <key>LoadEarly</key>
+        <false/>
+        <key>Path</key>
+        <string>ProBookWifiUnblock.efi</string>
+      </dict>
+```
+</details>
+
+> [!IMPORTANT]
+> **Do not use this module with any other laptop: doing so can brick your device!**
+
+The laptop firmware will still warn you about incompatible wireless card installed, but it would no longer be actually disabled, despite what the warning says (just skip it with <kbd>Enter</kbd>).
+
+Continue with [other post-install tasks](#configuring-tackpad).
 
 Credits
 -------
