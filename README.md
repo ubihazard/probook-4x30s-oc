@@ -339,32 +339,32 @@ Without proper CPU PM `AppleIntelCPUPowerManagement.kext` would cause kernel pan
     ```
     </details>
 
-If you’ve installed Monterey make sure `ASPP-Override.kext` is enabled too, because it is required to restore legacy CPU power management support which was at some point removed in Monterey:
+  * If you’ve installed Monterey make sure `ASPP-Override.kext` is enabled too, because it is required to restore legacy CPU power management support which was at some point removed in Monterey:
 
-<details>
-<summary><strong>Example</strong></summary><br>
+    <details>
+    <summary><strong>Example</strong></summary><br>
 
-```xml
-<dict>
-  <key>Arch</key>
-  <string>Any</string>
-  <key>BundlePath</key>
-  <string>ASPP-Override.kext</string>
-  <key>Comment</key>
-  <string>ASPP-Override.kext</string>
-  <key>Enabled</key>
-  <true/>
-  <key>ExecutablePath</key>
-  <string></string>
-  <key>MaxKernel</key>
-  <string></string>
-  <key>MinKernel</key>
-  <string>21.4.0</string>
-  <key>PlistPath</key>
-  <string>Contents/Info.plist</string>
-</dict>
-```
-</details>
+    ```xml
+    <dict>
+      <key>Arch</key>
+      <string>Any</string>
+      <key>BundlePath</key>
+      <string>ASPP-Override.kext</string>
+      <key>Comment</key>
+      <string>ASPP-Override.kext</string>
+      <key>Enabled</key>
+      <true/>
+      <key>ExecutablePath</key>
+      <string></string>
+      <key>MaxKernel</key>
+      <string></string>
+      <key>MinKernel</key>
+      <string>21.4.0</string>
+      <key>PlistPath</key>
+      <string>Contents/Info.plist</string>
+    </dict>
+    ```
+    </details>
 
 ### Disabling Dedicated GPU
 
