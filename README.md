@@ -753,7 +753,7 @@ Optional: add your country code with `brcmfx-country=US` parameter. In my experi
 
 If you don‘t get Wi-Fi you can try to experiment with different values for `brcmfx-driver` parameter or your card might need a firmware uploader. Check out the [official docs](https://github.com/acidanthera/BrcmPatchRAM) for further assistance in configuration.
 
-### Disable 30s Series Wi-Fi Whitelist
+### Defeating 30s Series Wi-Fi Whitelist
 
 **For ProBook 4x30s series only:** enable BIOS Wi-Fi whitelist bypass EFI driver in `UEFI/Drivers`:
 
