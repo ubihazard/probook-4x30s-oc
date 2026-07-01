@@ -976,7 +976,7 @@ Whatever your choice of card would be, it must be of *half-size mini PCIe* form 
 
 One of the coolest upgrades you can perform on ProBook 4530s is equipping it with higher quality full HD aftermarket LCD panel replacing ugly stock 1366x768 screen with poor color reproduction that it comes with. This upgrade is quite hard to perform as it requires full laptop disassembly, which is not easy at all on these old laptops, and you will also need a compatible dual-link LVDS LCD cable from 4730s, but the result is very much worth it. Some full HD screens with wider color gamut can completely transform how machine looks and feels.
 
-The details of this upgrade are beyond the scope of this guide but you can find all necessary information on relevant hackintosh forums. If you do manage to install full HD screen, don’t forget to adjust iGPU device properties to enable dual-link operation or you will experience broken image.
+The details of this upgrade are beyond the scope of this guide but you can find all necessary information on relevant hackintosh forums. If you do manage to install full HD screen, don’t forget to [adjust iGPU device properties](#hd-and-full-hd-screens) to enable dual-link operation or you will experience broken image.
 
 Once you are done with upgrades it’s time to [start the installation process](#installation).
 
