@@ -761,23 +761,23 @@ If you don‘t get Wi-Fi you can try to experiment with different values for `br
 <summary><strong>Example</strong></summary><br>
 
 ```xml
-      <dict>
-        <key>Arguments</key>
-        <string></string>
-        <key>Comment</key>
-        <string>ProBookWifiWhlistOff.efi</string>
-        <key>Enabled</key>
-        <true/>
-        <key>LoadEarly</key>
-        <false/>
-        <key>Path</key>
-        <string>ProBookWifiUnblock.efi</string>
-      </dict>
+<dict>
+  <key>Arguments</key>
+  <string></string>
+  <key>Comment</key>
+  <string>ProBookWifiWhlistOff.efi</string>
+  <key>Enabled</key>
+  <true/>
+  <key>LoadEarly</key>
+  <false/>
+  <key>Path</key>
+  <string>ProBookWifiUnblock.efi</string>
+</dict>
 ```
 </details>
 
 > [!IMPORTANT]
-> **Do not use this module with any other laptop: doing so can brick your device!**
+> **Do not use this module with any other laptop other than ProBook 30s series: doing so can brick your device!**
 
 The laptop firmware will still warn you about incompatible wireless card installed, but it would no longer be actually disabled, despite what the warning says (just skip it with <kbd>Enter</kbd>).
 
