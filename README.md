@@ -606,7 +606,7 @@ A pre-made trackpad configuration file with tap to click is [provided](/Library/
 
 The final step to setting up your new hackintosh laptop is generating unique serial number and system UUID. You can skip this step if you don‘t plan to use App store or connect with Apple, otherwise it is required to make iCloud or iMessage to work.
 
-First, you need to choose the Mac SMBIOS product name that resembles your hardware most closely. For this laptop model it would be `MacBookPro8,1`. If you opted to upgrade your ProBook with quad-core CPU (against [my advice](Guide/1.&#32;Upgrading&#32;Your&#32;ProBook.md#cpu)), `MacBookPro8,2` would be a preferred choice, but see a note below for USB port mapping adjustment. Now you can use `macserial` tool from OpenCore utilities to generate serials (`SystemSerialNumber` and `MLB`, or “motherboard serial number”):
+First, you need to choose the Mac SMBIOS product name that resembles your hardware most closely. For this laptop model it would be `MacBookPro8,1`. If you opted to upgrade your ProBook with quad-core CPU (against [my advice](Guide/1.&#32;Upgrading&#32;Your&#32;ProBook.md#cpu)), `MacBookPro8,2` would be a preferred choice, – but see a note below for USB port mapping adjustment. Now you can use `macserial` tool from OpenCore utilities to generate serials (`SystemSerialNumber` and `MLB`, or “motherboard serial number”):
 
 ```bash
 ./macserial -m 'MacBookPro8,1' -n 1
@@ -663,6 +663,8 @@ Now we can fill this information under `PlatformInfo/Generic`:
 </dict>
 ```
 </details>
+
+### USB Port Mapping and SMBIOS
 
 > [!IMPORTANT]
 > If you change your SMBIOS name for any reason `USBMap.kext` must be adjusted because it depends on it. Open `USBMap.kext/Contents/Info.plist` in a plain text editor and replace all instances of `MacBookPro8,1` with SMBIOS name of your choice.
