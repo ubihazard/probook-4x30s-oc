@@ -66,7 +66,7 @@ Or “kexts” are equivalent of “drivers” in Windows and are required for p
 
 All required kexts are already assembled in one place in the provided OpenCore [EFI folder](https://github.com/ubihazard/probook-4x30s-oc/releases/latest). Though you might need to disable some and enable others to adjust for your own laptop configuration. This is done during the [post-install](#post-install) stage.
 
-  * `Lilu.kext`: basic required kext
+  * `Lilu.kext`: basic kext required for patching
   * `WhateverGreen.kext`: graphics patches
   * `VirtualSMC.kext`: SMC emulation
   * `SMCProcessor.kext`: CPU support
