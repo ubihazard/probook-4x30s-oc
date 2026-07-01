@@ -7,7 +7,7 @@ Detailed instructions on how to install recent version of [macOS](https://en.wik
 ![macOS Installed on a ProBook 4530s](Resources/about-this-probook.png)
 
 > [!IMPORTANT]
-> There is a [newer guide](https://github.com/ubihazard/probook-4x40s-oc "macOS for ProBook 4x40s") for 40s series laptops with third generation Intel Ivy Bridge CPUs and Metal-capable graphics now available with much better support for modern macOS.
+> There is a [newer guide](https://github.com/ubihazard/probook-4x40s-oc "macOS for ProBook 4x40s") for 40s series laptops with third generation Intel Ivy Bridge CPUs and Metal-capable graphics now available with much better support for modern macOS. Some content was moved there to avoid duplication.
 
 > [!NOTE]
 > In the process some little adjustments for your particular laptop will need to be made because ProBooks shipped in many different configurations. Therefore it is highly recommended that you read the official OpenCore [install guide](https://dortania.github.io/OpenCore-Install-Guide/ "OpenCore install guide") first to get familiar with the process. That will make it much easier for you to adapt this guide as you progress.
@@ -785,7 +785,7 @@ Remove Atheros wireless kexts entries from `config.plist`:
   * `ProBookAtheros.kext`,
   * `WifiLocFix.kext`.
 
-Add the following kexts to `EFI/OC/Kexts` by copying them from [4x40s OC EFI folder](https://github.com/ubihazard/probook-4x40s-oc/releases/latest "40s series OpenCore EFI folder"):
+Download Broadcom wireless kexts from [4x40s EFI folder](https://github.com/ubihazard/probook-4x40s-oc/releases/latest "40s series OC EFI folder") and copy them to `EFI/OC/Kexts` on your system EFI partition:
 
   * `AirportBrcmFixup.kext` (includes plugins):
       * `AirPortBrcmNIC_Injector.kext`,
