@@ -7,19 +7,19 @@ Detailed instructions on how to install recent version of [macOS](https://en.wik
 ![macOS Installed on a ProBook 4530s](Resources/about-this-probook.png)
 
 > [!IMPORTANT]
-> An expanded [guide for 40s series laptops](https://github.com/ubihazard/probook-4x40s) with third generation Intel Ivy Bridge CPUs and Metal-capable graphics is now also available with much better support for modern macOS.
+> An [expanded guide](https://github.com/ubihazard/probook-4x40s-oc "macOS for ProBook 4x40s") for 40s series laptops with third generation Intel Ivy Bridge CPUs and Metal-capable graphics is now available with much better support for modern macOS.
 
 > [!NOTE]
-> Some little [adjustments](#restoring-power-management) for your particular laptop[^1] still need to be made because ProBooks shipped with different processors. Therefore it is highly recommended that you read the official [install guide](https://dortania.github.io/OpenCore-Install-Guide/ "OpenCore install guide") first to get familiar with the process. That will make it much easier for you to adapt this guide for your needs.
+> In the process some little adjustments for your particular laptop will need to be made because ProBooks shipped in many different configurations. Therefore it is highly recommended that you read the official OpenCore [install guide](https://dortania.github.io/OpenCore-Install-Guide/ "OpenCore install guide") first to get familiar with the process. That will make it much easier for you to adapt this guide as you progress.
 
-Also note that only models with integrated Intel HD 3000 graphics are supported by this guide. Laptops with AMD GPUs require additional steps to [turn their discrete GPU off](Guide/3.&#32;ACPI&#32;Patching.md#disabling-dedicated-gpu), which is unsupported in macOS.
+Also note that only models with integrated Intel HD 3000 graphics are supported by this guide. Laptops with AMD GPUs require additional steps to [turn their discrete GPU off](#disabling-dedicated-gpu), which is not supported by macOS.
 
-Despite effort was made to ensure all steps are as easy to follow and clear as possible, the process is not straightforward and a certain level of skill, experience with command line, patience, and ability to troubleshoot are a must. A complete OpenCore [EFI folder](https://github.com/ubihazard/probook-4x30s/releases/latest "Download") is available for your reference.
+Despite effort was made to ensure all steps are as easy to follow and clear as possible, the process is not straightforward and a certain level of skill, experience with command line, patience, and ability to troubleshoot are a must. A complete OpenCore [EFI folder](https://github.com/ubihazard/probook-4x30s-oc/releases/latest "Download") is available for your reference.
 
 Introduction
 ------------
 
-ProBook 4530s is an old laptop from Sandy Bridge era made by HP. With a handful of aftermarket upgrades it can still make a powerful machine for simple daily tasks. More importantly, even in stock condition it is fairly compatible with macOS. So this is what we are going to do – putting macOS on it by means of [OpenCore](https://github.com/acidanthera/OpenCorePkg) bootloader and a collection of kernel extensions made by talented individuals in hackintosh community.
+ProBook 4530s is an old laptop from Sandy Bridge era made by HP. With a handful of [aftermarket upgrades](Guide/1.&#32;Upgrading&#32;Your&#32;ProBook.md) it can still make a powerful machine for simple daily tasks. More importantly, even in stock condition it is fairly compatible with macOS. So this is what we are going to do – putting macOS on it by means of [OpenCore](https://github.com/acidanthera/OpenCorePkg) bootloader and a collection of [kernel extensions](#kernel-extensions) made by talented individuals from hackintosh community.
 
 So this is the configuration[^1] we are going to work with:
 
@@ -28,9 +28,9 @@ So this is the configuration[^1] we are going to work with:
 | **CPU**      | Intel Core i7-2640M
 | **GPU**      | Intel HD 3000
 | **RAM**      | 16 GB DDR3
-| **SSD**      | 512 GB
-| **Wireless** | Atheros AR9285
+| **Storage**  | 512 GB SATA SSD
 | **Ethernet** | Realtek RTL8111
+| **Wireless** | Atheros AR9285
 | **USB 3.0**  | NEC Renesas uPD720200
 | **Card reader** | JMicron JMB38X
 | **Optical drive** | HP DVD-RW AD-7740H
@@ -38,32 +38,152 @@ So this is the configuration[^1] we are going to work with:
 | **OpenCore** | [1.0.6-0cc8c81](https://github.com/ubihazard/OpenCorePkg-ProBook/releases/tag/v1.0.6-0cc8c81) for legacy ProBook
 | **OCLP** | [2.4.1](https://github.com/dortania/OpenCore-Legacy-Patcher/releases/tag/2.4.1)
 
-[^1]: Webcam works up to Mojave. USB 3.0 works up to Catalina. USB 2.0, Bluetooth and webcam need proper [USB port mapping](Guide/3.&#32;ACPI&#32;Patching.md#fixing-usb). SD card reader might have issues past Monterey.
+[^1]: Webcam works up to Mojave. USB 3.0 works up to Catalina. USB 2.0, Bluetooth and webcam need proper [USB port mapping](#fixing-usb). SD card reader might have issues past Monterey.
 
 Although this laptop is very old, macOS works surprisingly well on it with pretty much full compatibility. You can expect relatively smooth web browsing experience, word processing, and coding light projects in VS Code (nothing too demanding). Don‘t expect running XCode with iOS simulator on it though. It can also help you manage your iThings if you don‘t already have a Mac.
-
-The guide has been split into several pages for easier consumption. So head over to next section and [let‘s start by upgrading your laptop](Guide/1.&#32;Getting&#32;Ready.md).
 
 OpenCore for Legacy ProBook
 ---------------------------
 
-This guide now uses a [custom build](https://github.com/ubihazard/OpenCorePkg-ProBook/releases) of OpenCore put together by me specifically for use with legacy ProBook laptops. It includes two EFI modules usable for ProBook 4x30s: BIOS fan reset and BIOS Wi-Fi whitelist bypass.
+This guide now uses a [custom build](https://github.com/ubihazard/OpenCorePkg-ProBook/releases) of OpenCore put together by me specifically for use with legacy ProBook laptops. It includes two EFI modules for ProBook 4x30s: BIOS fan reset and BIOS Wi-Fi whitelist bypass.
 
-**Do not use these EFI modules with any other laptop other than ProBook 30s or 40s series. Doing so can brick your device!**
+  * `ProBookFanReset.efi` resets fan control from macOS back to automatic BIOS management. This needs to be done every time after using quiet fan patch to restore embedded controller state, and the best place to do it is during boot up.
 
-`ProBookFanReset.efi` is needed to reset fan control from macOS back to automatic BIOS control. It needs to be done every time after using quiet fan patch to restore embedded controller state, and the best place to do it is during boot up.
+  * `ProBookWifiUnblock.efi` is necessary if you plan to install a [non-whitelisted](#broadcom-wireless) (not approved by HP) Wi-Fi card in your ProBook 4x30s laptop. Thankfully, this module *is not needed* for 4x40s because in an unusual move by HP they did not cripple 40s series laptops with a BIOS Wi-Fi whitelist.
 
-`ProBookWifiUnblock.efi` is necessary if you plan to install a [non-whitelisted](Guide/5.&#32;Broadcom&#32;Wireless.md) (not approved by HP) Wi-Fi card in your ProBook 4x30s laptop. It *is not needed* for 4x40s because luckily, HP did not cripple 40s series laptops with a BIOS Wi-Fi whitelist (weird for HP).
-
-Kernel Extensions
------------------
-
-Or “kexts” are equivalent of “drivers” in Windows and are required for proper hardware support by macOS. Most of the needed kernel extensions are already included in macOS, but the nature of hackintosh requires additional kexts to be added for unsupported (natively) network cards and some card readers. There isn‘t much more to say here: all required kexts are already assembled in one place in the provided [EFI OpenCore folder](https://github.com/ubihazard/probook-4x30s/releases/latest). Though you might need to disable some and enable others to adjust for your particular system in `Kernel/Add` section of included `config.plist`. This is done in the [post-install](Guide/4.&#32;Post-install.md) stage.
+> [!IMPORTANT]
+> **Do not use these EFI modules with any other laptop other than ProBook 30s or 40s series. Doing so can brick your device!**
 
 Converting from Clover
 ----------------------
 
-Note that Clover and OpenCore don’t mix well together. In my experience a NVRAM reset is required when switching from Clover to OpenCore, or the kernel might panic with weird error message, – so make sure to perform it on your first OpenCore boot. The NVRAM reset can be performed from OpenCore boot screen: press space to reveal the corresponding menu entry.
+Note that Clover and OpenCore don’t mix well together. In my experience a NVRAM reset is required when switching from Clover to OpenCore, or the kernel might panic with weird error message during boot. If you’ve been using Clover previously, make sure to perform a NVRAM reset on your first OpenCore boot. This can be done from OpenCore boot menu screen: press space to reveal the corresponding hidden menu entry.
+
+Kernel Extensions
+-----------------
+
+Or “kexts” are equivalent of “drivers” in Windows and are required for proper hardware support by macOS. Most of the important kernel extensions come preloaded with operating system, but the nature of hackintosh requires additional kexts to be added for certain devices which aren’t natively supported by macOS because they aren’t found in actual Macs made by Apple, such as network cards, SD card readers, and trackpads in case of laptops.
+
+All required kexts are already assembled in one place in the provided OpenCore [EFI folder](https://github.com/ubihazard/probook-4x30s-oc/releases/latest). Though you might need to disable some and enable others to adjust for your own laptop configuration. This is done during the [post-install](#post-install) stage.
+
+Installation
+------------
+
+Follow the official Dortania install guide to [make bootable macOS USB installer](https://dortania.github.io/OpenCore-Install-Guide/installer-guide/). After creating USB installer mount its EFI partition and copy OpenCore files downloaded from [releases page](https://github.com/ubihazard/probook-4x30s-oc/releases/latest "Download"). Replace `config.plist` with `config-usb.plist`. It‘s a configuration variant modified specifically to use with macOS installer that disables some kexts which are useless during setup process, — Wi-Fi, Bluetooth, SD card reader, etc., — doesn’t modify SIP flags or mess with AMFI, enables verbose boot text messages so you can troubleshoot boot issues, and has a different SMBIOS Mac model which allows to install more recent macOS versions not supported natively, but supported by [OpenCore Legacy Patcher](https://github.com/dortania/OpenCore-Legacy-Patcher), – up to Monterey with the provided OpenCore configuration.
+
+### HD+ and Full HD Screens (on 15" Models)
+
+If you own a 4730s model ProBook with HD+ 1600x900 screen or replaced your 4530s stock LCD panel with full HD one, an additional iGPU device parameter must be added to enable proper functionality of your laptop screen. Add the following under `DeviceProperties/Add/PciRoot(0x0)/Pci(0x2,0x0)` section for both regular and USB version of `config.plist` before beginning setup process:
+
+```xml
+<key>AAPL00,DualLink</key>
+<data>AQAAAA==</data>
+```
+
+### Resetting Power Management
+
+Unless your ProBook already comes with Core i7-2640M, like mine, you need to disable CPU power management for your very first setup. This step is required for legacy Intel CPUs such as used in Sandy Bridge and Ivy Bridge ProBooks.
+
+  * Open `config.plist` copied to EFI partition on a USB drive. Disable the `SSDT-PM.aml` ACPI table: under `ACPI/Add` set `Enabled` to `false`.
+
+    <details>
+    <summary><strong>Example</strong></summary><br>
+    ```xml
+    <dict>
+      <key>Comment</key>
+      <string>Core i7-2640M power management</string>
+      <key>Enabled</key>
+      <false/>
+      <key>Path</key>
+      <string>SSDT-PM.aml</string>
+    </dict>
+    ```
+    </details>
+
+  * Drop OEM CPU tables: under `ACPI/Delete` set `Enabled` to `true`.
+
+    <details>
+    <summary><strong>Example</strong></summary><br>
+    ```xml
+    <key>Delete</key>
+    <array>
+      <dict>
+        <key>All</key>
+        <false/>
+        <key>Comment</key>
+        <string>Delete CpuPm</string>
+        <key>Enabled</key>
+        <true/>
+        <key>OemTableId</key>
+        <data>Q3B1UG0AAAA=</data>
+        <key>TableLength</key>
+        <integer>0</integer>
+        <key>TableSignature</key>
+        <data>U1NEVA==</data>
+      </dict>
+      <dict>
+        <key>All</key>
+        <false/>
+        <key>Comment</key>
+        <string>Delete Cpu0Ist</string>
+        <key>Enabled</key>
+        <true/>
+        <key>OemTableId</key>
+        <data>Q3B1MElzdAA=</data>
+        <key>TableLength</key>
+        <integer>0</integer>
+        <key>TableSignature</key>
+        <data>U1NEVA==</data>
+      </dict>
+    </array>
+    ```
+    </details>
+
+  * Enable `NullCPUPowerManagement.kext`: under `Kernel/Add` set `Enabled` to `true`.
+
+    <details>
+    <summary><strong>Example</strong></summary><br>
+    ```xml
+    <dict>
+      <key>Arch</key>
+      <string>Any</string>
+      <key>BundlePath</key>
+      <string>NullCPUPowerManagement.kext</string>
+      <key>Comment</key>
+      <string>NullCPUPowerManagement.kext</string>
+      <key>Enabled</key>
+      <true/>
+      <key>ExecutablePath</key>
+      <string>Contents/MacOS/NullCPUPowerManagement</string>
+      <key>MaxKernel</key>
+      <string></string>
+      <key>MinKernel</key>
+      <string></string>
+      <key>PlistPath</key>
+      <string>Contents/Info.plist</string>
+    </dict>
+    ```
+    </details>
+
+We will [re-enable](!) proper CPU power management in a post-install step later.
+
+### What macOS Version to Install
+
+A few notes on what macOS to choose for installation. Typically, the recommended macOS version to install is Big Sur. It is modern enough for everyday use and has decent software support, including modern browser (Firefox is recommended due to much longer older macOS support than Chrome).
+
+Mojave and everything older is *not recommended* due to being way too outdated and having no modern browser support making it difficult just to get on the Internet. Catalina and Mojave also aren‘t supported well by OpenCore Legacy Patcher (OCLP), which is required to restore legacy HD 3000 graphics acceleration.
+
+However, if you managed to find and swapped in a compatible Broadcom Wi-Fi card, you can bump installed macOS version to Monterey. The caveat is that support for Bluetooth on these cards (any compatible card you can install in this laptop) on Monterey is sketchy at best: Airdrop, Handoff, and certain Continuity features might not work at all, would work but with issues, or only in one direction (from iPhone to ProBook, but not the other way around).
+
+### Installing macOS Ventura
+
+macOS Ventura requires a CPU with AVX2 instructions which all Sandy Bridge and Ivy Bridge CPUs lack. (AVX2 becomes available since Haswell.) Thus, Monterey is the final version of macOS you can *technically* install on this laptop.
+
+Using [CryptexFixup](https://github.com/acidanthera/CryptexFixup) kext, which enables sort of AVX2 emulation, it is possible to install macOS Ventura (and even later macOS, all the way up to Sequoia). However, this isn‘t supported by this guide and is *not recommended*. macOS past Monterey increasingly rely high on Metal API in various places and bundled applications, and using non-metal GPU can be a real pain on such system. Also keep in mind that pretty much any third-party app designed to run on Ventura would expect AVX2 to be available and likely to experience random crashes due to lack thereof.
+
+So this, in my opinion, remains an option only for maniacs willing to accomplish just this task of “successfully” running Ventura on an unsupported Sandy Bridge system, – for bragging rights.
+
+Anyway, reboot your ProBook from created USB. During setup the machine will restart several times and if everything goes well (and it should) you will end up on macOS welcome screen. To finish setup we need to copy OpenCore files to your system EFI partition (so you can boot without USB) and fix power management. This time, however, keep the `config.plist` from the provided OpenCore [EFI folder](https://github.com/ubihazard/probook-4x30s-oc/releases/latest "Download"), not `config-usb.plist`. The next step requires you to have working internet connection so hook your laptop up with ethernet cable because Wi-Fi isn’t available yet.
 
 Credits
 -------
