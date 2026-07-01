@@ -637,7 +637,7 @@ A pre-made trackpad configuration file with tap to click is [provided](/Library/
 
 The final step to setting up your new hackintosh laptop is generating unique serial number and system UUID. You can skip this step if you don‘t plan to use App store or connect with Apple, otherwise it is required to make iCloud or iMessage to work.
 
-First, you need to choose the Mac SMBIOS product name that resembles your hardware most closely. For this laptop model it would be `MacBookPro8,1`. If you opted to upgrade your ProBook with quad-core CPU (against [my advice](#cpu)), `MacBookPro8,2` would be a preferred choice, – but see a note below for USB port mapping adjustment. Now you can use `macserial` tool from OpenCore utilities to generate serials (`SystemSerialNumber` and `MLB`, or “motherboard serial number”):
+First, you need to choose the Mac SMBIOS product name that resembles your hardware most closely. For this laptop model it would be `MacBookPro8,1`. If you opted to upgrade your ProBook with quad-core CPU (against [my advice](#processor)), `MacBookPro8,2` would be a preferred choice, – but see a note below for USB port mapping adjustment. Now you can use `macserial` tool from OpenCore utilities to generate serials (`SystemSerialNumber` and `MLB`, or “motherboard serial number”):
 
 ```bash
 ./macserial -m 'MacBookPro8,1' -n 1
@@ -993,15 +993,15 @@ Upgrading Your ProBook
 
 Before you begin it is recommended that you consider upgrading your ProBook as all of its off-the-shelf configurations are hopelessly outdated.
 
-### SSD
+### Storage
 
 Swapping the hard disk for a solid-state drive should be your first upgrade. This alone will massively increase performance and responsiveness of the whole system. Modern versions of macOS use APFS file system which is specifically designed for solid-state drives. Although you can install macOS on a HDD, the performance penalty would likely be too high. Install a minimum of 256 GB SATA SSD drive, preferably with DRAM cache. 128 GB can be enough for very light use. Larger drive will allow for multiple operating systems in a dual-boot configuration.
 
-### RAM
+### Memory
 
 It is highly recommended that you install at least 8 GB of RAM. This is the minimum amount required for macOS to operate smoothly. ProBooks based on Sandy Bridge CPUs use DDR3 RAM which, luckily, isn’t much affected by RAM crisis and can still be found relatively for cheap.
 
-### CPU
+### Processor
 
 Although not strictly required, changing your processor to at least Core i5 with Turbo Boost, in case if you are stuck with Core i3, is a worthy consideration. You would want to disassemble your laptop anyway to clean it and change thermal paste, so why not upgrade CPU in the process? My personal CPU recommendation, however, would be a dual-core Core i7, namely [2.8 GHz 2640M](https://ark.intel.com/content/www/us/en/ark/products/53464/intel-core-i72640m-processor-4m-cache-up-to-3-50-ghz.html "Core i7-2640M") or 2.7 GHz 2620M (whichever you can still find). I would advice against quad-core 2670QM and especially 2760QM or higher for several reasons. For one, your laptop‘s power adapter might no longer provide enough juice for the whole system. Then, ProBook‘s mainboard doesn‘t possess VRM strong enough to properly feed power hungry quad-core i7 CPUs with TDP of 45W. Lastly, the cooling system is simply inadequate for a quad-core CPU: having just one short heat pipe.
 
