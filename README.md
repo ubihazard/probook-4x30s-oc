@@ -69,11 +69,11 @@ All required kexts are already assembled in one place in the provided OpenCore [
 Installation
 ------------
 
-Follow the official Dortania install guide to [make bootable macOS USB installer](https://dortania.github.io/OpenCore-Install-Guide/installer-guide/). After creating USB installer mount its EFI partition and copy OpenCore files downloaded from [releases page](https://github.com/ubihazard/probook-4x30s-oc/releases/latest "Download"). Replace `config.plist` with `config-usb.plist`. It‘s a configuration variant modified specifically to use with macOS installer that disables some kexts which are useless during setup process, — Wi-Fi, Bluetooth, SD card reader, etc., — doesn’t modify SIP flags or mess with AMFI, enables verbose boot text messages so you can troubleshoot boot issues, and has a different SMBIOS Mac model which allows to install more recent macOS versions not supported natively, but supported by [OpenCore Legacy Patcher](https://github.com/dortania/OpenCore-Legacy-Patcher), – up to Monterey with the provided OpenCore configuration.
+Follow the official Dortania install guide to [make bootable macOS USB installer](https://dortania.github.io/OpenCore-Install-Guide/installer-guide/). After creating USB installer mount its EFI partition and copy OpenCore files downloaded from [releases page](https://github.com/ubihazard/probook-4x30s-oc/releases/latest "Download"). Replace `config.plist` with `config-usb.plist`. It‘s a configuration variant modified specifically to use with macOS installer that disables some kexts which are useless during setup process, — Wi-Fi, Bluetooth, SD card reader, etc., — doesn’t modify SIP flags or mess with AMFI, enables verbose boot text messages so you can troubleshoot boot issues, and has a different SMBIOS Mac model which allows to install more recent macOS versions not supported natively, but supported by [OpenCore Legacy Patcher](https://github.com/dortania/OpenCore-Legacy-Patcher) (OCLP), – up to Monterey with the provided OpenCore configuration.
 
-### HD+ and Full HD Screens (on 15" Models)
+### HD+ and Full HD Screens
 
-If you own a 4730s model ProBook with HD+ 1600x900 screen or replaced your 4530s stock LCD panel with full HD one, an additional iGPU device parameter must be added to enable proper functionality of your laptop screen. Add the following under `DeviceProperties/Add/PciRoot(0x0)/Pci(0x2,0x0)` section for both regular and USB version of `config.plist` before beginning setup process:
+If you own a 4730s model ProBook with HD+ 1600x900 screen or replaced your 4530s stock LCD panel with a full HD one, an additional iGPU device parameter must be set to enable proper operation of your laptop screen. Add the following under `DeviceProperties/Add/PciRoot(0x0)/Pci(0x2,0x0)` section for both regular and USB version of `config.plist` before beginning the setup process:
 
 ```xml
 <key>AAPL00,DualLink</key>
@@ -82,7 +82,7 @@ If you own a 4730s model ProBook with HD+ 1600x900 screen or replaced your 4530s
 
 ### Resetting Power Management
 
-Unless your ProBook already comes with Core i7-2640M, like mine, you need to disable CPU power management for your very first setup. This step is required for legacy Intel CPUs such as used in Sandy Bridge and Ivy Bridge ProBooks.
+Unless your ProBook already comes with a Core i7-2640M, like mine, you need to disable CPU power management for your very first setup. This step is required for legacy Intel CPUs such as used in Sandy Bridge and Ivy Bridge ProBooks.
 
   * Open `config.plist` copied to EFI partition on a USB drive. Disable the `SSDT-PM.aml` ACPI table: under `ACPI/Add` set `Enabled` to `false`.
 
@@ -165,13 +165,13 @@ Unless your ProBook already comes with Core i7-2640M, like mine, you need to dis
     ```
     </details>
 
-We will [re-enable](!) proper CPU power management in a post-install step later.
+We will [re-enable](#restoring-power-management) proper CPU power management during a post-install step later.
 
 ### What macOS Version to Install
 
-A few notes on what macOS to choose for installation. Typically, the recommended macOS version to install is Big Sur. It is modern enough for everyday use and has decent software support, including modern browser (Firefox is recommended due to much longer older macOS support than Chrome).
+A few notes on what macOS to choose for installation. Typically, the recommended macOS version to install is Big Sur. It is modern enough for everyday use and has decent software support, including modern browser (Firefox is recommended due to much longer support of older macOS than Chrome).
 
-Mojave and everything older is *not recommended* due to being way too outdated and having no modern browser support making it difficult just to get on the Internet. Catalina and Mojave also aren‘t supported well by OpenCore Legacy Patcher (OCLP), which is required to restore legacy HD 3000 graphics acceleration.
+Mojave and everything older is *not recommended* due to being way too outdated and having no modern browser support making it difficult just to get on the Internet. Catalina and Mojave also aren‘t supported well by OCLP, which is required to restore legacy HD 3000 graphics acceleration.
 
 However, if you managed to find and swapped in a compatible Broadcom Wi-Fi card, you can bump installed macOS version to Monterey. The caveat is that support for Bluetooth on these cards (any compatible card you can install in this laptop) on Monterey is sketchy at best: Airdrop, Handoff, and certain Continuity features might not work at all, would work but with issues, or only in one direction (from iPhone to ProBook, but not the other way around).
 
@@ -183,7 +183,165 @@ Using [CryptexFixup](https://github.com/acidanthera/CryptexFixup) kext, which en
 
 So this, in my opinion, remains an option only for maniacs willing to accomplish just this task of “successfully” running Ventura on an unsupported Sandy Bridge system, – for bragging rights.
 
-Anyway, reboot your ProBook from created USB. During setup the machine will restart several times and if everything goes well (and it should) you will end up on macOS welcome screen. To finish setup we need to copy OpenCore files to your system EFI partition (so you can boot without USB) and fix power management. This time, however, keep the `config.plist` from the provided OpenCore [EFI folder](https://github.com/ubihazard/probook-4x30s-oc/releases/latest "Download"), not `config-usb.plist`. The next step requires you to have working internet connection so hook your laptop up with ethernet cable because Wi-Fi isn’t available yet.
+Anyway, reboot your ProBook from created USB. During setup the machine will restart several times and if everything goes well (and it should) you will end up on macOS welcome screen. To finish setup we need to copy OpenCore files to your system EFI partition (so you can boot without USB) and fix power management. This time, however, keep the `config.plist` from the provided OpenCore [EFI folder](https://github.com/ubihazard/probook-4x30s-oc/releases/latest "Download"), not `config-usb.plist`. The next step requires you to have working internet connection so hook your laptop up with an ethernet cable because Wi-Fi isn’t available yet.
+
+ACPI Patching
+-------------
+
+ACPI patches, like kexts, are required for basic functionality of your ProBook in macOS. You can’t skip this section. Most ACPI patches for this laptop (and other ProBooks, EliteBooks, and ZBooks) were made by legendary [RehabMan](https://github.com/RehabMan/HP-ProBook-4x30s-DSDT-Patch) and then simply ported by me to work with OpenCore bootloader using his [patched DSDT](https://github.com/ubihazard/probook-4x40s-oc/ACPI/RehabMan/4x40s_IvyBridge.txt) and hot patch guide as sources. Other SSDTs are provided by Dortania in their [Sandy Bridge laptop guide](https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/sandy-bridge.html "Sandy Bridge laptop guide").
+
+These patches are compatible across all 30s series laptops regardless of configuration and can be used as is. What‘s left is restoring proper CPU power management (for exact processor installed in your ProBook) and ensure correct USB port mapping. If your laptop comes with discrete AMD GPU and you *don’t* want to turn it off in BIOS (to keep it available for other OSes), an additional DSDT patch is needed to turn it off exclusively in macOS.
+
+### Restoring Power Management
+
+Legacy CPU power management is enabled with the help of `SSDT-PM.aml` ACPI table. This table is specific to each CPU and because ProBooks came with different processors it has to be generated yourself.
+
+Without proper CPU PM `AppleIntelCPUPowerManagement.kext` would cause kernel panic at boot so `NullCPUPowerManagement.kext` is used (in USB `config.plist`) to overtake control from it temporarily.
+
+  * Follow the Dortania [guide](https://dortania.github.io/OpenCore-Post-Install/universal/pm.html#sandy-and-ivy-bridge-power-management) to create `SSDT-PM.aml` for the CPU installed in your laptop.
+
+  * Mount your EFI system partition:
+
+    ```bash
+    diskutil list
+    sudo diskutil mount diskXsY
+    ```
+
+    (Replace `X` and `Y` with your EFI disk identifier. It would probably be `disk0s1`.)
+
+  * Copy the `ssdt.aml` generated by [ssdtPRGen.sh](https://github.com/Piker-Alpha/ssdtPRGen.sh) script from Piker-Alpha to your EFI ACPI folder:
+
+    ```bash
+    cp ~/Library/ssdtPRGen/ssdt.aml /Volumes/EFI/EFI/OC/ACPI/SSDT-PM.aml
+    ```
+
+  * Re-enable CPU power management in `config.plist`: under `ACPI/Add` set `Enabled` to `true`.
+
+    <details>
+    <summary><strong>Example</strong></summary><br>
+    ```xml
+    <dict>
+      <key>Comment</key>
+      <string>SSDT-PM.aml</string>
+      <key>Enabled</key>
+      <true/>
+      <key>Path</key>
+      <string>SSDT-PM.aml</string>
+    </dict>
+    ```
+    </details>
+
+  * Restore OEM CPU tables: under `ACPI/Delete` set `Enabled` to `false`.
+
+    <details>
+    <summary><strong>Example</strong></summary><br>
+    ```xml
+    <key>Delete</key>
+    <array>
+      <dict>
+        <key>All</key>
+        <false/>
+        <key>Comment</key>
+        <string>Delete CpuPm</string>
+        <key>Enabled</key>
+        <false/>
+        <key>OemTableId</key>
+        <data>Q3B1UG0AAAA=</data>
+        <key>TableLength</key>
+        <integer>0</integer>
+        <key>TableSignature</key>
+        <data>U1NEVA==</data>
+      </dict>
+      <dict>
+        <key>All</key>
+        <false/>
+        <key>Comment</key>
+        <string>Delete Cpu0Ist</string>
+        <key>Enabled</key>
+        <false/>
+        <key>OemTableId</key>
+        <data>Q3B1MElzdAA=</data>
+        <key>TableLength</key>
+        <integer>0</integer>
+        <key>TableSignature</key>
+        <data>U1NEVA==</data>
+      </dict>
+    </array>
+    ```
+    </details>
+
+  * Disable `NullCPUPowerManagement.kext`: under `Kernel/Add` set `Enabled` to `false`.
+
+    <details>
+    <summary><strong>Example</strong></summary><br>
+    ```xml
+    <dict>
+      <key>Arch</key>
+      <string>Any</string>
+      <key>BundlePath</key>
+      <string>NullCPUPowerManagement.kext</string>
+      <key>Comment</key>
+      <string>NullCPUPowerManagement.kext</string>
+      <key>Enabled</key>
+      <false/>
+      <key>ExecutablePath</key>
+      <string>Contents/MacOS/NullCPUPowerManagement</string>
+      <key>MaxKernel</key>
+      <string></string>
+      <key>MinKernel</key>
+      <string></string>
+      <key>PlistPath</key>
+      <string>Contents/Info.plist</string>
+    </dict>
+    ```
+    </details>
+
+If you went with Monterey make sure `ASPP-Override.kext` is enabled too, because it is required to restore legacy CPU power management which was at some point removed in Monterey:
+
+<details>
+<summary><strong>Example</strong></summary><br>
+```xml
+<dict>
+  <key>Arch</key>
+  <string>Any</string>
+  <key>BundlePath</key>
+  <string>ASPP-Override.kext</string>
+  <key>Comment</key>
+  <string>ASPP-Override.kext</string>
+  <key>Enabled</key>
+  <true/>
+  <key>ExecutablePath</key>
+  <string></string>
+  <key>MaxKernel</key>
+  <string></string>
+  <key>MinKernel</key>
+  <string>21.4.0</string>
+  <key>PlistPath</key>
+  <string>Contents/Info.plist</string>
+</dict>
+```
+</details>
+
+### Disabling Dedicated GPU
+
+For laptop configurations with dedicated GPU soldered onto motherboard an additional step of disabling (or “turning off”) of this unsupported GPU is needed. Unfortunately, I did not have a 30s series laptop with dGPU on hand, so I can’t provide direct instructions for ProBook 4530s exactly. I did, however, have an Ivy Bridge 4540s with Radeon dGPU, and because it is very similar with 4530s in terms of ACPI configuration, you can grab my [dGPU off patch](https://github.com/ubihazard/probook-4x40s-oc/Guide/Disabling&#32;Radeon.md) for 4540s and adapt it for 4530s quite easily.
+
+Alternatively, `-wegnoegpu` [WhateverGreen boot argument](https://github.com/acidanthera/WhateverGreen "WhateverGreen configuration") can be used temporarily in `config.plist` while you are working on a real patch:
+
+```xml
+<key>boot-args</key>
+<string>... -wegnoegpu</string>
+```
+
+Notice that, just like I said, this is *not* a proper patch because it does not actually turn off the discrete GPU so it doesn’t consume power, – it merely hides it from macOS so it doesn’t cause conflict and boot issues. And power consumption is very important, especially in a laptop. A GPU without drivers loaded for it will run with no power saving features enabled and will consume lots of power and overheat for no reason.
+
+Or simply disable dGPU in your laptop‘s BIOS, – although in this case it would obviously also no longer be available in other operating systems, not just macOS. On the other hand this approach is definitely the easiest.
+
+### Fixing USB
+
+The USB port map kext in this repo is for ProBook 4530s models with USB 3.0 port. If you have a different mainboard (such as with all USB 2.0 ports only) or if port mapping doesn‘t match for some other reason, you would have to re-map your USB ports by means of creating your own version of `USBMap.kext` while still booted from USB. This procedure is fully covered in Dortania [guide](https://dortania.github.io/OpenCore-Post-Install/usb/ "USB port mapping guide") and I won‘t be duplicating it here. Using @corpnewt [USBMap](https://github.com/corpnewt/USBMap) is the route you want to take. Otherwise, jump to the next step.
+
+We still got some [post-install tasks](4.\ Post-install.md) to perform to make the system usable.
 
 Credits
 -------
