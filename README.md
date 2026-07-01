@@ -592,7 +592,7 @@ Remove Atheros wireless kexts entries from `config.plist`:
   * `ProBookAtheros.kext`,
   * `WifiLocFix.kext`.
 
-Finally, add the following kexts to `EFI/OC/Kexts`:
+Add the following kexts to `EFI/OC/Kexts` by copying them from [4x40s OC EFI folder](https://github.com/ubihazard/probook-4x40s-oc/releases/latest "40s series OpenCore EFI folder"):
 
   * `AirportBrcmFixup.kext` together with its plugins:
       * `AirPortBrcmNIC_Injector.kext`,
