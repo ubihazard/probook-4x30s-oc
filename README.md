@@ -338,7 +338,7 @@ Alternatively, `-wegnoegpu` [WhateverGreen boot argument](https://github.com/aci
 <string>... -wegnoegpu</string>
 ```
 
-Notice that, just like I said, this is *not* a proper patch because it does not actually turn off the discrete GPU so it doesn’t consume power, – it merely hides it from macOS so it doesn’t cause conflict and boot issues. And power consumption is very important, especially in a laptop. A GPU without drivers loaded for it will run with no power saving features enabled and will consume lots of power and overheat for no reason.
+Notice that this is *not* a proper patch because it does not actually turn the discrete GPU off so it doesn’t consume power, – it merely hides it from macOS so it doesn’t cause conflict and boot issues. And power consumption is very important, especially in a laptop. A GPU without drivers loaded for it will run with no power saving features enabled and will consume lots of power and overheat for no reason.
 
 Or simply disable dGPU in your laptop‘s BIOS, – although in this case it would obviously also no longer be available in other operating systems, not just macOS. On the other hand this approach is definitely the easiest.
 
@@ -448,7 +448,7 @@ By default Atheros wireless is already configured in `config.plist`. You can ver
 ```
 </details>
 
-Open `WifiLocFix.kext/Contents/Info.plist` in a plain text editor and change the country code (`US`) and locale (`FCC` or `ETSI` for Europe):
+Optional: open `WifiLocFix.kext/Contents/Info.plist` in a plain text editor and change the country code (`US`) and locale (`FCC` or `ETSI` for Europe):
 
 ```xml
 <dict>
