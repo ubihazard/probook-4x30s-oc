@@ -32,8 +32,8 @@ So this is the configuration[^1] we are going to work with:
 | **Ethernet** | Realtek RTL8111
 | **Wireless** | Atheros AR9285
 | **USB 3.0**  | NEC Renesas uPD720200
-| **Card reader** | JMicron JMB38X
-| **Optical drive** | HP DVD-RW AD-7740H
+| **Card Reader** | JMicron JMB38X
+| **Optical Drive** | HP DVD-RW AD-7740H
 | **macOS**    | Monterey 12.7.6
 | **OpenCore** | [1.0.6-0cc8c81](https://github.com/ubihazard/OpenCorePkg-ProBook/releases/tag/v1.0.6-0cc8c81) for legacy ProBook
 | **OCLP** | [2.4.1](https://github.com/dortania/OpenCore-Legacy-Patcher/releases/tag/2.4.1)
@@ -999,7 +999,7 @@ Swapping the hard disk for a solid-state drive should be your first upgrade. Thi
 
 ### RAM
 
-It is highly recommended that you install at least 8 GB of RAM. This is the minimum amount required for macOS to operate smoothly. ProBooks based on Sandy Bridge CPUs use DDR3 RAM which, thankfully, isn’t much affected by RAM crisis and can still be found for cheap.
+It is highly recommended that you install at least 8 GB of RAM. This is the minimum amount required for macOS to operate smoothly. ProBooks based on Sandy Bridge CPUs use DDR3 RAM which, luckily, isn’t much affected by RAM crisis and can still be found relatively for cheap.
 
 ### CPU
 
