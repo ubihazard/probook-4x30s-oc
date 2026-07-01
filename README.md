@@ -755,7 +755,7 @@ If you don‘t get Wi-Fi you can try to experiment with different values for `br
 
 ### Defeating 30s Series Wi-Fi Whitelist
 
-**For ProBook 4x30s series only:** enable BIOS Wi-Fi whitelist bypass EFI driver in `UEFI/Drivers`:
+Enable BIOS Wi-Fi whitelist bypass EFI driver in `UEFI/Drivers`:
 
 <details>
 <summary><strong>Example</strong></summary><br>
