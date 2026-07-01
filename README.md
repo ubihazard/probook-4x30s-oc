@@ -353,7 +353,7 @@ The USB port map kext in this repo is for ProBook 4530s models with USB 3.0 port
 Post-install
 ------------
 
-We still got stuff to do to make the system usable. Unless you decided to install very old macOS version for some reason, e.g. High Sierra, you’d be stuck without hardware graphics acceleration and, as a result, very slow and unusable user interface. This and other stuff, like Wi-Fi and Bluetooth, is fixed in this step.
+We still got stuff to do to make the system usable. Unless you decided to install very old macOS version for some reason, e.g. High Sierra, you’d be stuck without hardware graphics acceleration and, as a result, very slow and unusable user interface. This and other stuff, like Wi-Fi and Bluetooth, is fixed here.
 
 ### Quick Note on APFS
 
