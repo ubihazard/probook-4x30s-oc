@@ -2,4 +2,5 @@ Resources
 EFI/BOOT
 EFI/OC/*
 !EFI/OC/*.plist
+*.zip
 *.sh
