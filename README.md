@@ -12,7 +12,7 @@ Detailed instructions on how to install recent version of [macOS](https://en.wik
 > [!NOTE]
 > In the process certain adjustments for your particular laptop will need to be made because ProBooks shipped in many different configurations. Therefore it is highly recommended that you read the official OpenCore [install guide](https://dortania.github.io/OpenCore-Install-Guide/ "OpenCore install guide") first to get familiar with the process. This will make it much easier for you to follow instructions and adapt them for you needs.
 
-Also note that only models with integrated Intel HD 3000 graphics are supported by this guide. Laptops with AMD GPUs require additional steps to [turn their discrete GPU off](#disabling-dedicated-gpu), which is not supported by macOS.
+Also note that only models with integrated Intel HD 3000 graphics are supported by this guide. Laptops with Radeon GPU require additional steps to [turn discrete GPU off](#disabling-dedicated-gpu) because it is not supported by macOS.
 
 Despite effort was made to ensure all steps are as easy to follow and clear as possible, the process is not straightforward and a certain level of skill, experience with command line, patience, and ability to troubleshoot are a must. A complete OpenCore [EFI folder](https://github.com/ubihazard/probook-4x30s-oc/releases/latest "Download") is available for your reference.
 
