@@ -780,7 +780,7 @@ Enable the `ACPIPoller.kext`:
 ```
 </details>
 
-Apply the custom fan curve:
+Apply the custom fan curve with `SSDT-FANUBI.aml`:
 
 ```xml
 <dict>
@@ -795,7 +795,7 @@ Apply the custom fan curve:
 
 There are several fan behaviors available for choice:
 
-  * `SSDT-FANREAD.aml`: Fan readings only. Not very useful because there isn’t monitoring software which supports it anymore.
+  * `SSDT-FANREAD.aml`: Readings only, useless because there is no monitoring software which supports it.
   * `SSDT-FANORIG.aml`: Copy the default behavior.
   * `SSDT-FANQ.aml`: Original quiet fan patch by RehabMan.
   * `SSDT-FANRM.aml`: Alternative version by RehabMan.
