@@ -10,7 +10,7 @@ Detailed instructions on how to install recent version of [macOS](https://en.wik
 > There is a [newer guide](https://github.com/ubihazard/probook-4x40s-oc "macOS for ProBook 4x40s") for 40s series laptops with third generation Intel Ivy Bridge CPUs and Metal-capable graphics now available with much better support for modern macOS. Some content was moved there to avoid duplication.
 
 > [!NOTE]
-> In the process some little adjustments for your particular laptop will need to be made because ProBooks shipped in many different configurations. Therefore it is highly recommended that you read the official OpenCore [install guide](https://dortania.github.io/OpenCore-Install-Guide/ "OpenCore install guide") first to get familiar with the process. That will make it much easier for you to adapt this guide as you progress.
+> In the process certain adjustments for your particular laptop will need to be made because ProBooks shipped in many different configurations. Therefore it is highly recommended that you read the official OpenCore [install guide](https://dortania.github.io/OpenCore-Install-Guide/ "OpenCore install guide") first to get familiar with the process. This will make it much easier for you to follow instructions and adapt them for you needs.
 
 Also note that only models with integrated Intel HD 3000 graphics are supported by this guide. Laptops with AMD GPUs require additional steps to [turn their discrete GPU off](#disabling-dedicated-gpu), which is not supported by macOS.
 
@@ -35,7 +35,7 @@ So this is the configuration[^1] we are going to work with:
 | **Card Reader** | JMicron JMB38X
 | **Optical Drive** | HP DVD-RW AD-7740H
 | **macOS**    | Monterey 12.7.6
-| **OpenCore** | [1.0.6-0cc8c81](https://github.com/ubihazard/OpenCorePkg-ProBook/releases/tag/v1.0.6-0cc8c81) for legacy ProBook
+| **OpenCore** | [1.0.6-0cc8c81](https://github.com/ubihazard/OpenCorePkg-ProBook-Legacy/releases/tag/v1.0.6-0cc8c81) for legacy ProBook
 | **OCLP** | [2.4.1](https://github.com/dortania/OpenCore-Legacy-Patcher/releases/tag/2.4.1)
 
 [^1]: Webcam works up to Mojave. USB 3.0 works up to Catalina. USB 2.0, Bluetooth and webcam need proper [USB port mapping](#fixing-usb). SD card reader might have issues past Monterey.
@@ -45,7 +45,7 @@ Although this laptop is very old, macOS works surprisingly well on it with prett
 OpenCore for Legacy ProBook
 ---------------------------
 
-This guide now uses a [custom build](https://github.com/ubihazard/OpenCorePkg-ProBook/releases) of OpenCore put together by me specifically for use with legacy ProBook laptops. It includes two EFI modules for ProBook 4x30s: BIOS fan reset and BIOS Wi-Fi whitelist bypass.
+This guide now uses a [custom build](https://github.com/ubihazard/OpenCorePkg-ProBook-Legacy/releases) of OpenCore put together by me specifically for use with legacy ProBook laptops. It includes two EFI modules for ProBook 4x30s: BIOS fan reset and BIOS Wi-Fi whitelist bypass.
 
   * `ProBookFanReset.efi` resets fan control from macOS back to automatic BIOS management. This needs to be done every time after using quiet fan patch to restore embedded controller state, and the best place to do it is during boot up.
 
@@ -64,7 +64,7 @@ Kernel Extensions
 
 Or “kexts” are equivalent of “drivers” in Windows and are required for proper hardware support by macOS. Most of the important kernel extensions come preloaded with operating system, but the nature of hackintosh requires additional kexts to be added for certain devices which aren’t natively supported by macOS because they aren’t found in actual Macs made by Apple, such as network cards, SD card readers, and trackpads in case of laptops.
 
-All required kexts are already assembled in one place in the provided OpenCore [EFI folder](https://github.com/ubihazard/probook-4x30s-oc/releases/latest). Though you might need to disable some and enable others to adjust for your own laptop configuration. This is done during the [post-install](#post-install) stage.
+All required kexts are already assembled in one place in the provided OpenCore [EFI folder](https://github.com/ubihazard/probook-4x30s-oc/releases/latest).
 
   * `Lilu.kext` [1.7.1]: Basic kext required for patching
   * `ECEnabler.kext` [1.0.2]: Laptop battery patches
@@ -97,14 +97,16 @@ All required kexts are already assembled in one place in the provided OpenCore [
   * `NoTouchID.kext`: Disable Touch ID
   * `SimpleMSR.kext`: Fix BD PROCHOT due to lack of working battery
 
+We will be enabling some and disabling others during the [post-install](#post-install) stage to adjust for your own laptop configuration.
+
 Installation
 ------------
 
-Follow the official Dortania install guide to [make bootable macOS USB installer](https://dortania.github.io/OpenCore-Install-Guide/installer-guide/). After creating USB installer mount its EFI partition and copy OpenCore files downloaded from [releases page](https://github.com/ubihazard/probook-4x30s-oc/releases/latest "Download"). Replace `config.plist` with `config-usb.plist`. It‘s a configuration variant modified specifically to use with macOS installer that disables some kexts which are useless during setup process (Wi-Fi, Bluetooth, SD card reader, etc.), doesn’t modify SIP flags or mess with AMFI, enables verbose boot text messages so you can troubleshoot boot issues, and has a different SMBIOS Mac model which allows to install more recent macOS versions which aren’t supported natively, but supported by [OpenCore Legacy Patcher](https://github.com/dortania/OpenCore-Legacy-Patcher) (OCLP), – up to Monterey with the provided OpenCore configuration.
+Follow the official Dortania install guide to [make bootable macOS USB installer](https://dortania.github.io/OpenCore-Install-Guide/installer-guide/). After creating USB installer mount its EFI partition and copy OpenCore files downloaded from [releases page](https://github.com/ubihazard/probook-4x30s-oc/releases/latest "Download") replacing `config.plist` with `config-usb.plist`. It‘s a configuration variant modified specifically for use with macOS installer that disables some kexts which are useless during setup process (Wi-Fi, Bluetooth, SD card reader, etc.), doesn’t modify SIP flags or mess with AMFI, enables verbose boot text messages so you can troubleshoot boot issues, and has a different SMBIOS Mac model which allows to install more recent macOS versions which aren’t supported natively, but supported by [OpenCore Legacy Patcher](https://github.com/dortania/OpenCore-Legacy-Patcher) (OCLP), – up to Monterey with the provided OpenCore configuration.
 
 ### HD+ and Full HD Screens
 
-If you own a 4730s model ProBook with HD+ 1600x900 screen or replaced your 4530s stock LCD panel with a full HD one, an additional iGPU device parameter must be set to enable proper operation of your laptop screen. Add the following under `DeviceProperties/Add/PciRoot(0x0)/Pci(0x2,0x0)` section for both regular and USB version of `config.plist` before beginning the setup process:
+If you own a 4730s model ProBook with HD+ 1600x900 screen or replaced your 4530s stock LCD panel with a full HD one, an additional iGPU device parameter must be set to enable proper operation of your laptop screen. Add the following under `DeviceProperties/Add/PciRoot(0x0)/Pci(0x2,0x0)` section for both regular and USB version of `config.plist` before starting the setup process:
 
 ```xml
 <key>AAPL00,DualLink</key>
@@ -115,7 +117,7 @@ If you own a 4730s model ProBook with HD+ 1600x900 screen or replaced your 4530s
 
 Unless your ProBook already comes with a Core i7-2640M, like mine, you need to disable CPU power management for your very first setup. This step is required for legacy Intel CPUs used in Sandy Bridge and Ivy Bridge era ProBooks.
 
-  * Open `config.plist` copied to EFI partition on a USB drive. Disable the `SSDT-PM.aml` ACPI table: under `ACPI/Add` set `Enabled` to `false`.
+  * Open `config.plist` copied to EFI partition on a USB drive. Disable the `SSDT-PM.aml` ACPI table under `ACPI/Add`, set `Enabled` to `false`.
 
     <details>
     <summary><strong>Example</strong></summary><br>
@@ -132,7 +134,7 @@ Unless your ProBook already comes with a Core i7-2640M, like mine, you need to d
     ```
     </details>
 
-  * Drop OEM CPU tables: under `ACPI/Delete` set `Enabled` to `true`.
+  * Drop `CpuPm` and `Cpu0Ist` OEM CPU tables under `ACPI/Delete`, set `Enabled` to `true`.
 
     <details>
     <summary><strong>Example</strong></summary><br>
@@ -172,7 +174,7 @@ Unless your ProBook already comes with a Core i7-2640M, like mine, you need to d
     ```
     </details>
 
-  * Enable `NullCPUPowerManagement.kext`: under `Kernel/Add` set `Enabled` to `true`.
+  * Enable `NullCPUPowerManagement.kext` under `Kernel/Add`, set `Enabled` to `true`.
 
     <details>
     <summary><strong>Example</strong></summary><br>
@@ -219,7 +221,7 @@ Using [CryptexFixup](https://github.com/acidanthera/CryptexFixup) kext, which en
 
 So this, in my opinion, remains an option only for maniacs willing to accomplish just this task of “successfully” running Ventura on an unsupported Sandy Bridge system, – for bragging rights.
 
-If you are bold enough to go this route, you can try adapt my [40s series guide](https://github.com/ubihazard/probook-4x40s-oc) for Ivy Bridge ProBooks to Sandy Bridge, but don’t expect much success or pleasant experience.
+If you are bold enough to go this route, you can refer to my [40s series guide](https://github.com/ubihazard/probook-4x40s-oc) for additional kexts and configuration changes, but don’t expect much success or pleasant experience.
 
 ### Running the Installer
 
@@ -228,15 +230,13 @@ Anyway, reboot your ProBook from the USB installer. During setup the machine wil
 ACPI Patching
 -------------
 
-ACPI patches, like kexts, are required for basic functionality of your ProBook in macOS. You can’t skip this section. Most ACPI patches for this laptop (and other ProBooks, EliteBooks, and ZBooks) were made by legendary [RehabMan](https://github.com/RehabMan/HP-ProBook-4x30s-DSDT-Patch) and then simply ported by me to work with OpenCore bootloader using his [patched DSDT](https://github.com/ubihazard/probook-4x40s-oc/ACPI/RehabMan/4x40s_IvyBridge.txt) and hot patch guide as sources. Other SSDTs are provided by Dortania in their [Sandy Bridge laptop guide](https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/sandy-bridge.html "Sandy Bridge laptop guide").
+ACPI patches, like kexts, are required for basic functionality of your ProBook in macOS. Most ACPI patches for this laptop (and other ProBooks, EliteBooks, and ZBooks) were made by legendary [RehabMan](https://github.com/RehabMan/HP-ProBook-4x30s-DSDT-Patch) and then simply ported by me to work with OpenCore bootloader using his [patched DSDT](https://github.com/ubihazard/probook-4x40s-oc/ACPI/RehabMan/4x40s_IvyBridge.txt) and hot patch guide as sources. Other SSDTs are provided by Dortania in their [Sandy Bridge laptop guide](https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/sandy-bridge.html "Sandy Bridge laptop guide").
 
 These patches are compatible across all 30s series laptops regardless of configuration and can be used as is. What‘s left is restoring proper CPU power management (for exact processor installed in your ProBook) and ensure correct USB port mapping. If your laptop comes with discrete AMD GPU and you *don’t* want to turn it off in BIOS (to keep it available for other OSes), an additional DSDT patch is needed to turn it off exclusively in macOS.
 
 ### Restoring Power Management
 
-Legacy CPU power management is enabled with the help of `SSDT-PM.aml` ACPI table. This table is specific to each CPU and because ProBooks came with different processors it has to be generated yourself.
-
-Without proper CPU PM `AppleIntelCPUPowerManagement.kext` would cause kernel panic at boot so `NullCPUPowerManagement.kext` is used (in USB `config.plist`) to overtake control from it temporarily.
+Without proper CPU PM `AppleIntelCPUPowerManagement.kext` would cause kernel panic at boot so `NullCPUPowerManagement.kext` is used (in USB `config.plist`) to overtake control from it temporarily. Legacy CPU power management is enabled with the help of `SSDT-PM.aml` ACPI table. This table is specific to each CPU and has to be generated manually.
 
   * Follow the Dortania [guide](https://dortania.github.io/OpenCore-Post-Install/universal/pm.html#sandy-and-ivy-bridge-power-management) to create PM table for the CPU installed in your laptop.
 
@@ -339,7 +339,7 @@ Without proper CPU PM `AppleIntelCPUPowerManagement.kext` would cause kernel pan
     ```
     </details>
 
-  * If you’ve installed Monterey make sure `ASPP-Override.kext` is enabled too, because it is required to restore legacy CPU power management support which was at some point removed in Monterey:
+  * If you’ve installed Monterey make sure `ASPP-Override.kext` is enabled too. It is required to restore legacy CPU power management support which was at some point removed in Monterey:
 
     <details>
     <summary><strong>Example</strong></summary><br>
@@ -383,12 +383,12 @@ Or simply disable dGPU in your laptop‘s BIOS, – although in this case it wou
 
 ### Fixing USB
 
-The USB port map kext in this repo is for ProBook 4530s models with USB 3.0 port. If you have a different mainboard (such as with all USB 2.0 ports only) or if port mapping doesn‘t match for some other reason, you would have to re-map your USB ports by means of creating your own version of `USBMap.kext` while still booted from USB. This procedure is fully covered in Dortania [guide](https://dortania.github.io/OpenCore-Post-Install/usb/ "USB port mapping guide") and I won‘t be duplicating it here. [USBMap](https://github.com/corpnewt/USBMap) is the tool you want to utilize. Otherwise, jump to the next step.
+The USB port map kext in this repo is for ProBook 4530s models with USB 3.0 port. If you have a different mainboard (such as with all USB 2.0 ports only) or if port mapping doesn‘t match for some other reason, you would have to re-map your USB ports by means of creating your own version of `USBMap.kext` while still booted from USB. This procedure is fully covered in Dortania [guide](https://dortania.github.io/OpenCore-Post-Install/usb/ "USB port mapping guide") and I won‘t be duplicating it here. In short, use [USBMap](https://github.com/corpnewt/USBMap).
 
 Post-install
 ------------
 
-We still got stuff to do to make the system usable. Unless you decided to install very old macOS version for some reason, e.g. High Sierra, you’d be stuck without hardware graphics acceleration and, as a result, very slow and unusable user interface. This and other stuff, like Wi-Fi and Bluetooth, is fixed here.
+We still got stuff to do to make the system usable. Unless you decided to install very old macOS version for some reason, e.g. High Sierra, you’d be stuck without hardware graphics acceleration and, as a result, very slow and unusable user interface. This and other things, like Wi-Fi and Bluetooth, is fixed here.
 
 ### Quick Note on APFS
 
@@ -396,7 +396,7 @@ OpenCore from the provided EFI folder will load any APFS driver available. This 
 
 ### Disabling SIP and AMFI
 
-Due to extensive modifications required to support this laptop on modern macOS it is better to disable both SIP and AMFI right away in `NVRAM/Add/7C436110-AB2A-4BBB-A880-FE41995C9F82` (the configured value is `0x803`):
+Due to extensive modifications required to support this laptop on modern macOS it is required to disable SIP in `NVRAM/Add/7C436110-AB2A-4BBB-A880-FE41995C9F82` (the configured value is `0x803`):
 
 ```xml
 <key>csr-active-config</key>
@@ -416,7 +416,7 @@ These modifications are already done in the provided `config.plist`, I’m just 
 
 One of the first [post-installation](https://dortania.github.io/OpenCore-Post-Install/ "Post-installation guide") tasks you will have to perform, unless you decided to stick with High Sierra, is restoring graphics acceleration along with native desktop resolution.
 
-Intel HD 3000 doesn‘t support Metal graphics acceleration API used by macOS since El Capitan. And since Mojave, HD 3000 itself isn‘t supported at all: you need to use [OpenCore Legacy Patcher](https://github.com/dortania/OpenCore-Legacy-Patcher "OCLP") to install patched kexts that restore graphics acceleration and work-around lack of Metal requirement.
+Intel HD 3000 doesn‘t support Metal graphics acceleration API available in macOS since El Capitan. And since Mojave, HD 3000 itself isn‘t supported at all: you need to use [OpenCore Legacy Patcher](https://github.com/dortania/OpenCore-Legacy-Patcher "OCLP") to install patched kexts and frameworks that restore graphics acceleration and work-around lack of Metal requirement.
 
 Reboot without USB installer: this is important because USB config doesn’t use proper SMBIOS model and doesn’t disable SIP and AMFI required for patcher to work. Download OCLP and allow it to install root patches. Reboot one more time and you should be greeted by a proper desktop in glorious native resolution.
 
@@ -641,13 +641,16 @@ A pre-made trackpad configuration file with tap to click is [provided](/Library/
 
 The final step to setting up your new hackintosh laptop is generating unique serial number and system UUID. You can skip this step if you don‘t plan to use App store or connect with Apple, otherwise it is required to make iCloud or iMessage to work.
 
-First, you need to choose the Mac SMBIOS product name that resembles your hardware most closely. For this laptop model it would be `MacBookPro8,1`. If you opted to upgrade your ProBook with quad-core CPU (against [my advice](#processor)), `MacBookPro8,2` would be a preferred choice, – but see a note below for USB port mapping adjustment. Now you can use `macserial` tool from OpenCore utilities to generate serials (`SystemSerialNumber` and `MLB`, or “motherboard serial number”):
+> [!IMPORTANT]
+> If you don‘t own any real Apple product, such as an iPhone or iPad, registering in iServices with a hackintosh system would likely trigger a security check instantly putting your new account on hold. It is recommended to keep iCloud disabled and limit your Apple interactions to App Store only.
+
+First, you need to choose the Mac SMBIOS product name that resembles your hardware most closely. For this laptop model it would be `MacBookPro8,1`. If you opted to upgrade your ProBook with quad-core CPU (against [my advice](#processor)), `MacBookPro8,2` would be a preferred choice, – but see a note below for USB port mapping adjustment. Now you can use `macserial` tool from OpenCore utilities to generate serials (`SystemSerialNumber` and `MLB`, or motherboard serial number):
 
 ```bash
 ./macserial -m 'MacBookPro8,1' -n 1
 ```
 
-The system serial number you generated must be reported as “invalid” or “not found” on Apple [support coverage](https://checkcoverage.apple.com/ "Serial number check") page. If it comes back as “valid”, it means `macserial` somehow generated a number that belongs to an actual produced Mac, and you must generate another serial and check it again.
+The system serial number you generated must be reported as “invalid” or “not found” on Apple [support coverage](https://checkcoverage.apple.com/ "Serial number check") page. If it comes back as “valid”, it means `macserial` somehow generated a number that belongs to an actual produced Mac, and you must generate another pair of serials.
 
 Next, find out your ethernet adapter MAC address and strip it of `:` characters, – this would be your `ROM` (it is better to pick wired interface MAC address rather than wireless):
 
@@ -658,7 +661,7 @@ ifconfig
 Encode your `ROM` value in Base64:
 
 ```bash
-echo AABBCCXXYYZZ | base64
+echo AABBCCXXYYZZ | xxd -ps -r | base64
 ```
 
 Finally, generate the `SystemUUID` for your ProBook:
@@ -773,7 +776,7 @@ Next, enable BIOS Wi-Fi whitelist bypass EFI driver in `UEFI/Drivers`:
 
 The laptop firmware will still warn you about incompatible wireless card installed, but it would no longer be actually disabled, despite what the warning says (just skip it with <kbd>Enter</kbd>).
 
-### Configuration
+### Broadcom Configuration
 
 Remove Atheros wireless kexts entries from `config.plist`:
 
@@ -785,7 +788,7 @@ Remove Atheros wireless kexts entries from `config.plist`:
   * `ProBookAtheros.kext`,
   * `WifiLocFix.kext`.
 
-Download Broadcom wireless kexts from [4x40s EFI folder](https://github.com/ubihazard/probook-4x40s-oc/releases/latest "40s series OC EFI folder") and copy them to `EFI/OC/Kexts` on your system EFI partition:
+Download Broadcom wireless kexts from [4x40s EFI folder](https://github.com/ubihazard/probook-4x40s-oc/releases/latest "40s series OC EFI") and copy them to `EFI/OC/Kexts` on your system EFI partition:
 
   * `AirportBrcmFixup.kext` (includes plugins):
       * `AirPortBrcmNIC_Injector.kext`,
@@ -972,7 +975,7 @@ With HD 3000 it is possible to change the maximum amount of video ram macOS allo
 
 Open the `AppleIntelSNBGraphicsFB.kext/Contents/MacOS/AppleIntelSNBGraphicsFB` in a binary hexadecimal editor and patch it according to your installed RAM amount and the tables below.
 
-If you got 8 GB of system RAM:
+If you got 8 GB or more of system RAM:
 
 | **VRAM size** | Hex find   | Hex replace | Base64 find | Base64 replace
 | ------------- | ---------- | ----------- | ----------- | --------------
@@ -988,7 +991,7 @@ For 4 GB of system RAM (not recommended):
 | **768**       | d000000018 | d000000030  | 0AAAABg=    | 0AAAADA=
 | **1024**      | d000000018 | d000000040  | 0AAAABg=    | 0AAAAEA=
 
-The provided values are for High Sierra version of the kext. Don’t forget to [rebuild the kernel cache](https://github.com/ubihazard/macos-scripts/tree/main/Scripts#rebuild-kernel-cache "Kernel cache rebuild guide") after the patch and then reboot to test your changes.
+The provided values are for High Sierra version of the kext. Don’t forget to rebuild the kernel cache after the patch and then reboot to test your changes.
 
 [Continue](#fixing-blur-effects-in-big-sur-and-monterey) fixing your graphics.
 
@@ -1027,7 +1030,7 @@ Whatever your choice of card would be, it must be of *half-size mini PCIe* form 
 
 ### Full HD Screen Upgrade for 15" Models
 
-One of the coolest upgrades you can perform on ProBook 4530s is equipping it with higher quality full HD aftermarket LCD panel replacing ugly stock 1366x768 screen with poor color reproduction that it comes with. This upgrade is quite hard to perform as it requires full laptop disassembly, which is not easy at all on these old laptops, and you will also need a compatible dual-link LVDS LCD cable from 4730s, but the result is very much worth it. Some full HD screens with wider color gamut can completely transform how machine looks and feels.
+One of the coolest upgrades you can perform on 15 inch ProBook 4530s or 4540s is equipping it with higher quality full HD aftermarket LCD panel replacing ugly stock 1366x768 screen with poor color reproduction that it comes with. This upgrade is quite hard to perform as it requires full laptop disassembly, which is not easy at all on these old laptops, and you will also need a compatible dual-link LVDS LCD cable from 4730s or 4740s respectively, but the result is very much worth it. Some full HD screens with wider color gamut can completely transform how machine looks and feels.
 
 The details of this upgrade are beyond the scope of this guide but you can find all necessary information on relevant hackintosh forums. If you do manage to install full HD screen, don’t forget to [adjust iGPU device properties](#hd-and-full-hd-screens) to enable dual-link operation or you will experience broken image.
 
