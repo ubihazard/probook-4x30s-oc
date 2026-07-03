@@ -637,6 +637,21 @@ cp com.apple.AppleMultitouchTrackpad.plist ~/Library/Preferences/
 
 A pre-made trackpad configuration file with tap to click is [provided](/Library/Preferences/com.apple.AppleMultitouchTrackpad.plist "Trackpad config") and should suit most users well. Copy it to `~/Library/Preferences` replacing the original, if you can’t bother editing your own.
 
+### Function Keys
+
+By default function keys on your laptop are going to be working as F1..F12 keys and in order to obtain special function, such as brightness or volume control, a special Fn key must be pressed. For Apple keyboards the setting to toggle this behavior can be found in (suprise) keyboard preferences. But since ProBook keyboard is completely different the relevant setting would not be available. In our case a special `SSDT-KBFN.aml` SSDT is needed to alter the default behavior. Like other SSDTs it needs to be activated in `config.plist`:
+
+```xml
+<dict>
+  <key>Comment</key>
+  <string>Function keys fix</string>
+  <key>Enabled</key>
+  <true/>
+  <key>Path</key>
+  <string>SSDT-KBFN.aml</string>
+</dict>
+```
+
 ### Filling Your System Information
 
 The final step to setting up your new hackintosh laptop is generating unique serial number and system UUID. You can skip this step if you don‘t plan to use App store or connect with Apple, otherwise it is required to make iCloud or iMessage to work.
@@ -707,15 +722,6 @@ Now we can fill this information under `PlatformInfo/Generic`:
 > [!IMPORTANT]
 > If you change your SMBIOS name for any reason `USBMap.kext` must be adjusted because it depends on it. Open `USBMap.kext/Contents/Info.plist` in a plain text editor and replace all instances of `MacBookPro8,1` with SMBIOS name of your choice.
 
-### Firefox Not Starting on Monterey
-
-Add `ipc_control_port_options=0` to `boot-args` config section:
-
-```xml
-<key>boot-args</key>
-<string>-no_compat_check amfi_get_out_of_my_way=1 amfi=0x80 ipc_control_port_options=0</string>
-```
-
 ### Windows Dual-boot Issues
 
 OpenCore does quite a good job pretending you are using a real Mac. This is obviously good for macOS but can present problems if you boot other operating systems with OC. Because your system is literally masquerading as a Mac, Windows will attempt to install drivers belonging to an actual Mac Book, which is definitely not what we want. Official driver packages from HP will likely fail to install for the same reason.
@@ -733,6 +739,68 @@ Change `UpdateSMBIOSMode` from `Create` to `Custom` in `PlatformInfo`:
 <key>UpdateSMBIOSMode</key>
 <string>Custom</string>
 ```
+
+### Firefox Not Starting on Monterey
+
+Add `ipc_control_port_options=0` to `boot-args` config section:
+
+```xml
+<key>boot-args</key>
+<string>-no_compat_check amfi_get_out_of_my_way=1 amfi=0x80 ipc_control_port_options=0</string>
+```
+
+### Quiet Fan Patch
+
+The default HP BIOS fan curve for ProBook is configured to increase fan speed too early causing laptop fan to constantly spin up and down at slightest load, which is quite annoying. Fortunately, an intelligent fan control was developed by RehabMan based on ACPI hack approach used by similar projects on other OSes for SMSC KBC-1126 Super I/O chip installed on ProBooks. It consists of a support kext and ACPI code which injects custom fan curve for much better fan behavior.
+
+Enable the `ACPIPoller.kext`:
+
+<details>
+<summary><strong>Example</strong></summary><br>
+
+```xml
+<dict>
+  <key>Arch</key>
+  <string>Any</string>
+  <key>BundlePath</key>
+  <string>ACPIPoller.kext</string>
+  <key>Comment</key>
+  <string>Needed for quiet fan patch</string>
+  <key>Enabled</key>
+  <true/>
+  <key>ExecutablePath</key>
+  <string>Contents/MacOS/ACPIPoller</string>
+  <key>MaxKernel</key>
+  <string></string>
+  <key>MinKernel</key>
+  <string></string>
+  <key>PlistPath</key>
+  <string>Contents/Info.plist</string>
+</dict>
+```
+</details>
+
+Apply the custom fan curve:
+
+```xml
+<dict>
+  <key>Comment</key>
+  <string>Quiet fan patch (needs ACPIPoller.kext)</string>
+  <key>Enabled</key>
+  <true/>
+  <key>Path</key>
+  <string>SSDT-FANUBI.aml</string>
+</dict>
+```
+
+There are several fan behaviors available for choice:
+
+  * `SSDT-FANREAD.aml`: Fan readings only. Not very useful because there isn’t monitoring software which supports it anymore.
+  * `SSDT-FANORIG.aml`: Copy the default behavior.
+  * `SSDT-FANQ.aml`: Original quiet fan patch by RehabMan.
+  * `SSDT-FANRM.aml`: Alternative version by RehabMan.
+  * `SSDT-FANGRAP.aml`: Yet another version by Don Grappler.
+  * `SSDT-FANUBI.aml`: An even more refined version from me 😎
 
 Enabling Broadcom Wireless
 --------------------------
