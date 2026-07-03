@@ -255,7 +255,7 @@ Without proper CPU PM `AppleIntelCPUPowerManagement.kext` would cause kernel pan
 
     > Running `ssdtPRGen.sh` requires internet access. You can temporarily connect ethernet cable to your laptop.
 
-  * Re-enable `SSDT-PM.aml` CPU power management table in `config.plist` under `ACPI/Add`, set `Enabled` to `true`.
+  * Re-enable `SSDT-PM.aml` CPU PM table in `config.plist` under `ACPI/Add`, set `Enabled` to `true`.
 
     <details>
     <summary><strong>Example</strong></summary><br>
