@@ -1,10 +1,10 @@
-<p align="center"><img alt="ProBook 4x30s" src="Resources/probook-4530s-banner.png"/></p>
+<p align="center"><img alt="ProBook 4x30s" src="Images/probook-4530s-banner.png"/></p>
 <h1 align="center">ProBook 4x30s OpenCore</h1>
 <h3 align="center">4330s / 4530s / 4730s</h3>
 
 Detailed instructions on how to install recent version of [macOS](https://en.wikipedia.org/wiki/MacOS) on HP ProBook 30s series laptops with second generation Sandy Bridge Intel Core i CPUs, – specifically, a [ProBook 4530s](https://support.hp.com/us-en/product/hp-probook-4530s-notebook-pc/5060880). This is also a long-overdue update to a previous guide posted here now with proper ACPI patches, important corrections and recommendations.
 
-![macOS Installed on a ProBook 4530s](Resources/about-this-probook.png)
+![macOS Installed on a ProBook 4530s](Images/about-this-probook.png)
 
 > [!IMPORTANT]
 > There is a [newer guide](https://github.com/ubihazard/probook-4x40s-oc "macOS for ProBook 4x40s") for 40s series laptops with third generation Intel Ivy Bridge CPUs and Metal-capable graphics now available with much better support for modern macOS. Some content was moved there to avoid duplication.
@@ -743,7 +743,7 @@ As already [mentioned](#opencore-for-legacy-probook), ProBook 4530s suffers from
 
 You will need to mask certain PCB contacts with tiny pieces of kapton tape to prevent HP firmware from turning the Wi-Fi module off. Without this mod only Bluetooth side will work.
 
-![BCM94352HMB hardware hack](Resources/bcm94352hmb-whitelist-hack.jpg)
+![BCM94352HMB hardware hack](Images/bcm94352hmb-whitelist-hack.jpg)
 
 > [!NOTE]
 > This guide assumes you are using Broadcom BCM94352HMB, which is the best wireless module you can put in your ProBook laptop. If you’ve got another compatible Broadcom adapter the pin out might be different. In that case you need to find a datasheet for your card and determine where equivalent contacts are located.
