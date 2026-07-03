@@ -642,7 +642,7 @@ A pre-made trackpad configuration file with tap to click is [provided](/Library/
 The final step to setting up your new hackintosh laptop is generating unique serial number and system UUID. You can skip this step if you don‘t plan to use App store or connect with Apple, otherwise it is required to make iCloud or iMessage to work.
 
 > [!IMPORTANT]
-> If you don‘t own any real Apple product, such as an iPhone or iPad, registering in iServices with a hackintosh system would likely trigger a security check instantly putting your new account on hold. It is recommended to keep iCloud disabled and limit your Apple interactions to App Store only.
+> If you don‘t own any real Apple product, such as an iPhone or iPad, registering in iServices with a hackintosh system would likely trigger a security check instantly, putting your new account on hold. In this case it is recommended to keep iCloud and iMessage disabled and limit your online Apple interactions to App Store only.
 
 First, you need to choose the Mac SMBIOS product name that resembles your hardware most closely. For this laptop model it would be `MacBookPro8,1`. If you opted to upgrade your ProBook with quad-core CPU (against [my advice](#processor)), `MacBookPro8,2` would be a preferred choice, – but see a note below for USB port mapping adjustment. Now you can use `macserial` tool from OpenCore utilities to generate serials (`SystemSerialNumber` and `MLB`, or motherboard serial number):
 
