@@ -45,7 +45,7 @@ Although this laptop is very old, macOS works surprisingly well on it with prett
 OpenCore for Legacy ProBook
 ---------------------------
 
-This guide now uses a [custom build](https://github.com/ubihazard/OpenCorePkg-ProBook-Legacy/releases) of OpenCore put together by me specifically for use with legacy ProBook laptops. It includes two EFI modules for ProBook 4x30s: BIOS fan reset and BIOS Wi-Fi whitelist bypass.
+This guide now uses a [custom build](https://github.com/ubihazard/OpenCorePkg-ProBook-Legacy/releases) of OpenCore put together by me specifically for use with legacy ProBook laptops. It includes two EFI modules for ProBook 4x30s.
 
   * `ProBookFanReset.efi` resets fan control from macOS back to automatic BIOS management. This needs to be done every time after using quiet fan patch to restore embedded controller state, and the best place to do it is during boot up.
 
@@ -232,11 +232,11 @@ ACPI Patching
 
 ACPI patches, like kexts, are required for basic functionality of your ProBook in macOS. Most ACPI patches for this laptop (and other ProBooks, EliteBooks, and ZBooks) were made by legendary [RehabMan](https://github.com/RehabMan/HP-ProBook-4x30s-DSDT-Patch) and then simply ported by me to work with OpenCore bootloader using his [patched DSDT](https://github.com/ubihazard/probook-4x40s-oc/ACPI/RehabMan/4x40s_IvyBridge.txt) and hot patch guide as sources. Other SSDTs are provided by Dortania in their [Sandy Bridge laptop guide](https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/sandy-bridge.html "Sandy Bridge laptop guide").
 
-These patches are compatible across all 30s series laptops regardless of configuration and can be used as is. What‘s left is restoring proper CPU power management (for exact processor installed in your ProBook) and ensure correct USB port mapping. If your laptop comes with discrete AMD GPU and you *don’t* want to turn it off in BIOS (to keep it available for other OSes), an additional DSDT patch is needed to turn it off exclusively in macOS.
+These patches are compatible across all 30s series laptops regardless of configuration and can be used as is. What‘s left is restoring proper CPU power management for exact processor installed in your ProBook and ensure correct USB port mapping. If your laptop comes with discrete AMD GPU and you *don’t* want to turn it off in BIOS (to keep it available for other OSes), an additional DSDT patch is needed to turn it off exclusively in macOS.
 
 ### Restoring Power Management
 
-Without proper CPU PM `AppleIntelCPUPowerManagement.kext` would cause kernel panic at boot so `NullCPUPowerManagement.kext` is used (in USB `config.plist`) to overtake control from it temporarily. Legacy CPU power management is enabled with the help of `SSDT-PM.aml` ACPI table. This table is specific to each CPU and has to be generated manually.
+Without proper CPU PM `AppleIntelCPUPowerManagement.kext` would cause kernel panic at boot so `NullCPUPowerManagement.kext` is used (in USB `config.plist`) to temporarily overtake control from it. Legacy CPU power management is enabled with the help of `SSDT-PM.aml` ACPI table. This table is specific to each CPU and has to be generated manually.
 
   * Follow the Dortania [guide](https://dortania.github.io/OpenCore-Post-Install/universal/pm.html#sandy-and-ivy-bridge-power-management) to create PM table for the CPU installed in your laptop.
 
@@ -255,7 +255,7 @@ Without proper CPU PM `AppleIntelCPUPowerManagement.kext` would cause kernel pan
 
     > Running `ssdtPRGen.sh` requires internet access. You can temporarily connect ethernet cable to your laptop.
 
-  * Re-enable CPU power management in `config.plist`: under `ACPI/Add` set `Enabled` to `true`.
+  * Re-enable `SSDT-PM.aml` CPU power management table in `config.plist` under `ACPI/Add`, set `Enabled` to `true`.
 
     <details>
     <summary><strong>Example</strong></summary><br>
@@ -272,7 +272,7 @@ Without proper CPU PM `AppleIntelCPUPowerManagement.kext` would cause kernel pan
     ```
     </details>
 
-  * Restore OEM CPU tables: under `ACPI/Delete` set `Enabled` to `false`.
+  * Restore OEM CPU tables you deleted earlier under `ACPI/Delete`, set `Enabled` to `false`.
 
     <details>
     <summary><strong>Example</strong></summary><br>
@@ -312,7 +312,7 @@ Without proper CPU PM `AppleIntelCPUPowerManagement.kext` would cause kernel pan
     ```
     </details>
 
-  * Disable `NullCPUPowerManagement.kext`: under `Kernel/Add` set `Enabled` to `false`.
+  * Disable `NullCPUPowerManagement.kext` under `Kernel/Add`, set `Enabled` to `false`.
 
     <details>
     <summary><strong>Example</strong></summary><br>
@@ -383,7 +383,7 @@ Or simply disable dGPU in your laptop‘s BIOS, – although in this case it wou
 
 ### Fixing USB
 
-The USB port map kext in this repo is for ProBook 4530s models with USB 3.0 port. If you have a different mainboard (such as with all USB 2.0 ports only) or if port mapping doesn‘t match for some other reason, you would have to re-map your USB ports by means of creating your own version of `USBMap.kext` while still booted from USB. This procedure is fully covered in Dortania [guide](https://dortania.github.io/OpenCore-Post-Install/usb/ "USB port mapping guide") and I won‘t be duplicating it here. In short, use [USBMap](https://github.com/corpnewt/USBMap).
+The USB port map kext in this repo is for ProBook 4530s models with USB 3.0 port. If you have a different mainboard (such as with all USB 2.0 ports only) or if port mapping doesn‘t match for some other reason, you would have to re-map your USB ports by means of creating your own version of `USBMap.kext` while still booted from USB. This procedure is fully covered in Dortania [guide](https://dortania.github.io/OpenCore-Post-Install/usb/ "USB port mapping guide") and I won‘t be duplicating it here. In short, use [USBMap](https://github.com/corpnewt/USBMap "USBMap tool by corpnewt").
 
 Post-install
 ------------
@@ -414,7 +414,7 @@ These modifications are already done in the provided `config.plist`, I’m just 
 
 ### Restoring Graphics Acceleration
 
-One of the first [post-installation](https://dortania.github.io/OpenCore-Post-Install/ "Post-installation guide") tasks you will have to perform, unless you decided to stick with High Sierra, is restoring graphics acceleration along with native desktop resolution.
+One of the first [post-installation](https://dortania.github.io/OpenCore-Post-Install/ "Post-install OpenCore guide") tasks you will have to perform, unless you decided to stick with High Sierra, is restoring graphics acceleration along with native desktop resolution.
 
 Intel HD 3000 doesn‘t support Metal graphics acceleration API available in macOS since El Capitan. And since Mojave, HD 3000 itself isn‘t supported at all: you need to use [OpenCore Legacy Patcher](https://github.com/dortania/OpenCore-Legacy-Patcher "OCLP") to install patched kexts and frameworks that restore graphics acceleration and work-around lack of Metal requirement.
 
