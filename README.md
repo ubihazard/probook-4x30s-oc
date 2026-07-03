@@ -639,7 +639,7 @@ A pre-made trackpad configuration file with tap to click is [provided](/Library/
 
 ### Function Keys
 
-By default function keys on your laptop are going to be working as F1..F12 keys and in order to obtain special function, such as brightness or volume control, a special Fn key must be pressed. For Apple keyboards the setting to toggle this behavior can be found in (suprise) keyboard preferences. But since ProBook keyboard is completely different the relevant setting would not be available. In our case a special `SSDT-KBFN.aml` SSDT is needed to alter the default behavior. Like other SSDTs it needs to be activated in `config.plist`:
+By default function keys on your laptop are going to be working as F1..F12 keys and in order to obtain special function, such as brightness or volume control, a special Fn key must be pressed. For Apple keyboards the setting to toggle this behavior can be found in (suprise) keyboard preferences. But since ProBook keyboard is completely different the relevant setting would not be available. In our case a special `SSDT-KBFN.aml` SSDT is needed to alter the default behavior. Like other SSDTs, it needs to be activated in `config.plist`:
 
 ```xml
 <dict>
