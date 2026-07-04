@@ -386,12 +386,12 @@ Or simply disable dGPU in your laptop‘s BIOS, – although in this case it wou
 
 ### Fixing USB
 
-The USB port map kext in this repo is for ProBook 4530s models with USB 3.0 port. If you have a different mainboard (such as with all USB 2.0 ports only) or if port mapping doesn‘t match for some other reason, you would have to re-map your USB ports by means of creating your own version of `USBMap.kext` while still booted from USB. This procedure is fully covered in Dortania [guide](https://dortania.github.io/OpenCore-Post-Install/usb/ "USB port mapping guide") and I won‘t be duplicating it here. In short, use [USBMap](https://github.com/corpnewt/USBMap "USBMap tool by corpnewt").
+The USB port map kext in this repo is for ProBook 4530s models with USB 3.0 port. If you have a different mainboard (such as with all USB 2.0 ports only) or if port mapping doesn‘t match for some other reason, you would have to re-map your USB ports by means of creating your own version of `USBMap.kext`, while still booted from the USB stick. This procedure is fully covered in Dortania [guide](https://dortania.github.io/OpenCore-Post-Install/usb/ "USB port mapping guide") and I won‘t be duplicating it here. In short, use [USBMap](https://github.com/corpnewt/USBMap "USBMap tool by corpnewt").
 
 Post-install
 ------------
 
-We still got stuff to do to make the system usable. Unless you decided to install very old macOS version for some reason, e.g. High Sierra, you’d be stuck without hardware graphics acceleration and, as a result, very slow and unusable user interface. This and other things, like Wi-Fi and Bluetooth, is fixed here.
+We still got stuff to do to make the system fully usable. Unless you decided to install very old macOS version for some reason, e.g. High Sierra, you’d be stuck without hardware graphics acceleration and, as a result, very slow and unusable user interface. This and other things, like Wi-Fi and Bluetooth, is fixed here.
 
 ### Quick Note on APFS
 
