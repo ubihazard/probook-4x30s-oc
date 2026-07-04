@@ -642,7 +642,7 @@ A pre-made trackpad configuration file with tap to click is [provided](/Library/
 
 ### Function Keys
 
-By default function keys on your laptop are going to be working as F1..F12 keys and in order to obtain special function, such as brightness or volume control, a special Fn key must be pressed. For Apple keyboards the setting to toggle this behavior can be found in (suprise) keyboard preferences. But since ProBook keyboard is completely different the relevant setting would not be available. In our case a special `SSDT-KBFN.aml` SSDT is needed to alter the default behavior.
+By default function keys on your laptop are going to work as F1..F12 and in order to obtain special function, such as brightness or volume control, a special Fn key must be pressed. For Apple keyboards the setting to toggle this behavior can be found in (suprise) keyboard preferences. But since ProBook keyboard is completely different the relevant setting would not be available. In our case a special `SSDT-KBFN.aml` SSDT is needed to alter the default behavior.
 
 Like other SSDTs, it needs to be activated in `config.plist`:
 
@@ -659,7 +659,7 @@ Like other SSDTs, it needs to be activated in `config.plist`:
 
 ### Filling Your System Information
 
-The final step to setting up your new hackintosh laptop is generating unique serial number and system UUID. You can skip this step if you don‘t plan to use App store or connect with Apple, otherwise it is required to make iCloud or iMessage to work.
+The final step to setting up your new hackintosh laptop is generating unique serial number and system UUID. You can skip this step if you don‘t plan to use App Store or connect with Apple, otherwise it is required to make iCloud or iMessage work.
 
 > [!IMPORTANT]
 > If you don‘t own any real Apple product, such as an iPhone or iPad, registering in iServices with a hackintosh system would likely trigger a security check instantly, putting your new account on hold. In this case it is recommended to keep iCloud and iMessage disabled and limit your online Apple interactions to App Store only.
@@ -725,11 +725,11 @@ Now we can fill this information under `PlatformInfo/Generic`:
 ### USB Port Mapping and SMBIOS
 
 > [!IMPORTANT]
-> If you change your SMBIOS name for any reason `USBMap.kext` must be adjusted because it depends on it. Open `USBMap.kext/Contents/Info.plist` in a plain text editor and replace all instances of `MacBookPro8,1` with SMBIOS name of your choice.
+> If you change your SMBIOS name for whatever reason `USBMap.kext` must be adjusted because it depends on it. Open `USBMap.kext/Contents/Info.plist` in a plain text editor and replace all instances of `MacBookPro8,1` with SMBIOS name of your choice.
 
 ### Windows Dual-boot Issues
 
-OpenCore does quite a good job pretending you are using a real Mac. This is obviously good for macOS but can present problems if you boot other operating systems with OC. Because your system is literally masquerading as a Mac, Windows will attempt to install drivers belonging to an actual Mac Book, which is definitely not what we want. Official driver packages from HP will likely fail to install for the same reason.
+OpenCore does quite a good job pretending you are using a real Mac. This is obviously good for macOS but can present problems if you boot other operating systems through OC. Because your system is literally masquerading as a MacBook Pro, Windows will attempt to install drivers belonging to an actual Mac Book, which is definitely not what we want. Official driver packages from HP would likely fail to install for the same reason.
 
 To fix this we need to make couple adjustments. Set `CustomSMBIOSGuid` to `true` under `Kernel/Quirks`:
 
@@ -756,7 +756,7 @@ Add `ipc_control_port_options=0` to `boot-args` config section:
 
 ### Quiet Fan Patch
 
-The default HP BIOS fan curve for ProBook is configured to increase fan speed too early causing laptop fan to constantly spin up and down at slightest load, which is quite annoying. Fortunately, an intelligent fan control was developed by RehabMan based on ACPI hack approach used by similar projects on other OSes for SMSC KBC-1126 Super I/O chip installed on ProBooks. It consists of a support kext and ACPI code which injects custom fan curve for much better fan behavior.
+The default HP BIOS fan curve for ProBook is configured to increase fan speed way too early, causing laptop fan to constantly spin up and down at slightest load, which is quite annoying. Fortunately, an intelligent fan control was developed by RehabMan based on ACPI hack approach used by similar projects on other OSes for SMSC KBC-1126 Super I/O chip employed in ProBooks. It consists of a support kext and ACPI code which injects custom fan curve for much better fan behavior.
 
 Enable the `ACPIPoller.kext`:
 
@@ -1006,7 +1006,7 @@ Finally, copy and paste the following section where Atheros configuration was pr
 ```
 </details>
 
-For Mojave and earlier copy `BrcmPatchRAM2.kext` and `BrcmFirmwareRepo.kext` (not “Data”) to `/Library/Extensions`, and rebuild the kernel cache.
+For Mojave and earlier copy `BrcmPatchRAM2.kext` and `BrcmFirmwareRepo.kext` (not “Data”) to `/Library/Extensions` and rebuild the kernel cache.
 
 > [!NOTE]
 > These two kexts cannot be injected from bootloader and must be installed manually to your system drive.
@@ -1075,17 +1075,17 @@ Before you begin it is recommended that you consider upgrading your ProBook as a
 
 ### Storage
 
-Swapping the hard disk for a solid-state drive should be your first upgrade. This alone will massively increase performance and responsiveness of the whole system. Modern versions of macOS use APFS file system which is specifically designed for solid-state drives. Although you can install macOS on a HDD, the performance penalty would likely be too high. Install a minimum of 256 GB SATA SSD drive, preferably with DRAM cache. 128 GB can be enough for very light use. Larger drive will allow for multiple operating systems in a dual-boot configuration.
+Swapping the hard disk for a solid-state drive should be your first upgrade. This alone will massively increase performance and responsiveness of the whole system. Modern versions of macOS use APFS file system which is specifically designed for solid-state drives. Although you can install macOS on a HDD, the performance penalty would likely be too high. Install a minimum of 256 GB SATA SSD drive, preferably with DRAM cache. 128 GB can be enough for very light use. Larger drive would allow for multiple operating systems in a dual-boot configuration.
 
 ### Memory
 
-It is highly recommended that you install at least 8 GB of RAM. This is the minimum amount required for macOS to operate smoothly. ProBooks based on Sandy Bridge CPUs use DDR3 RAM which, luckily, isn’t much affected by RAM crisis and can still be found relatively for cheap.
+It is highly recommended that you install at least 8 GB of RAM. This is the minimum amount required for macOS to operate smoothly. ProBooks based on Sandy Bridge CPUs use DDR3 RAM which, luckily, isn’t affected much by the RAM crisis and can still be found relatively for cheap.
 
 ### Processor
 
-Although not strictly required, changing your processor to at least Core i5 with Turbo Boost, in case if you are stuck with Core i3, is a worthy consideration. You would want to disassemble your laptop anyway to clean it and change thermal paste, so why not upgrade CPU in the process? My personal CPU recommendation, however, would be a dual-core Core i7, namely [2.8 GHz 2640M](https://ark.intel.com/content/www/us/en/ark/products/53464/intel-core-i72640m-processor-4m-cache-up-to-3-50-ghz.html "Core i7-2640M") or 2.7 GHz 2620M (whichever you can still find). I would advice against quad-core 2670QM and especially 2760QM or higher for several reasons. For one, your laptop‘s power adapter might no longer provide enough juice for the whole system. Then, ProBook‘s mainboard doesn‘t possess VRM strong enough to properly feed power hungry quad-core i7 CPUs with TDP of 45W. Lastly, the cooling system is simply inadequate for a quad-core CPU, – having just one short heat pipe.
+Although not strictly required, changing your processor to at least Core i5 with Turbo Boost, in case if you are stuck with Core i3, is a worthy consideration. You would want to disassemble your laptop anyway to clean it and change thermal paste, so why not upgrade CPU in the process? My personal CPU recommendation, however, would be a dual-core Core i7, namely [2.8 GHz 2640M](https://ark.intel.com/content/www/us/en/ark/products/53464/intel-core-i72640m-processor-4m-cache-up-to-3-50-ghz.html "Core i7-2640M") or 2.7 GHz 2620M (whichever you can still find). I would advice against quad-core 2670QM and especially 2760QM or higher for several reasons. For one, your laptop‘s power adapter might no longer provide enough juice for the whole system. Then, ProBook‘s mainboard doesn‘t possess VRM strong enough to properly feed power hungry quad-core i7 CPUs with TDP of 45W. Lastly, the cooling system is simply inadequate for such a CPU, – having just one short heat pipe.
 
-Failure to observe these hardware restrictions will result in your CPU quickly overheating, not having Turbo Boost or not running even at its stock advertised speed, VRM running very hot, and laptop abruptly shutting down. And on top of all that, even the fastest 45W Core i7 CPU, 2860QM, is still whole 300 MHz slower on all cores than 35W 2640M, resulting in a noticeably lower single-thread performance. Taking power and thermal limits into account, a 2640M with two but powerful cores is just a better overall option. This is especially true when compared to 2670QM with its miserable (by modern standards) 2.2 GHz stock clock speed.
+Failure to observe these hardware restrictions will result in your CPU quickly overheating, not having Turbo Boost or not running even at its stock advertised speed, VRM running very hot, and laptop abruptly shutting down. On top of all that, even the fastest 45W Core i7 CPU, 2860QM, is still whole 300 MHz slower on all cores than 35W 2640M, resulting in a noticeably lower single-thread performance. Taking power and thermal limits into account, a 2640M with two but powerful cores is just a better overall option. This is especially true when compared to 2670QM with its miserable (by modern standards) 2.2 GHz stock clock speed.
 
 For reference, my dual-core Core i7-2640M with high-quality TIM applied hits **95** degrees under full continuous load (compilation of a big C/C++ project), – just a couple degrees shy of thermal throttling.
 
@@ -1097,13 +1097,13 @@ Chances are you already have a compatible Atheros AR9285 adapter so you can just
 
 However, at this point a much better alternative would be going for Broadcom BCM94352HMB module. Although it would need BIOS Wi-Fi whitelist [bypass hack](#defeating-30s-series-wi-fi-whitelist) and a [hardware mod](#hardware-mod) on a card itself, it would allow you to bump installed macOS version to Monterey, which offers better compatibility with software.
 
-Alternatively, Intel Wi-Fi modules have recently became a viable option with [itlwm](https://github.com/OpenIntelWireless/itlwm "macOS Intel wireless kexts"). Refer to GitHub project page for installation and configuration instructions for different macOS versions.
+Alternatively, Intel Wi-Fi modules had recently become a viable option with [itlwm](https://github.com/OpenIntelWireless/itlwm "macOS Intel wireless kexts"). Refer to its GitHub project page for installation and configuration instructions for different macOS versions.
 
 Whatever your choice of card would be, it must be of *half-size mini PCIe* form factor, *not M2*.
 
 ### Full HD Screen Upgrade for 15" Models
 
-One of the coolest upgrades you can perform on 15 inch ProBook 4530s or 4540s is equipping it with higher quality full HD aftermarket LCD panel replacing ugly stock 1366x768 screen with poor color reproduction that it comes with. This upgrade is quite hard to perform as it requires full laptop disassembly, which is not easy at all on these old laptops, and you will also need a compatible dual-link LVDS LCD cable from 4730s or 4740s respectively, but the result is very much worth it. Some full HD screens with wider color gamut can completely transform how machine looks and feels.
+One of the coolest upgrades you can perform on 15 inch ProBook 4530s or 4540s is equipping it with a higher quality full HD aftermarket LCD panel, replacing the ugly stock 1366x768 screen with poor color reproduction that it comes with. This upgrade is quite hard to perform as it requires full laptop disassembly, which is not easy at all on these old laptops, and you will also need a compatible dual-link LVDS LCD cable from 4730s or 4740s respectively, but the result is very much worth it. Some full HD screens with wider color gamut can completely transform how machine looks and feels.
 
 The details of this upgrade are beyond the scope of this guide but you can find all necessary information on relevant hackintosh forums. If you do manage to install full HD screen, don’t forget to [adjust iGPU device properties](#hd-and-full-hd-screens) to enable dual-link operation or you will experience broken image.
 
