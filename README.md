@@ -235,7 +235,7 @@ ACPI Patching
 
 ACPI patches, like kexts, are required for basic functionality of your ProBook in macOS. Most ACPI patches for this laptop (and other ProBooks, EliteBooks, and ZBooks) were made by legendary [RehabMan](https://github.com/RehabMan/HP-ProBook-4x30s-DSDT-Patch) and then simply ported by me to work with OpenCore bootloader using his [patched DSDT](https://github.com/ubihazard/probook-4x40s-oc/ACPI/RehabMan/4x40s_IvyBridge.txt) and hot patch guide as sources. Other SSDTs are provided by Dortania in their [Sandy Bridge laptop guide](https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/sandy-bridge.html "Sandy Bridge laptop guide").
 
-These patches are compatible across all 30s series laptops regardless of configuration and can be used as is. What‘s left is restoring proper CPU power management for exact processor installed in your ProBook and ensure correct USB port mapping. If your laptop comes with discrete AMD GPU and you *don’t* want to turn it off in BIOS (to keep it available for other OSes), an additional ACPI patch is needed to turn it off exclusively in macOS.
+These patches are compatible across all 30s series laptops regardless of configuration using latest BIOS from HP. What’s left is restoring proper CPU power management for the exact processor installed in your ProBook and ensuring correct USB port mapping. If your laptop comes with a discrete AMD GPU and you *don’t* want to turn it off in BIOS (to keep it available for other OSes), an [additional ACPI patch](#disabling-dedicated-gpu) is needed to turn it off exclusively in macOS.
 
 ### Restoring Power Management
 
