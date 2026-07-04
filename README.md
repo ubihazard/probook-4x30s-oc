@@ -725,7 +725,7 @@ Now we can fill this information under `PlatformInfo/Generic`:
 ### USB Port Mapping and SMBIOS
 
 > [!IMPORTANT]
-> If you change your SMBIOS name for whatever reason `USBMap.kext` must be adjusted because it depends on it. Open `USBMap.kext/Contents/Info.plist` in a plain text editor and replace all instances of `MacBookPro8,1` with SMBIOS name of your choice.
+> If you change your SMBIOS name for whatever reason `USBMap.kext` must be adjusted because it depends on it. Open `USBMap.kext/Contents/Info.plist` in a plain text editor and replace all instances of `MacBookPro8,1` with SMBIOS name of your choice. (There’s additional `USBMap.kext` in `Legacy` subfolder for older macOS.)
 
 ### Windows Dual-boot Issues
 
