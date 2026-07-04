@@ -2,7 +2,7 @@
 <h1 align="center">ProBook 4x30s OpenCore</h1>
 <h3 align="center">4330s / 4530s / 4730s</h3>
 
-Detailed instructions on how to install recent version of [macOS](https://en.wikipedia.org/wiki/MacOS) on HP ProBook 30s series laptops with second generation Sandy Bridge Intel Core i CPUs, – specifically, a [ProBook 4530s](https://support.hp.com/us-en/product/hp-probook-4530s-notebook-pc/5060880). This is also a long-overdue update to a previous guide posted here now with proper ACPI patches, important corrections and recommendations.
+Detailed instructions on how to install recent version of [macOS](https://en.wikipedia.org/wiki/MacOS) on HP ProBook 30s series laptops with second generation Sandy Bridge Intel Core i CPUs, – specifically, a [ProBook 4530s](https://support.hp.com/us-en/product/hp-probook-4530s-notebook-pc/5060880). This is also a long-overdue update to the previous guide posted here, now with proper ACPI patches, important corrections and recommendations.
 
 ![macOS Installed on a ProBook 4530s](Images/about-this-probook.png)
 
@@ -19,7 +19,7 @@ Despite effort was made to ensure all steps are as easy to follow and clear as p
 Introduction
 ------------
 
-ProBook 4530s is an old laptop from Sandy Bridge era made by HP. With a handful of [aftermarket upgrades](#upgrading-your-probook) it can still make a powerful machine for simple daily tasks. More importantly, even in stock condition it is fairly compatible with macOS. So this is what we are going to do – putting macOS on it by means of [OpenCore](https://github.com/acidanthera/OpenCorePkg) bootloader and a collection of [kernel extensions](#kernel-extensions) made by talented individuals from hackintosh community.
+ProBook 4530s is an old laptop from Sandy Bridge era made by HP. With a handful of [aftermarket upgrades](#upgrading-your-probook) it can still make a powerful machine for simple daily tasks. More importantly, even in stock condition it is fairly compatible with macOS. And this is what we are going to do – putting macOS on it by means of [OpenCore](https://github.com/acidanthera/OpenCorePkg) bootloader and a collection of [kernel extensions](#kernel-extensions) made by talented individuals from hackintosh community.
 
 So this is the configuration[^1] we are going to work with:
 
@@ -57,12 +57,12 @@ This guide now uses a [custom build](https://github.com/ubihazard/OpenCorePkg-Pr
 Converting from Clover
 ----------------------
 
-Note that Clover and OpenCore don’t mix well together. In my experience a NVRAM reset is required when switching from Clover to OpenCore, or the kernel might panic with weird error message during boot. If you’ve been using Clover previously, make sure to perform a NVRAM reset on your first OpenCore boot. This can be done from OpenCore boot menu screen: press space to reveal the corresponding hidden menu entry.
+Note that Clover and OpenCore don’t mix well together. In my experience a NVRAM reset is required when switching from Clover to OpenCore, or the kernel might panic with weird error message during boot. If you’ve been using Clover before, make sure to perform a NVRAM reset on your first OpenCore boot. This can be done from OpenCore boot menu screen: press space to reveal the corresponding hidden menu entry.
 
 Kernel Extensions
 -----------------
 
-Or “kexts” are equivalent of “drivers” in Windows and are required for proper hardware support by macOS. Most of the important kernel extensions come preloaded with operating system, but the nature of hackintosh requires additional kexts to be added for certain devices which aren’t natively supported by macOS because they aren’t found in actual Macs made by Apple, such as network cards, SD card readers, and trackpads in case of laptops.
+Or “kexts” are equivalent of “drivers” in Windows and are required for proper hardware support by macOS. Most of the important kernel extensions, such as graphics, come preloaded with the operating system. But the nature of hackintosh requires additional kexts to be added for certain devices which aren’t natively supported by macOS because they aren’t found in actual Macs made by Apple, such as network cards, SD card readers, and trackpads in case of laptops.
 
 All required kexts are already assembled in one place in the provided OpenCore [EFI folder](https://github.com/ubihazard/probook-4x30s-oc/releases/latest).
 
@@ -102,7 +102,7 @@ We will be enabling some and disabling others during the [post-install](#post-in
 Installation
 ------------
 
-Follow the official Dortania install guide to [make bootable macOS USB installer](https://dortania.github.io/OpenCore-Install-Guide/installer-guide/). After creating USB installer mount its EFI partition and copy OpenCore files downloaded from [releases page](https://github.com/ubihazard/probook-4x30s-oc/releases/latest "Download") replacing `config.plist` with `config-usb.plist`. It‘s a configuration variant modified specifically for use with macOS installer that disables some kexts which are useless during setup process (Wi-Fi, Bluetooth, SD card reader, etc.), doesn’t modify SIP flags or mess with AMFI, enables verbose boot text messages so you can troubleshoot boot issues, and has a different SMBIOS Mac model which allows to install more recent macOS versions which aren’t supported natively, but supported by [OpenCore Legacy Patcher](https://github.com/dortania/OpenCore-Legacy-Patcher) (OCLP), – up to Monterey with the provided OpenCore configuration.
+Follow the official Dortania instructions to [make a bootable macOS USB installer](https://dortania.github.io/OpenCore-Install-Guide/installer-guide/). After creating USB installer mount its EFI partition and copy OpenCore files downloaded from [releases page](https://github.com/ubihazard/probook-4x30s-oc/releases/latest "Download") replacing `config.plist` with `config-usb.plist`. It‘s a configuration variant modified specifically for use with macOS installer that disables some kexts which are useless during setup process (Wi-Fi, Bluetooth, SD card reader, etc.), doesn’t modify SIP flags or mess with AMFI, enables verbose boot text messages so you can troubleshoot boot issues, and has a different SMBIOS Mac model which allows to install more recent macOS versions, which aren’t supported natively, but supported with the help of [OpenCore Legacy Patcher](https://github.com/dortania/OpenCore-Legacy-Patcher) (OCLP), – up to Monterey with the provided OpenCore configuration.
 
 ### HD+ and Full HD Screens
 
@@ -221,11 +221,14 @@ Using [CryptexFixup](https://github.com/acidanthera/CryptexFixup) kext, which en
 
 So this, in my opinion, remains an option only for maniacs willing to accomplish just this task of “successfully” running Ventura on an unsupported Sandy Bridge system, – for bragging rights.
 
-If you are bold enough to go this route, you can refer to my [40s series guide](https://github.com/ubihazard/probook-4x40s-oc) for additional kexts and configuration changes, but don’t expect much success or pleasant experience.
+If you are bold enough to go this route, you can refer to the [40s series guide](https://github.com/ubihazard/probook-4x40s-oc) for additional kexts and configuration changes, but don’t expect much success or pleasant experience.
 
 ### Running the Installer
 
 Anyway, reboot your ProBook from the USB installer. During setup the machine will restart several times and if everything goes well you will end up on macOS welcome screen. To finish setup we need to copy OpenCore files to your system EFI partition (so you can boot without USB) and fix power management. This time, however, keep the `config.plist` from the provided OpenCore [EFI folder](https://github.com/ubihazard/probook-4x30s-oc/releases/latest "Download"), not `config-usb.plist`. The next step requires you to have working internet connection so hook your laptop up with an ethernet cable because Wi-Fi isn’t available yet.
+
+> [!TIP]
+> If, for some reason, you can’t have wired ethernet organized, skip through macOS initial setup prompts, [enable wireless kexts](#enabling-wi-fi-and-bluetooth) *in a `config.plist` on your USB EFI partition* and reboot from the USB stick again, – this time not into the installer but into a macOS you’ve just installed.
 
 ACPI Patching
 -------------
