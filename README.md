@@ -1027,7 +1027,7 @@ Now continue with [other post-install tasks](#configuring-tackpad).
 HD 3000 Issues
 --------------
 
-Unfortunately, Intel HD 3000 isn’t exactly the best fit for a hackintosh system. But being on a laptop you don’t have much choice about it. There are couple things you need to be aware of.
+Unfortunately, Intel HD 3000 isn’t exactly the best fit for a hackintosh system. But being on a laptop you don’t have much choice about it. There are a couple of things you need to be aware of.
 
 ### Graphical Glitches
 
