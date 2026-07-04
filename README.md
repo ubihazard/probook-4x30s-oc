@@ -417,9 +417,9 @@ These modifications are already done in the provided `config.plist`, I’m just 
 
 ### Restoring Graphics Acceleration
 
-One of the first [post-installation](https://dortania.github.io/OpenCore-Post-Install/ "Post-install OpenCore guide") tasks you will have to perform, unless you decided to stick with High Sierra, is restoring graphics acceleration along with native desktop resolution.
+One of the first [post-install](https://dortania.github.io/OpenCore-Post-Install/ "Post-install OpenCore guide") tasks you will have to perform, unless you decided to stick with High Sierra, is restoring graphics acceleration along with native desktop resolution.
 
-Intel HD 3000 doesn‘t support Metal graphics acceleration API available in macOS since El Capitan. And since Mojave, HD 3000 itself isn‘t supported at all: you need to use [OpenCore Legacy Patcher](https://github.com/dortania/OpenCore-Legacy-Patcher "OCLP") to install patched kexts and frameworks that restore graphics acceleration and work-around lack of Metal requirement.
+Intel HD 3000 doesn‘t support Metal graphics acceleration API available in macOS since El Capitan. And since Mojave HD 3000 itself isn‘t supported at all: you will need to use [OpenCore Legacy Patcher](https://github.com/dortania/OpenCore-Legacy-Patcher "OCLP") to install patched kexts and frameworks that restore graphics acceleration and work-around lack of Metal requirement.
 
 Reboot without USB installer: this is important because USB config doesn’t use proper SMBIOS model and doesn’t disable SIP and AMFI required for patcher to work. Download OCLP and allow it to install root patches. Reboot one more time and you should be greeted by a proper desktop in glorious native resolution.
 
@@ -429,7 +429,7 @@ There’s additional information about [Intel HD 3000 graphics](#hd-3000-issues)
 
 ### Fixing Blur Effects in Big Sur and Monterey
 
-In Big Sur transparent effects, such as blur, render incorrectly on non-Metal GPUs (HD 3000 is not capable of Metal API). After installing [patched graphics kexts](#restoring-graphics-acceleration) with OCLP it becomes possible to fall back to legacy blur drawing method:
+In Big Sur transparent effects, such as blur, render incorrectly on non-Metal GPUs (HD 3000 is not capable of Metal API). After installing [patched graphics kexts and frameworks](#restoring-graphics-acceleration) with OCLP it becomes possible to fall back to legacy blur drawing method:
 
 ```bash
 defaults write -g Moraea_BlurBeta -bool true
@@ -607,7 +607,7 @@ Optional: open `WifiLocFix.kext/Contents/Info.plist` in a plain text editor and 
 </dict>
 ```
 
-If you opted to install Broadcom card in your ProBook head over to a [dedicated section](#enabling-broadcom-wireless) for your wireless configuration. Otherwise, make sure to remove Broadcom kexts from your `config.plist` if they are present.
+If you opted to install Broadcom card in your ProBook, head over to a [dedicated section](#enabling-broadcom-wireless) for your wireless configuration. Otherwise, make sure to remove Broadcom kexts from your `config.plist` if they are present.
 
 ### Configuring Trackpad
 
