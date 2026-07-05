@@ -392,6 +392,21 @@ Post-install
 
 We still got stuff to do to make the system fully usable. Unless you decided to install very old macOS version for some reason, e.g. High Sierra, you’d be stuck without hardware graphics acceleration and, as a result, very slow and unusable user interface. This and other things, like Wi-Fi and Bluetooth, is fixed here.
 
+### Disabling Hibernation
+
+Hibernation (deep sleep) isn’t available on hackintosh systems and must be explicitly turned off:
+
+```bash
+sudo pmset -a hibernatemode 0
+```
+
+We also remove the sleep image, which preserves RAM contents during sleep, and replace it with an empty folder to prevent it from being recreated:
+
+```bash
+sudo rm /var/vm/sleepimage
+sudo mkdir /var/vm/sleepimage
+```
+
 ### Quick Note on APFS
 
 OpenCore from the provided EFI folder will load any APFS driver available. This is done to make initial setup easier in case of multiple macOS installations (e.g. High Sierra together with Big Sur). For security reasons, it is recommeded that after installation you would [change](https://dortania.github.io/OpenCore-Install-Guide/config-laptop.plist/sandy-bridge.html#apfs) the minimum allowed APFS driver version according to the latest macOS version you have installed. For Big Sur and above leave both `MinVersion` and `MinDate` at `0`.
@@ -412,7 +427,7 @@ AMFI is disabled via `boot-args`:
 <string>... amfi=0x80 amfi_get_out_of_my_way=1</string>
 ```
 
-These modifications are already done in the provided `config.plist`, I’m just making it obvious here. The `amfi_get_out_of_my_way=1` parameter appears to be redundant.
+These modifications are already done in the provided `config.plist`, I’m just making it obvious here. The `amfi_get_out_of_my_way=1` parameter appears to be redundant. However, if a tool like [OCLP](#restoring-graphics-acceleration) complains about AMFI not being disabled, feel free to add it back.
 
 ### Restoring Graphics Acceleration
 
