@@ -437,7 +437,7 @@ macOS does not automatically enable TRIM for non-Apple SSDs, even if it is insta
 sudo trimforce enable
 ```
 
-Ignore the warning message and proceed anyway. There are no known SATA SSD drives that have issues with macOS. including TRIM support.
+Ignore the warning message and proceed anyway. There are no known SATA SSD drives that have issues with macOS, including TRIM support.
 
 ### Restoring Graphics Acceleration
 
