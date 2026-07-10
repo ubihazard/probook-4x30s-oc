@@ -227,7 +227,7 @@ If you are bold enough to go this route, you can refer to the [40s series guide]
 Anyway, reboot your ProBook from the USB installer. During setup the machine will restart several times and if everything goes well you will end up on macOS welcome screen. To finish setup we need to copy OpenCore files to your system EFI partition (so you can boot without USB) and fix power management. This time, however, keep the `config.plist` from the provided OpenCore [EFI folder](https://github.com/ubihazard/probook-4x30s-oc/releases/latest "Download"), not `config-usb.plist`. The next step requires you to have working internet connection so hook your laptop up with an ethernet cable because Wi-Fi isn’t available yet.
 
 > [!TIP]
-> If, for some reason, you can’t have wired ethernet organized, skip through macOS initial setup prompts, [enable wireless kexts](#enabling-wi-fi-and-bluetooth) *in a `config.plist` on your USB EFI partition* and reboot from the USB stick again, – this time not into the installer but into a macOS you’ve just installed.
+> If, for some reason, you can’t have wired ethernet organized, skip through macOS initial setup prompts, [enable wireless kexts](#enabling-wi-fi-and-bluetooth) *in a `config.plist` on your USB EFI partition* and reboot from the USB stick again, – this time not into the installer but into the macOS you’ve just installed.
 
 ACPI Patching
 -------------
