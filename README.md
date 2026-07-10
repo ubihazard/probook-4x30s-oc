@@ -431,7 +431,7 @@ sudo mkdir /var/vm/sleepimage
 
 ### Enabling TRIM
 
-macOS does not automatically enable TRIM for non-Apple SSDs, even if it is installed on such. Using an SSD without TRIM will result in suboptimal performance and lower its lifespan. We must force enable TRIM with the following command:
+macOS does not automatically enable TRIM for non-Apple SSDs, even if it is installed on such. Using an SSD without TRIM will result in suboptimal performance and reduce its lifespan. We must force enable TRIM with the following command:
 
 ```bash
 sudo trimforce enable
