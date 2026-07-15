@@ -659,7 +659,8 @@ The official [installer](https://github.com/chris1111/JMicron-Card-Reader) for J
         sudo cp -r /EFI/EFI/OC/Kexts/HSSDBlockStorage.kext /Library/Extensions
         ```
       * Approve new kexts when prompted.
-  * Reboot to use card reader.
+
+Reboot to use the card reader.
 
 ### Configuring Trackpad
 
