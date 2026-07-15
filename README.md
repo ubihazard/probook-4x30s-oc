@@ -633,6 +633,34 @@ Optional: open `WifiLocFix.kext/Contents/Info.plist` in a plain text editor and 
 
 If you opted to install Broadcom card in your ProBook, head over to a [dedicated section](#enabling-broadcom-wireless) for your wireless configuration. Otherwise, make sure to remove Broadcom kexts from your `config.plist` if they are present.
 
+### Enabling SD Card Reader
+
+The official [installer](https://github.com/chris1111/JMicron-Card-Reader) for JMicron PCI SD card reader package recommends installing kexts to `/Library/Extensions`. Although no adverse effects were found in injecting them from bootloader, we will follow the official recommendation.
+
+  * Mount your SSD EFI folder.
+    ```bash
+    diskutil list
+    sudo diskutil mount diskXsY
+    ```
+  * If using Mojave or Catalina:
+      * Copy legacy kexts using Terminal.app.
+        ```bash
+        sudo cp -r /EFI/EFI/OC/Kexts/Legacy/JMB38X.kext /Library/Extensions
+        sudo cp -r /EFI/EFI/OC/Kexts/Legacy/HSSDBlockStorage.kext /Library/Extensions
+        ```
+      * Rebuild kernel cache.
+        ```bash
+        sudo kextcache -i /
+        ```
+  * If using Big Sur and above:
+      * Copy modern kexts.
+        ```bash
+        sudo cp -r /EFI/EFI/OC/Kexts/JMB38X.kext /Library/Extensions
+        sudo cp -r /EFI/EFI/OC/Kexts/HSSDBlockStorage.kext /Library/Extensions
+        ```
+      * Approve new kexts when prompted.
+  * Reboot to use card reader.
+
 ### Configuring Trackpad
 
 Since your laptop battery is probably long dead, macOS would not recognize it. And without a recognized battery modern versions of macOS also prevent changing trackpad settings (go figure).
@@ -1159,7 +1187,11 @@ Finally, copy and paste the following section where Atheros configuration was pr
 ```
 </details>
 
-For Mojave and earlier copy `BrcmPatchRAM2.kext` and `BrcmFirmwareRepo.kext` (not “Data”) to `/Library/Extensions` and rebuild the kernel cache.
+For Mojave and earlier copy `BrcmPatchRAM2.kext` and `BrcmFirmwareRepo.kext` (not “Data”) to `/Library/Extensions` and rebuild the kernel cache:
+
+```bash
+sudo kextcache -i /
+```
 
 > [!NOTE]
 > These two kexts cannot be injected from bootloader and must be installed manually to your system drive.
