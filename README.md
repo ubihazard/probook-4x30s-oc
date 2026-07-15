@@ -932,7 +932,13 @@ After enabling graphical boot picker we can go one step further and add a better
 
     The `UUID` part refers to the specific macOS installation volume on APFS drive. Because there can be multiple installations on the same drive, make sure to figure out which UUID belongs where.
 
-  * Make a custom graphical label:
+  * Optional for Big Sur and later: copy your custom icon to Data volume root as well. This will change drive appearance in Disk Utility and Finder in macOS itself.
+
+    ```bash
+    sudo cp Drive\ Icon/Monterey.icns /System/Volumes/Data/.VolumeIcon.icns
+    ```
+
+  * If you ever end up renaming your macOS volume you might need to update its label because it is stored in both textual and graphical form. Make a new graphical label using `disklabel` OpenCore utility:
 
     ```bash
     disklabel -e 'macOS Monterey' .disk_label .disk_label_2x
@@ -941,21 +947,15 @@ After enabling graphical boot picker we can go one step further and add a better
   * Copy new labels:
 
     ```bash
-    sudo cp .disk_label /System/Volumes/Preboot/<UUID>/System/Library/CoreServices
-    sudo cp .disk_label_2x /System/Volumes/Preboot/<UUID>/System/Library/CoreServices
+    sudo cp .disk_label /System/Volumes/Preboot/<UUID>/System/Library/CoreServices/.disk_label
+    sudo cp .disk_label_2x /System/Volumes/Preboot/<UUID>/System/Library/CoreServices/.disk_label_2x
     ```
 
-  * Replace `.disk_label.contentDetails` file with new contents to match the created graphical labels:
+  * Replace `.disk_label.contentDetails` text file with new contents to match the created graphical labels:
 
     ```bash
     printf 'macOS Monterey' > .disk_label.contentDetails
-    sudo cp .disk_label.contentDetails /System/Volumes/Preboot/<UUID>/System/Library/CoreServices
-    ```
-
-  * Optional for Big Sur and later: copy your custom icon to Data volume root as well. This will change drive appearance in Disk Utility and Finder in macOS itself.
-
-    ```bash
-    sudo cp Drive\ Icon/Monterey.icns /System/Volumes/Data/.VolumeIcon.icns
+    sudo cp .disk_label.contentDetails /System/Volumes/Preboot/<UUID>/System/Library/CoreServices/.disk_label.contentDetails
     ```
 
 Next time you reboot the macOS boot entry will change to a new icon and label.
