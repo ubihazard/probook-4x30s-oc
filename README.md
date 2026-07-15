@@ -643,7 +643,7 @@ The official [installer](https://github.com/chris1111/JMicron-Card-Reader) for J
     sudo diskutil mount diskXsY
     ```
   * If using Mojave or Catalina:
-      * Copy legacy kexts using Terminal.app.
+      * Copy legacy kexts from EFI folder.
         ```bash
         sudo cp -r /EFI/EFI/OC/Kexts/Legacy/JMB38X.kext /Library/Extensions
         sudo cp -r /EFI/EFI/OC/Kexts/Legacy/HSSDBlockStorage.kext /Library/Extensions
