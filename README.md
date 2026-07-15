@@ -123,12 +123,12 @@ Unless your ProBook already comes with a Core i7-2640M, like mine, you need to d
 
     ```xml
     <dict>
-      <key>Comment</key>
-      <string>Core i7-2640M power management</string>
-      <key>Enabled</key>
-      <false/>
-      <key>Path</key>
-      <string>SSDT-PM.aml</string>
+        <key>Comment</key>
+        <string>Core i7-2640M power management</string>
+        <key>Enabled</key>
+        <false/>
+        <key>Path</key>
+        <string>SSDT-PM.aml</string>
     </dict>
     ```
     </details>
@@ -141,34 +141,34 @@ Unless your ProBook already comes with a Core i7-2640M, like mine, you need to d
     ```xml
     <key>Delete</key>
     <array>
-      <dict>
-        <key>All</key>
-        <false/>
-        <key>Comment</key>
-        <string>Delete CpuPm</string>
-        <key>Enabled</key>
-        <true/>
-        <key>OemTableId</key>
-        <data>Q3B1UG0AAAA=</data>
-        <key>TableLength</key>
-        <integer>0</integer>
-        <key>TableSignature</key>
-        <data>U1NEVA==</data>
-      </dict>
-      <dict>
-        <key>All</key>
-        <false/>
-        <key>Comment</key>
-        <string>Delete Cpu0Ist</string>
-        <key>Enabled</key>
-        <true/>
-        <key>OemTableId</key>
-        <data>Q3B1MElzdAA=</data>
-        <key>TableLength</key>
-        <integer>0</integer>
-        <key>TableSignature</key>
-        <data>U1NEVA==</data>
-      </dict>
+        <dict>
+            <key>All</key>
+            <false/>
+            <key>Comment</key>
+            <string>Delete CpuPm</string>
+            <key>Enabled</key>
+            <true/>
+            <key>OemTableId</key>
+            <data>Q3B1UG0AAAA=</data>
+            <key>TableLength</key>
+            <integer>0</integer>
+            <key>TableSignature</key>
+            <data>U1NEVA==</data>
+        </dict>
+        <dict>
+            <key>All</key>
+            <false/>
+            <key>Comment</key>
+            <string>Delete Cpu0Ist</string>
+            <key>Enabled</key>
+            <true/>
+            <key>OemTableId</key>
+            <data>Q3B1MElzdAA=</data>
+            <key>TableLength</key>
+            <integer>0</integer>
+            <key>TableSignature</key>
+            <data>U1NEVA==</data>
+        </dict>
     </array>
     ```
     </details>
@@ -180,22 +180,22 @@ Unless your ProBook already comes with a Core i7-2640M, like mine, you need to d
 
     ```xml
     <dict>
-      <key>Arch</key>
-      <string>Any</string>
-      <key>BundlePath</key>
-      <string>NullCPUPowerManagement.kext</string>
-      <key>Comment</key>
-      <string>NullCPUPowerManagement.kext</string>
-      <key>Enabled</key>
-      <true/>
-      <key>ExecutablePath</key>
-      <string>Contents/MacOS/NullCPUPowerManagement</string>
-      <key>MaxKernel</key>
-      <string></string>
-      <key>MinKernel</key>
-      <string></string>
-      <key>PlistPath</key>
-      <string>Contents/Info.plist</string>
+        <key>Arch</key>
+        <string>Any</string>
+        <key>BundlePath</key>
+        <string>NullCPUPowerManagement.kext</string>
+        <key>Comment</key>
+        <string>NullCPUPowerManagement.kext</string>
+        <key>Enabled</key>
+        <true/>
+        <key>ExecutablePath</key>
+        <string>Contents/MacOS/NullCPUPowerManagement</string>
+        <key>MaxKernel</key>
+        <string></string>
+        <key>MinKernel</key>
+        <string></string>
+        <key>PlistPath</key>
+        <string>Contents/Info.plist</string>
     </dict>
     ```
     </details>
@@ -264,12 +264,12 @@ Without proper CPU PM `AppleIntelCPUPowerManagement.kext` would cause kernel pan
 
     ```xml
     <dict>
-      <key>Comment</key>
-      <string>SSDT-PM.aml</string>
-      <key>Enabled</key>
-      <true/>
-      <key>Path</key>
-      <string>SSDT-PM.aml</string>
+        <key>Comment</key>
+        <string>SSDT-PM.aml</string>
+        <key>Enabled</key>
+        <true/>
+        <key>Path</key>
+        <string>SSDT-PM.aml</string>
     </dict>
     ```
     </details>
@@ -282,34 +282,34 @@ Without proper CPU PM `AppleIntelCPUPowerManagement.kext` would cause kernel pan
     ```xml
     <key>Delete</key>
     <array>
-      <dict>
-        <key>All</key>
-        <false/>
-        <key>Comment</key>
-        <string>Delete CpuPm</string>
-        <key>Enabled</key>
-        <false/>
-        <key>OemTableId</key>
-        <data>Q3B1UG0AAAA=</data>
-        <key>TableLength</key>
-        <integer>0</integer>
-        <key>TableSignature</key>
-        <data>U1NEVA==</data>
-      </dict>
-      <dict>
-        <key>All</key>
-        <false/>
-        <key>Comment</key>
-        <string>Delete Cpu0Ist</string>
-        <key>Enabled</key>
-        <false/>
-        <key>OemTableId</key>
-        <data>Q3B1MElzdAA=</data>
-        <key>TableLength</key>
-        <integer>0</integer>
-        <key>TableSignature</key>
-        <data>U1NEVA==</data>
-      </dict>
+        <dict>
+            <key>All</key>
+            <false/>
+            <key>Comment</key>
+            <string>Delete CpuPm</string>
+            <key>Enabled</key>
+            <false/>
+            <key>OemTableId</key>
+            <data>Q3B1UG0AAAA=</data>
+            <key>TableLength</key>
+            <integer>0</integer>
+            <key>TableSignature</key>
+            <data>U1NEVA==</data>
+        </dict>
+        <dict>
+            <key>All</key>
+            <false/>
+            <key>Comment</key>
+            <string>Delete Cpu0Ist</string>
+            <key>Enabled</key>
+            <false/>
+            <key>OemTableId</key>
+            <data>Q3B1MElzdAA=</data>
+            <key>TableLength</key>
+            <integer>0</integer>
+            <key>TableSignature</key>
+            <data>U1NEVA==</data>
+        </dict>
     </array>
     ```
     </details>
@@ -321,22 +321,22 @@ Without proper CPU PM `AppleIntelCPUPowerManagement.kext` would cause kernel pan
 
     ```xml
     <dict>
-      <key>Arch</key>
-      <string>Any</string>
-      <key>BundlePath</key>
-      <string>NullCPUPowerManagement.kext</string>
-      <key>Comment</key>
-      <string>NullCPUPowerManagement.kext</string>
-      <key>Enabled</key>
-      <false/>
-      <key>ExecutablePath</key>
-      <string>Contents/MacOS/NullCPUPowerManagement</string>
-      <key>MaxKernel</key>
-      <string></string>
-      <key>MinKernel</key>
-      <string></string>
-      <key>PlistPath</key>
-      <string>Contents/Info.plist</string>
+        <key>Arch</key>
+        <string>Any</string>
+        <key>BundlePath</key>
+        <string>NullCPUPowerManagement.kext</string>
+        <key>Comment</key>
+        <string>NullCPUPowerManagement.kext</string>
+        <key>Enabled</key>
+        <false/>
+        <key>ExecutablePath</key>
+        <string>Contents/MacOS/NullCPUPowerManagement</string>
+        <key>MaxKernel</key>
+        <string></string>
+        <key>MinKernel</key>
+        <string></string>
+        <key>PlistPath</key>
+        <string>Contents/Info.plist</string>
     </dict>
     ```
     </details>
@@ -348,22 +348,22 @@ Without proper CPU PM `AppleIntelCPUPowerManagement.kext` would cause kernel pan
 
     ```xml
     <dict>
-      <key>Arch</key>
-      <string>Any</string>
-      <key>BundlePath</key>
-      <string>ASPP-Override.kext</string>
-      <key>Comment</key>
-      <string>ASPP-Override.kext</string>
-      <key>Enabled</key>
-      <true/>
-      <key>ExecutablePath</key>
-      <string></string>
-      <key>MaxKernel</key>
-      <string></string>
-      <key>MinKernel</key>
-      <string>21.4.0</string>
-      <key>PlistPath</key>
-      <string>Contents/Info.plist</string>
+        <key>Arch</key>
+        <string>Any</string>
+        <key>BundlePath</key>
+        <string>ASPP-Override.kext</string>
+        <key>Comment</key>
+        <string>ASPP-Override.kext</string>
+        <key>Enabled</key>
+        <true/>
+        <key>ExecutablePath</key>
+        <string></string>
+        <key>MaxKernel</key>
+        <string></string>
+        <key>MinKernel</key>
+        <string>21.4.0</string>
+        <key>PlistPath</key>
+        <string>Contents/Info.plist</string>
     </dict>
     ```
     </details>
@@ -492,130 +492,130 @@ By default Atheros wireless is already configured in `config.plist`. You can ver
 
 ```xml
 <dict>
-	<key>Arch</key>
-	<string>Any</string>
-	<key>BundlePath</key>
-	<string>IOath3kfrmwr.kext</string>
-	<key>Comment</key>
-	<string>IOath3kfrmwr.kext</string>
-	<key>Enabled</key>
-	<true/>
-	<key>ExecutablePath</key>
-	<string>Contents/MacOS/IOath3kfrmwr</string>
-	<key>MaxKernel</key>
-	<string></string>
-	<key>MinKernel</key>
-	<string>18.0.0</string>
-	<key>PlistPath</key>
-	<string>Contents/Info.plist</string>
+    <key>Arch</key>
+    <string>Any</string>
+    <key>BundlePath</key>
+    <string>IOath3kfrmwr.kext</string>
+    <key>Comment</key>
+    <string>IOath3kfrmwr.kext</string>
+    <key>Enabled</key>
+    <true/>
+    <key>ExecutablePath</key>
+    <string>Contents/MacOS/IOath3kfrmwr</string>
+    <key>MaxKernel</key>
+    <string></string>
+    <key>MinKernel</key>
+    <string>18.0.0</string>
+    <key>PlistPath</key>
+    <string>Contents/Info.plist</string>
 </dict>
 <dict>
-	<key>Arch</key>
-	<string>Any</string>
-	<key>BundlePath</key>
-	<string>Legacy/IOath3kfrmwr.kext</string>
-	<key>Comment</key>
-	<string>IOath3kfrmwr.kext</string>
-	<key>Enabled</key>
-	<true/>
-	<key>ExecutablePath</key>
-	<string>Contents/MacOS/IOath3kfrmwr</string>
-	<key>MaxKernel</key>
-	<string>17.9.9</string>
-	<key>MinKernel</key>
-	<string></string>
-	<key>PlistPath</key>
-	<string>Contents/Info.plist</string>
+    <key>Arch</key>
+    <string>Any</string>
+    <key>BundlePath</key>
+    <string>Legacy/IOath3kfrmwr.kext</string>
+    <key>Comment</key>
+    <string>IOath3kfrmwr.kext</string>
+    <key>Enabled</key>
+    <true/>
+    <key>ExecutablePath</key>
+    <string>Contents/MacOS/IOath3kfrmwr</string>
+    <key>MaxKernel</key>
+    <string>17.9.9</string>
+    <key>MinKernel</key>
+    <string></string>
+    <key>PlistPath</key>
+    <string>Contents/Info.plist</string>
 </dict>
 <dict>
-	<key>Arch</key>
-	<string>Any</string>
-	<key>BundlePath</key>
-	<string>IOath3kdevice.kext</string>
-	<key>Comment</key>
-	<string>IOath3kdevice.kext</string>
-	<key>Enabled</key>
-	<true/>
-	<key>ExecutablePath</key>
-	<string>Contents/MacOS/IOath3kdevice</string>
-	<key>MaxKernel</key>
-	<string>20.9.9</string>
-	<key>MinKernel</key>
-	<string>18.0.0</string>
-	<key>PlistPath</key>
-	<string>Contents/Info.plist</string>
+    <key>Arch</key>
+    <string>Any</string>
+    <key>BundlePath</key>
+    <string>IOath3kdevice.kext</string>
+    <key>Comment</key>
+    <string>IOath3kdevice.kext</string>
+    <key>Enabled</key>
+    <true/>
+    <key>ExecutablePath</key>
+    <string>Contents/MacOS/IOath3kdevice</string>
+    <key>MaxKernel</key>
+    <string>20.9.9</string>
+    <key>MinKernel</key>
+    <string>18.0.0</string>
+    <key>PlistPath</key>
+    <string>Contents/Info.plist</string>
 </dict>
 <dict>
-	<key>Arch</key>
-	<string>Any</string>
-	<key>BundlePath</key>
-	<string>HS80211Family.kext</string>
-	<key>Comment</key>
-	<string>HS80211Family.kext</string>
-	<key>Enabled</key>
-	<true/>
-	<key>ExecutablePath</key>
-	<string>Contents/MacOS/HS80211Family</string>
-	<key>MaxKernel</key>
-	<string>20.9.9</string>
-	<key>MinKernel</key>
-	<string>18.0.0</string>
-	<key>PlistPath</key>
-	<string>Contents/Info.plist</string>
+    <key>Arch</key>
+    <string>Any</string>
+    <key>BundlePath</key>
+    <string>HS80211Family.kext</string>
+    <key>Comment</key>
+    <string>HS80211Family.kext</string>
+    <key>Enabled</key>
+    <true/>
+    <key>ExecutablePath</key>
+    <string>Contents/MacOS/HS80211Family</string>
+    <key>MaxKernel</key>
+    <string>20.9.9</string>
+    <key>MinKernel</key>
+    <string>18.0.0</string>
+    <key>PlistPath</key>
+    <string>Contents/Info.plist</string>
 </dict>
 <dict>
-	<key>Arch</key>
-	<string>Any</string>
-	<key>BundlePath</key>
-	<string>AirPortAtheros40.kext</string>
-	<key>Comment</key>
-	<string>AirPortAtheros40.kext</string>
-	<key>Enabled</key>
-	<true/>
-	<key>ExecutablePath</key>
-	<string>Contents/MacOS/AirPortAtheros40</string>
-	<key>MaxKernel</key>
-	<string>20.9.9</string>
-	<key>MinKernel</key>
-	<string>18.0.0</string>
-	<key>PlistPath</key>
-	<string>Contents/Info.plist</string>
+    <key>Arch</key>
+    <string>Any</string>
+    <key>BundlePath</key>
+    <string>AirPortAtheros40.kext</string>
+    <key>Comment</key>
+    <string>AirPortAtheros40.kext</string>
+    <key>Enabled</key>
+    <true/>
+    <key>ExecutablePath</key>
+    <string>Contents/MacOS/AirPortAtheros40</string>
+    <key>MaxKernel</key>
+    <string>20.9.9</string>
+    <key>MinKernel</key>
+    <string>18.0.0</string>
+    <key>PlistPath</key>
+    <string>Contents/Info.plist</string>
 </dict>
 <dict>
-	<key>Arch</key>
-	<string>Any</string>
-	<key>BundlePath</key>
-	<string>ProBookAtheros.kext</string>
-	<key>Comment</key>
-	<string>ProBookAtheros.kext</string>
-	<key>Enabled</key>
-	<true/>
-	<key>ExecutablePath</key>
-	<string></string>
-	<key>MaxKernel</key>
-	<string>17.9.9</string>
-	<key>MinKernel</key>
-	<string></string>
-	<key>PlistPath</key>
-	<string>Contents/Info.plist</string>
+    <key>Arch</key>
+    <string>Any</string>
+    <key>BundlePath</key>
+    <string>ProBookAtheros.kext</string>
+    <key>Comment</key>
+    <string>ProBookAtheros.kext</string>
+    <key>Enabled</key>
+    <true/>
+    <key>ExecutablePath</key>
+    <string></string>
+    <key>MaxKernel</key>
+    <string>17.9.9</string>
+    <key>MinKernel</key>
+    <string></string>
+    <key>PlistPath</key>
+    <string>Contents/Info.plist</string>
 </dict>
 <dict>
-	<key>Arch</key>
-	<string>Any</string>
-	<key>BundlePath</key>
-	<string>WifiLocFix.kext</string>
-	<key>Comment</key>
-	<string>WifiLocFix.kext</string>
-	<key>Enabled</key>
-	<true/>
-	<key>ExecutablePath</key>
-	<string></string>
-	<key>MaxKernel</key>
-	<string></string>
-	<key>MinKernel</key>
-	<string></string>
-	<key>PlistPath</key>
-	<string>Contents/Info.plist</string>
+    <key>Arch</key>
+    <string>Any</string>
+    <key>BundlePath</key>
+    <string>WifiLocFix.kext</string>
+    <key>Comment</key>
+    <string>WifiLocFix.kext</string>
+    <key>Enabled</key>
+    <true/>
+    <key>ExecutablePath</key>
+    <string></string>
+    <key>MaxKernel</key>
+    <string></string>
+    <key>MinKernel</key>
+    <string></string>
+    <key>PlistPath</key>
+    <string>Contents/Info.plist</string>
 </dict>
 ```
 </details>
@@ -624,10 +624,10 @@ Optional: open `WifiLocFix.kext/Contents/Info.plist` in a plain text editor and 
 
 ```xml
 <dict>
-  <key>IO80211CountryCode</key>
-  <string>US</string>
-  <key>IO80211Locale</key>
-  <string>FCC</string>
+    <key>IO80211CountryCode</key>
+    <string>US</string>
+    <key>IO80211Locale</key>
+    <string>FCC</string>
 </dict>
 ```
 
@@ -672,12 +672,12 @@ Like other SSDTs, it needs to be activated in `config.plist`:
 
 ```xml
 <dict>
-  <key>Comment</key>
-  <string>Function keys fix</string>
-  <key>Enabled</key>
-  <true/>
-  <key>Path</key>
-  <string>SSDT-KBFN.aml</string>
+    <key>Comment</key>
+    <string>Function keys fix</string>
+    <key>Enabled</key>
+    <true/>
+    <key>Path</key>
+    <string>SSDT-KBFN.aml</string>
 </dict>
 ```
 
@@ -722,26 +722,26 @@ Now we can fill this information under `PlatformInfo/Generic`:
 ```xml
 <key>Generic</key>
 <dict>
-  <key>AdviseFeatures</key>
-  <false/>
-  <key>MLB</key>
-  <string>M0000000000000001</string>
-  <key>MaxBIOSVersion</key>
-  <false/>
-  <key>ProcessorType</key>
-  <integer>0</integer>
-  <key>ROM</key>
-  <data>ABCDEF==</data>
-  <key>SpoofVendor</key>
-  <true/>
-  <key>SystemMemoryStatus</key>
-  <string>Auto</string>
-  <key>SystemProductName</key>
-  <string>MacBookPro8,1</string>
-  <key>SystemSerialNumber</key>
-  <string>W00000000001</string>
-  <key>SystemUUID</key>
-  <string>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</string>
+    <key>AdviseFeatures</key>
+    <false/>
+    <key>MLB</key>
+    <string>M0000000000000001</string>
+    <key>MaxBIOSVersion</key>
+    <false/>
+    <key>ProcessorType</key>
+    <integer>0</integer>
+    <key>ROM</key>
+    <data>ABCDEF==</data>
+    <key>SpoofVendor</key>
+    <true/>
+    <key>SystemMemoryStatus</key>
+    <string>Auto</string>
+    <key>SystemProductName</key>
+    <string>MacBookPro8,1</string>
+    <key>SystemSerialNumber</key>
+    <string>W00000000001</string>
+    <key>SystemUUID</key>
+    <string>XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</string>
 </dict>
 ```
 </details>
@@ -789,22 +789,22 @@ Enable the `ACPIPoller.kext`:
 
 ```xml
 <dict>
-  <key>Arch</key>
-  <string>Any</string>
-  <key>BundlePath</key>
-  <string>ACPIPoller.kext</string>
-  <key>Comment</key>
-  <string>Needed for quiet fan patch</string>
-  <key>Enabled</key>
-  <true/>
-  <key>ExecutablePath</key>
-  <string>Contents/MacOS/ACPIPoller</string>
-  <key>MaxKernel</key>
-  <string></string>
-  <key>MinKernel</key>
-  <string></string>
-  <key>PlistPath</key>
-  <string>Contents/Info.plist</string>
+    <key>Arch</key>
+    <string>Any</string>
+    <key>BundlePath</key>
+    <string>ACPIPoller.kext</string>
+    <key>Comment</key>
+    <string>Needed for quiet fan patch</string>
+    <key>Enabled</key>
+    <true/>
+    <key>ExecutablePath</key>
+    <string>Contents/MacOS/ACPIPoller</string>
+    <key>MaxKernel</key>
+    <string></string>
+    <key>MinKernel</key>
+    <string></string>
+    <key>PlistPath</key>
+    <string>Contents/Info.plist</string>
 </dict>
 ```
 </details>
@@ -813,12 +813,12 @@ Apply the custom fan curve with `SSDT-FANUBI.aml`:
 
 ```xml
 <dict>
-  <key>Comment</key>
-  <string>Quiet fan patch (needs ACPIPoller.kext)</string>
-  <key>Enabled</key>
-  <true/>
-  <key>Path</key>
-  <string>SSDT-FANUBI.aml</string>
+    <key>Comment</key>
+    <string>Quiet fan patch (needs ACPIPoller.kext)</string>
+    <key>Enabled</key>
+    <true/>
+    <key>Path</key>
+    <string>SSDT-FANUBI.aml</string>
 </dict>
 ```
 
@@ -983,16 +983,16 @@ Next, enable BIOS Wi-Fi whitelist bypass EFI driver in `UEFI/Drivers`:
 
 ```xml
 <dict>
-  <key>Arguments</key>
-  <string></string>
-  <key>Comment</key>
-  <string>ProBookWifiWhlistOff.efi</string>
-  <key>Enabled</key>
-  <true/>
-  <key>LoadEarly</key>
-  <false/>
-  <key>Path</key>
-  <string>ProBookWifiUnblock.efi</string>
+    <key>Arguments</key>
+    <string></string>
+    <key>Comment</key>
+    <string>ProBookWifiWhlistOff.efi</string>
+    <key>Enabled</key>
+    <true/>
+    <key>LoadEarly</key>
+    <false/>
+    <key>Path</key>
+    <string>ProBookWifiUnblock.efi</string>
 </dict>
 ```
 </details>
@@ -1031,130 +1031,130 @@ Finally, copy and paste the following section where Atheros configuration was pr
 
 ```xml
 <dict>
-  <key>Arch</key>
-  <string>Any</string>
-  <key>BundlePath</key>
-  <string>AirportBrcmFixup.kext</string>
-  <key>Comment</key>
-  <string>AirportBrcmFixup.kext</string>
-  <key>Enabled</key>
-  <true/>
-  <key>ExecutablePath</key>
-  <string>Contents/MacOS/AirportBrcmFixup</string>
-  <key>MaxKernel</key>
-  <string></string>
-  <key>MinKernel</key>
-  <string></string>
-  <key>PlistPath</key>
-  <string>Contents/Info.plist</string>
+    <key>Arch</key>
+    <string>Any</string>
+    <key>BundlePath</key>
+    <string>AirportBrcmFixup.kext</string>
+    <key>Comment</key>
+    <string>AirportBrcmFixup.kext</string>
+    <key>Enabled</key>
+    <true/>
+    <key>ExecutablePath</key>
+    <string>Contents/MacOS/AirportBrcmFixup</string>
+    <key>MaxKernel</key>
+    <string></string>
+    <key>MinKernel</key>
+    <string></string>
+    <key>PlistPath</key>
+    <string>Contents/Info.plist</string>
 </dict>
 <dict>
-  <key>Arch</key>
-  <string>Any</string>
-  <key>BundlePath</key>
-  <string>AirportBrcmFixup.kext/Contents/PlugIns/AirPortBrcmNIC_Injector.kext</string>
-  <key>Comment</key>
-  <string>AirPortBrcmNIC_Injector.kext</string>
-  <key>Enabled</key>
-  <true/>
-  <key>ExecutablePath</key>
-  <string></string>
-  <key>MaxKernel</key>
-  <string></string>
-  <key>MinKernel</key>
-  <string>20.0.0</string>
-  <key>PlistPath</key>
-  <string>Contents/Info.plist</string>
+    <key>Arch</key>
+    <string>Any</string>
+    <key>BundlePath</key>
+    <string>AirportBrcmFixup.kext/Contents/PlugIns/AirPortBrcmNIC_Injector.kext</string>
+    <key>Comment</key>
+    <string>AirPortBrcmNIC_Injector.kext</string>
+    <key>Enabled</key>
+    <true/>
+    <key>ExecutablePath</key>
+    <string></string>
+    <key>MaxKernel</key>
+    <string></string>
+    <key>MinKernel</key>
+    <string>20.0.0</string>
+    <key>PlistPath</key>
+    <string>Contents/Info.plist</string>
 </dict>
 <dict>
-  <key>Arch</key>
-  <string>Any</string>
-  <key>BundlePath</key>
-  <string>AirportBrcmFixup.kext/Contents/PlugIns/AirPortBrcm4360_Injector.kext</string>
-  <key>Comment</key>
-  <string>AirPortBrcm4360_Injector.kext</string>
-  <key>Enabled</key>
-  <true/>
-  <key>ExecutablePath</key>
-  <string></string>
-  <key>MaxKernel</key>
-  <string>19.9.9</string>
-  <key>MinKernel</key>
-  <string></string>
-  <key>PlistPath</key>
-  <string>Contents/Info.plist</string>
+    <key>Arch</key>
+    <string>Any</string>
+    <key>BundlePath</key>
+    <string>AirportBrcmFixup.kext/Contents/PlugIns/AirPortBrcm4360_Injector.kext</string>
+    <key>Comment</key>
+    <string>AirPortBrcm4360_Injector.kext</string>
+    <key>Enabled</key>
+    <true/>
+    <key>ExecutablePath</key>
+    <string></string>
+    <key>MaxKernel</key>
+    <string>19.9.9</string>
+    <key>MinKernel</key>
+    <string></string>
+    <key>PlistPath</key>
+    <string>Contents/Info.plist</string>
 </dict>
 <dict>
-  <key>Arch</key>
-  <string>Any</string>
-  <key>BundlePath</key>
-  <string>BlueToolFixup.kext</string>
-  <key>Comment</key>
-  <string>BlueToolFixup.kext</string>
-  <key>Enabled</key>
-  <true/>
-  <key>ExecutablePath</key>
-  <string>Contents/MacOS/BlueToolFixup</string>
-  <key>MaxKernel</key>
-  <string></string>
-  <key>MinKernel</key>
-  <string>21.0.0</string>
-  <key>PlistPath</key>
-  <string>Contents/Info.plist</string>
+    <key>Arch</key>
+    <string>Any</string>
+    <key>BundlePath</key>
+    <string>BlueToolFixup.kext</string>
+    <key>Comment</key>
+    <string>BlueToolFixup.kext</string>
+    <key>Enabled</key>
+    <true/>
+    <key>ExecutablePath</key>
+    <string>Contents/MacOS/BlueToolFixup</string>
+    <key>MaxKernel</key>
+    <string></string>
+    <key>MinKernel</key>
+    <string>21.0.0</string>
+    <key>PlistPath</key>
+    <string>Contents/Info.plist</string>
 </dict>
 <dict>
-  <key>Arch</key>
-  <string>Any</string>
-  <key>BundlePath</key>
-  <string>BrcmBluetoothInjector.kext</string>
-  <key>Comment</key>
-  <string>BrcmBluetoothInjector.kext</string>
-  <key>Enabled</key>
-  <true/>
-  <key>ExecutablePath</key>
-  <string></string>
-  <key>MaxKernel</key>
-  <string>20.9.9</string>
-  <key>MinKernel</key>
-  <string>18.0.0</string>
-  <key>PlistPath</key>
-  <string>Contents/Info.plist</string>
+    <key>Arch</key>
+    <string>Any</string>
+    <key>BundlePath</key>
+    <string>BrcmBluetoothInjector.kext</string>
+    <key>Comment</key>
+    <string>BrcmBluetoothInjector.kext</string>
+    <key>Enabled</key>
+    <true/>
+    <key>ExecutablePath</key>
+    <string></string>
+    <key>MaxKernel</key>
+    <string>20.9.9</string>
+    <key>MinKernel</key>
+    <string>18.0.0</string>
+    <key>PlistPath</key>
+    <string>Contents/Info.plist</string>
 </dict>
 <dict>
-  <key>Arch</key>
-  <string>Any</string>
-  <key>BundlePath</key>
-  <string>BrcmFirmwareData.kext</string>
-  <key>Comment</key>
-  <string>BrcmFirmwareData.kext</string>
-  <key>Enabled</key>
-  <true/>
-  <key>ExecutablePath</key>
-  <string>Contents/MacOS/BrcmFirmwareData</string>
-  <key>MaxKernel</key>
-  <string></string>
-  <key>MinKernel</key>
-  <string>19.0.0</string>
-  <key>PlistPath</key>
-  <string>Contents/Info.plist</string>
+    <key>Arch</key>
+    <string>Any</string>
+    <key>BundlePath</key>
+    <string>BrcmFirmwareData.kext</string>
+    <key>Comment</key>
+    <string>BrcmFirmwareData.kext</string>
+    <key>Enabled</key>
+    <true/>
+    <key>ExecutablePath</key>
+    <string>Contents/MacOS/BrcmFirmwareData</string>
+    <key>MaxKernel</key>
+    <string></string>
+    <key>MinKernel</key>
+    <string>19.0.0</string>
+    <key>PlistPath</key>
+    <string>Contents/Info.plist</string>
 </dict>
 <dict>
-  <key>Arch</key>
-  <string>Any</string>
-  <key>BundlePath</key>
-  <string>BrcmPatchRAM3.kext</string>
-  <key>Comment</key>
-  <string>BrcmPatchRAM3.kext</string>
-  <key>Enabled</key>
-  <true/>
-  <key>ExecutablePath</key>
-  <string>Contents/MacOS/BrcmPatchRAM3</string>
-  <key>MaxKernel</key>
-  <string></string>
-  <key>MinKernel</key>
-  <string>19.0.0</string>
-  <key>PlistPath</key>
-  <string>Contents/Info.plist</string>
+    <key>Arch</key>
+    <string>Any</string>
+    <key>BundlePath</key>
+    <string>BrcmPatchRAM3.kext</string>
+    <key>Comment</key>
+    <string>BrcmPatchRAM3.kext</string>
+    <key>Enabled</key>
+    <true/>
+    <key>ExecutablePath</key>
+    <string>Contents/MacOS/BrcmPatchRAM3</string>
+    <key>MaxKernel</key>
+    <string></string>
+    <key>MinKernel</key>
+    <string>19.0.0</string>
+    <key>PlistPath</key>
+    <string>Contents/Info.plist</string>
 </dict>
 ```
 </details>
