@@ -831,6 +831,135 @@ There are several fan behaviors available for choice:
   * `SSDT-FANGRAP.aml`: Yet another version by Don Grappler.
   * `SSDT-FANUBI.aml`: An even more refined version from me 😎
 
+### Enhancing OpenCore Boot Picker
+
+By default OpenCore uses textual or “console-like” interface for the boot picker, which is seen on a USB variant of configuration in `config-usb.plist`. Although sufficient for installation, some [GUI](https://dortania.github.io/OpenCore-Post-Install/cosmetic/gui.html "Pimp my OpenCore") would be nice to have on an actual finished install. The graphical user interface is enabled with `OpenCanopy.efi` OpenCore addon:
+
+```xml
+<dict>
+    <key>Arguments</key>
+    <string></string>
+    <key>Comment</key>
+    <string>OpenCanopy.efi</string>
+    <key>Enabled</key>
+    <true/>
+    <key>LoadEarly</key>
+    <false/>
+    <key>Path</key>
+    <string>OpenCanopy.efi</string>
+</dict>
+```
+
+Enable custom boot picker under `Misc/Boot`:
+
+```xml
+<key>PickerMode</key>
+<string>External</string>
+<key>PickerVariant</key>
+<string>Acidanthera\Syrah</string>
+<key>PickerAttributes</key>
+<integer>3</integer>
+```
+
+We can even add a [boot chime](https://dortania.github.io/OpenCore-Post-Install/cosmetic/gui.html#setting-up-boot-chime-with-audiodxe):
+
+```xml
+<dict>
+    <key>Arguments</key>
+    <string></string>
+    <key>Comment</key>
+    <string>AudioDxe.efi</string>
+    <key>Enabled</key>
+    <true/>
+    <key>LoadEarly</key>
+    <false/>
+    <key>Path</key>
+    <string>AudioDxe.efi</string>
+</dict>
+```
+
+Configure it in `UEFI/Audio`:
+
+<details>
+<summary><strong>Example</strong></summary><br>
+
+```xml
+<key>Audio</key>
+<dict>
+    <key>AudioCodec</key>
+    <integer>0</integer>
+    <key>AudioDevice</key>
+    <string>PciRoot(0x0)/Pci(0x1b,0x0)</string>
+    <key>AudioOutMask</key>
+    <integer>-1</integer>
+    <key>AudioSupport</key>
+    <true/>
+    <key>DisconnectHda</key>
+    <false/>
+    <key>MaximumGain</key>
+    <integer>-15</integer>
+    <key>MinimumAssistGain</key>
+    <integer>-30</integer>
+    <key>MinimumAudibleGain</key>
+    <integer>-55</integer>
+    <key>PlayChime</key>
+    <string>Enabled</string>
+    <key>ResetTrafficClass</key>
+    <false/>
+    <key>SetupDelay</key>
+    <integer>500</integer>
+</dict>
+```
+</details>
+
+Notice `PciRoot(0x0)/Pci(0x1b,0x0)` ACPI path which points to the sound card device. It can be easily discovered via `gfxutil -f HDEF`.
+
+OpenCore does not come with graphical or audio resources out of the box. They must be obtained from [OcBinaryData](https://github.com/acidanthera/OcBinaryData/tree/master/Resources) package and extracted to `EFI/OC/Resources`. This is already done in the provided EFI folder.
+
+### Custom Drive Icon and Label
+
+After enabling graphical boot picker we can go one step further and add a better icon for the newly installed macOS. The location from where OpenCore picker reads custom boot entry icons is not obvious though.
+
+  * Grab the [custom icon](https://github.com/ubihazard/probook-4x30s-oc/releases/latest) files from assets.
+
+  * For Catalina and Mojave: mount the Preboot volume. Use `diskutil list` to find out the correct disk identifier and mount it manually. In this case the volume would be mounted under `/Volumes`. Starting with Big Sur Preboot volume is mounted automatically under `/System/Volumes`.
+
+  * Choose the appropriate drive icon and copy it.
+
+    ```bash
+    sudo cp Drive\ Icon/Monterey.icns /System/Volumes/Preboot/<UUID>/.VolumeIcon.icns
+    ```
+
+    The `UUID` part refers to the specific macOS installation volume on APFS drive. Because there can be multiple installations on the same drive, make sure to figure out which UUID belongs where.
+
+  * Make a custom graphical label:
+
+    ```bash
+    disklabel -e 'macOS Monterey' .disk_label .disk_label_2x
+    ```
+
+  * Copy new labels:
+
+    ```bash
+    sudo cp .disk_label /System/Volumes/Preboot/<UUID>/System/Library/CoreServices
+    sudo cp .disk_label_2x /System/Volumes/Preboot/<UUID>/System/Library/CoreServices
+    ```
+
+  * Replace `.disk_label.contentDetails` file with new contents to match the created graphical labels:
+
+    ```bash
+    printf 'macOS Monterey' > .disk_label.contentDetails
+    sudo cp .disk_label.contentDetails /System/Volumes/Preboot/<UUID>/System/Library/CoreServices
+    ```
+
+  * Optional for Big Sur and later: copy your custom icon to Data volume root as well. This will change drive appearance in Disk Utility and Finder in macOS itself.
+
+    ```bash
+    sudo cp Drive\ Icon/Monterey.icns /System/Volumes/Data/.VolumeIcon.icns
+    ```
+
+Next time you reboot the macOS boot entry will change to a new icon and label.
+
 Enabling Broadcom Wireless
 --------------------------
 

@@ -2249,7 +2249,7 @@
 				<key>Comment</key>
 				<string>Restore automatic BIOS fan control on boot</string>
 				<key>Enabled</key>
-				<false/>
+				<true/>
 				<key>LoadEarly</key>
 				<false/>
 				<key>Path</key>
