@@ -101,6 +101,9 @@ We will be enabling some and disabling others during the [post-install](#post-in
 Installation
 ------------
 
+> [!IMPORTANT]
+> Update your laptop BIOS to the latest version from HP support website. The included ACPI patches should work with any BIOS version but only the latest was actually tested.
+
 Follow the official Dortania instructions to [make a bootable macOS USB installer](https://dortania.github.io/OpenCore-Install-Guide/installer-guide/). After creating USB installer mount its EFI partition and copy OpenCore files downloaded from [releases page](https://github.com/ubihazard/probook-4x30s-oc/releases/latest "Download") replacing `config.plist` with `config-usb.plist`. It‘s a configuration variant modified specifically for use with macOS installer that disables some kexts which are useless during setup process (Wi-Fi, Bluetooth, SD card reader, etc.), doesn’t modify SIP flags or mess with AMFI, enables verbose boot text messages so you can troubleshoot boot issues, and has a different SMBIOS Mac model which allows to install more recent macOS versions, which aren’t supported natively, but supported with the help of [OpenCore Legacy Patcher](https://github.com/dortania/OpenCore-Legacy-Patcher) (OCLP), – up to Monterey with the provided OpenCore configuration.
 
 ### HD+ and Full HD Screens
