@@ -83,10 +83,10 @@ All required kexts are already assembled in one place in the provided OpenCore [
       * `USBInjectAll.kext` [0.8.1]: Initial setup and port mapping
   * `mXHCD.kext` [1.0.0]: Renesas USB 3.0
       * `GenericUSBXHCI.kext` [1.3.0b1]: Renesas USB 3.0 (legacy)
-  * `HS80211Family.kext` [12.0]: Wireless (Bluetooth)
-      * `IOath3kfrmwr.kext` [1.3]
+  * `IOath3kfrmwr.kext` [1.3]: Wireless
       * `IOath3kdevice.kext`
-  * `AirPortAtheros40.kext` [7.0]: Wireless (Wi-Fi)
+  * `HS80211Family.kext` [12.0]: Wireless
+  * `AirPortAtheros40.kext` [7.0]: Wireless
       * `ProBookAtheros.kext` [1.0.3]
       * `WifiLocFix.kext`
   * `JMB38X.kext` [1.5.0]: SD card reader
