@@ -4,7 +4,7 @@
 
 Detailed instructions on how to install recent version of [macOS](https://en.wikipedia.org/wiki/MacOS) on HP ProBook 30s series laptops with second generation Sandy Bridge Intel Core i CPUs, – specifically, a [ProBook 4530s](https://support.hp.com/us-en/product/hp-probook-4530s-notebook-pc/5060880). This is also a long-overdue update to the previous guide posted here, now with proper ACPI patches, important corrections and recommendations.
 
-![macOS Installed on a ProBook 4530s](Images/about-this-probook.png)
+![macOS Installed on a ProBook 4530s](Images/probook-4530s-on-monterey.png)
 
 > [!IMPORTANT]
 > There is a [newer guide](https://github.com/ubihazard/probook-4x40s-oc "macOS for ProBook 4x40s") for 40s series laptops with third generation Intel Ivy Bridge CPUs and Metal-capable graphics now available with much better support for modern macOS. Some content was moved there to avoid duplication.
