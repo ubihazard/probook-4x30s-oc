@@ -665,6 +665,8 @@ The official [installer](https://github.com/chris1111/JMicron-Card-Reader) for J
 
 Reboot to use the card reader.
 
+The kext description makes it seem like it works only up to Ventura but it actually functions just fine on Sonoma and Sequoia.
+
 ### Configuring Trackpad
 
 Since your laptop battery is probably long dead, macOS would not recognize it. And without a recognized battery modern versions of macOS also prevent changing trackpad settings (go figure).
