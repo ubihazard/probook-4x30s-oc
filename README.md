@@ -1057,17 +1057,182 @@ Download Broadcom wireless kexts from [4x40s EFI folder](https://github.com/ubih
   * `AirportBrcmFixup.kext` (includes plugins):
       * `AirPortBrcmNIC_Injector.kext`,
       * `AirPortBrcm4360_Injector.kext`,
+  * `IOSkywalkFamily.kext`,
+  * `IO80211FamilyLegacy.kext` (with plugin),
+      * `IO80211FamilyLegacy.kext/Contents/PlugIns/AirPortBrcmNIC.kext`,
   * `BlueToolFixup.kext`,
   * `BrcmBluetoothInjector.kext`,
   * `BrcmFirmwareData.kext`
   * `BrcmPatchRAM3.kext`.
 
-Finally, copy and paste the following section where Atheros configuration was previously:
+Finally, copy and paste the following section where Atheros configuration was previously (order of kexts matters):
 
 <details>
 <summary><strong>Broadcom wireless config</strong></summary><br>
 
 ```xml
+<dict>
+    <key>Arch</key>
+    <string>Any</string>
+    <key>BundlePath</key>
+    <string>BrcmFirmwareData.kext</string>
+    <key>Comment</key>
+    <string>BrcmFirmwareData.kext</string>
+    <key>Enabled</key>
+    <true/>
+    <key>ExecutablePath</key>
+    <string>Contents/MacOS/BrcmFirmwareData</string>
+    <key>MaxKernel</key>
+    <string></string>
+    <key>MinKernel</key>
+    <string>19.0.0</string>
+    <key>PlistPath</key>
+    <string>Contents/Info.plist</string>
+</dict>
+<dict>
+    <key>Arch</key>
+    <string>Any</string>
+    <key>BundlePath</key>
+    <string>BrcmFirmwareRepo.kext</string>
+    <key>Comment</key>
+    <string>Must be installed manually to /Library/Extensions</string>
+    <key>Enabled</key>
+    <false/>
+    <key>ExecutablePath</key>
+    <string>Contents/MacOS/BrcmFirmwareRepo</string>
+    <key>MaxKernel</key>
+    <string>18.9.9</string>
+    <key>MinKernel</key>
+    <string></string>
+    <key>PlistPath</key>
+    <string>Contents/Info.plist</string>
+</dict>
+<dict>
+    <key>Arch</key>
+    <string>Any</string>
+    <key>BundlePath</key>
+    <string>BlueToolFixup.kext</string>
+    <key>Comment</key>
+    <string>BlueToolFixup.kext</string>
+    <key>Enabled</key>
+    <true/>
+    <key>ExecutablePath</key>
+    <string>Contents/MacOS/BlueToolFixup</string>
+    <key>MaxKernel</key>
+    <string></string>
+    <key>MinKernel</key>
+    <string>21.0.0</string>
+    <key>PlistPath</key>
+    <string>Contents/Info.plist</string>
+</dict>
+<dict>
+    <key>Arch</key>
+    <string>Any</string>
+    <key>BundlePath</key>
+    <string>BrcmBluetoothInjector.kext</string>
+    <key>Comment</key>
+    <string>BrcmBluetoothInjector.kext</string>
+    <key>Enabled</key>
+    <true/>
+    <key>ExecutablePath</key>
+    <string></string>
+    <key>MaxKernel</key>
+    <string>20.9.9</string>
+    <key>MinKernel</key>
+    <string>18.0.0</string>
+    <key>PlistPath</key>
+    <string>Contents/Info.plist</string>
+</dict>
+<dict>
+    <key>Arch</key>
+    <string>Any</string>
+    <key>BundlePath</key>
+    <string>BrcmPatchRAM3.kext</string>
+    <key>Comment</key>
+    <string>BrcmPatchRAM3.kext</string>
+    <key>Enabled</key>
+    <true/>
+    <key>ExecutablePath</key>
+    <string>Contents/MacOS/BrcmPatchRAM3</string>
+    <key>MaxKernel</key>
+    <string></string>
+    <key>MinKernel</key>
+    <string>19.0.0</string>
+    <key>PlistPath</key>
+    <string>Contents/Info.plist</string>
+</dict>
+<dict>
+    <key>Arch</key>
+    <string>Any</string>
+    <key>BundlePath</key>
+    <string>BrcmPatchRAM2.kext</string>
+    <key>Comment</key>
+    <string>Must be installed manually to /Library/Extensions</string>
+    <key>Enabled</key>
+    <false/>
+    <key>ExecutablePath</key>
+    <string>Contents/MacOS/BrcmPatchRAM2</string>
+    <key>MaxKernel</key>
+    <string>18.9.9</string>
+    <key>MinKernel</key>
+    <string>15.0.0</string>
+    <key>PlistPath</key>
+    <string>Contents/Info.plist</string>
+</dict>
+<dict>
+    <key>Arch</key>
+    <string>Any</string>
+    <key>BundlePath</key>
+    <string>IOSkywalkFamily.kext</string>
+    <key>Comment</key>
+    <string>IOSkywalkFamily.kext</string>
+    <key>Enabled</key>
+    <true/>
+    <key>ExecutablePath</key>
+    <string>Contents/MacOS/IOSkywalkFamily</string>
+    <key>MaxKernel</key>
+    <string></string>
+    <key>MinKernel</key>
+    <string>23.0.0</string>
+    <key>PlistPath</key>
+    <string>Contents/Info.plist</string>
+</dict>
+<dict>
+    <key>Arch</key>
+    <string>Any</string>
+    <key>BundlePath</key>
+    <string>IO80211FamilyLegacy.kext</string>
+    <key>Comment</key>
+    <string>IO80211FamilyLegacy.kext</string>
+    <key>Enabled</key>
+    <true/>
+    <key>ExecutablePath</key>
+    <string>Contents/MacOS/IO80211FamilyLegacy</string>
+    <key>MaxKernel</key>
+    <string></string>
+    <key>MinKernel</key>
+    <string>23.0.0</string>
+    <key>PlistPath</key>
+    <string>Contents/Info.plist</string>
+</dict>
+<dict>
+    <key>Arch</key>
+    <string>Any</string>
+    <key>BundlePath</key>
+    <string>IO80211FamilyLegacy.kext/Contents/PlugIns/AirPortBrcmNIC.kext</string>
+    <key>Comment</key>
+    <string>IO80211FamilyLegacy.kext/Contents/PlugIns/AirPortBrcmNIC.kext</string>
+    <key>Enabled</key>
+    <true/>
+    <key>ExecutablePath</key>
+    <string>Contents/MacOS/AirPortBrcmNIC</string>
+    <key>MaxKernel</key>
+    <string></string>
+    <key>MinKernel</key>
+    <string>23.0.0</string>
+    <key>PlistPath</key>
+    <string>Contents/Info.plist</string>
+</dict>
 <dict>
     <key>Arch</key>
     <string>Any</string>
@@ -1119,78 +1284,6 @@ Finally, copy and paste the following section where Atheros configuration was pr
     <string>19.9.9</string>
     <key>MinKernel</key>
     <string></string>
-    <key>PlistPath</key>
-    <string>Contents/Info.plist</string>
-</dict>
-<dict>
-    <key>Arch</key>
-    <string>Any</string>
-    <key>BundlePath</key>
-    <string>BlueToolFixup.kext</string>
-    <key>Comment</key>
-    <string>BlueToolFixup.kext</string>
-    <key>Enabled</key>
-    <true/>
-    <key>ExecutablePath</key>
-    <string>Contents/MacOS/BlueToolFixup</string>
-    <key>MaxKernel</key>
-    <string></string>
-    <key>MinKernel</key>
-    <string>21.0.0</string>
-    <key>PlistPath</key>
-    <string>Contents/Info.plist</string>
-</dict>
-<dict>
-    <key>Arch</key>
-    <string>Any</string>
-    <key>BundlePath</key>
-    <string>BrcmBluetoothInjector.kext</string>
-    <key>Comment</key>
-    <string>BrcmBluetoothInjector.kext</string>
-    <key>Enabled</key>
-    <true/>
-    <key>ExecutablePath</key>
-    <string></string>
-    <key>MaxKernel</key>
-    <string>20.9.9</string>
-    <key>MinKernel</key>
-    <string>18.0.0</string>
-    <key>PlistPath</key>
-    <string>Contents/Info.plist</string>
-</dict>
-<dict>
-    <key>Arch</key>
-    <string>Any</string>
-    <key>BundlePath</key>
-    <string>BrcmFirmwareData.kext</string>
-    <key>Comment</key>
-    <string>BrcmFirmwareData.kext</string>
-    <key>Enabled</key>
-    <true/>
-    <key>ExecutablePath</key>
-    <string>Contents/MacOS/BrcmFirmwareData</string>
-    <key>MaxKernel</key>
-    <string></string>
-    <key>MinKernel</key>
-    <string>19.0.0</string>
-    <key>PlistPath</key>
-    <string>Contents/Info.plist</string>
-</dict>
-<dict>
-    <key>Arch</key>
-    <string>Any</string>
-    <key>BundlePath</key>
-    <string>BrcmPatchRAM3.kext</string>
-    <key>Comment</key>
-    <string>BrcmPatchRAM3.kext</string>
-    <key>Enabled</key>
-    <true/>
-    <key>ExecutablePath</key>
-    <string>Contents/MacOS/BrcmPatchRAM3</string>
-    <key>MaxKernel</key>
-    <string></string>
-    <key>MinKernel</key>
-    <string>19.0.0</string>
     <key>PlistPath</key>
     <string>Contents/Info.plist</string>
 </dict>
