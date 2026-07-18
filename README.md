@@ -960,7 +960,7 @@ OpenCore does not come with graphical or audio resources out of the box. They mu
 
 After enabling graphical boot picker we can go one step further and add a better icon for the newly installed macOS. The location from where OpenCore picker reads custom boot entry icons is not obvious though.
 
-  * Grab the [custom drive icon](https://github.com/ubihazard/probook-4x30s-oc/releases/latest) files from assets.
+  * Grab the [custom drive icon](https://github.com/ubihazard/probook-4x40s-oc/releases/latest) files from assets.
 
   * For Catalina and Mojave: mount the Preboot volume. Use `diskutil list` to find out the correct disk identifier and mount it manually. In this case the volume would be mounted under `/Volumes`. Starting with Big Sur Preboot volume is mounted automatically under `/System/Volumes`.
 
