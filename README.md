@@ -82,7 +82,7 @@ All required kexts are already assembled in one place in the provided OpenCore [
   * `USBMap.kext`: USB port map
       * `USBInjectAll.kext` [0.8.1]: Initial setup and port mapping
   * `mXHCD.kext` [1.0.0]: Renesas USB 3.0
-      * `GenericUSBXHCI.kext` [1.3.0b1]: Renesas USB 3.0 (legacy)
+      * `GenericUSBXHCI.kext` [1.3.0b1]: Legacy USB 3.0
   * `IOath3kfrmwr.kext` [1.3]: Wireless
       * `IOath3kdevice.kext`
   * `HS80211Family.kext` [12.0]: Wireless
@@ -104,7 +104,7 @@ Installation
 > [!IMPORTANT]
 > Update your laptop BIOS to the latest version from HP support website. The included ACPI patches should work with any BIOS version but only the latest was actually tested.
 
-Follow the official Dortania instructions to [make a bootable macOS USB installer](https://dortania.github.io/OpenCore-Install-Guide/installer-guide/). After creating USB installer mount its EFI partition and copy OpenCore files downloaded from [releases page](https://github.com/ubihazard/probook-4x30s-oc/releases/latest "Download") replacing `config.plist` with `config-usb.plist`. It‘s a configuration variant modified specifically for use with macOS installer that disables some kexts which are useless during setup process (Wi-Fi, Bluetooth, SD card reader, etc.), doesn’t modify SIP flags or mess with AMFI, enables verbose boot text messages so you can troubleshoot boot issues, and has a different SMBIOS Mac model which allows to install more recent macOS versions, which aren’t supported natively, but supported with the help of [OpenCore Legacy Patcher](https://github.com/dortania/OpenCore-Legacy-Patcher) (OCLP), – up to Monterey with the provided OpenCore configuration.
+Follow the official Dortania instructions to [make a bootable macOS USB installer](https://dortania.github.io/OpenCore-Install-Guide/installer-guide/). After creating USB installer mount its EFI partition and copy OpenCore files downloaded from [releases page](https://github.com/ubihazard/probook-4x30s-oc/releases/latest "Download") replacing `config.plist` with `config-usb.plist`. It‘s a configuration variant modified specifically for use with macOS installer that disables some kexts which are useless or can cause problems during setup process (Wi-Fi, Bluetooth, SD card reader, etc.), doesn’t modify SIP flags or mess with AMFI, enables verbose boot text messages so you can troubleshoot boot issues, and has a different SMBIOS Mac model which allows to install more recent macOS versions, which aren’t supported natively, but supported with the help of [OpenCore Legacy Patcher](https://github.com/dortania/OpenCore-Legacy-Patcher) (OCLP), – up to Monterey with the provided OpenCore configuration and Broadcom wireless card.
 
 ### HD+ and Full HD Screens
 
@@ -211,7 +211,7 @@ A few notes on what macOS to choose for installation. Typically, the recommended
 
 Mojave and everything older is *not recommended* due to being way too outdated and having no decent modern browser support, making it difficult just to get on the Internet. Catalina and Mojave also aren‘t supported well by OCLP, which is required to restore legacy HD 3000 graphics acceleration.
 
-However, if you managed to find and swapped in a compatible Broadcom Wi-Fi card, you can bump installed macOS version to Monterey. The caveat is that support for Bluetooth on these cards (any compatible card you can install in this laptop) on Monterey is sketchy at best: Airdrop, Handoff, and certain Continuity features might not work at all, would work but with issues, or only in one direction (from iPhone to ProBook, but not the other way around).
+However, if you managed to find and swapped in a compatible Broadcom Wi-Fi card, you can bump installed macOS version to Monterey. The caveat is that support for Bluetooth on these cards (any compatible card you can install in this laptop) on Monterey is sketchy at best: Airdrop, Handoff, and certain Continuity features might not work at all, would work but with issues, or only in one direction (from iPhone to ProBook, but not the other way around). Bluetooth input devices work fine though.
 
 The minimum macOS version you can install using the provided OC EFI folder is High Sierra.
 
@@ -219,7 +219,7 @@ The minimum macOS version you can install using the provided OC EFI folder is Hi
 
 From Ventura onwards macOS requires a CPU with AVX2 instructions which all Sandy Bridge and Ivy Bridge CPUs lack. (AVX2 becomes available since Haswell.) Thus, Monterey is the final version of macOS you can *technically* install on this laptop.
 
-Using [CryptexFixup](https://github.com/acidanthera/CryptexFixup) kext, which enables sort of AVX2 emulation, it is possible to install macOS Ventura (and even later macOS, all the way up to Sequoia). However, this isn‘t supported by this guide and is *not recommended*. macOS past Monterey increasingly rely high on Metal API in various places and bundled applications, and using non-metal GPU can be a real pain on such system. Also keep in mind that pretty much any third-party app designed to run on Ventura would expect AVX2 to be available and likely to experience random crashes due to lack thereof.
+Using [CryptexFixup](https://github.com/acidanthera/CryptexFixup) kext, which enables sort of AVX2 emulation, it is possible to install macOS Ventura (and even later macOS, all the way up to Sequoia). However, this isn‘t supported by this guide and is *not recommended*. macOS past Monterey increasingly relies high on Metal API in various places and bundled applications, and using non-metal GPU can be a real pain on such system. Also keep in mind that pretty much any third-party app designed to run on Ventura would expect AVX2 to be available and likely to experience random crashes due to lack thereof.
 
 So this, in my opinion, remains an option only for maniacs willing to accomplish just this task of “successfully” running Ventura on an unsupported Sandy Bridge system, – for bragging rights.
 
@@ -425,7 +425,7 @@ Hibernation (deep sleep) isn’t available on hackintosh systems and must be exp
 sudo pmset -a hibernatemode 0
 ```
 
-We also remove the sleep image, which preserves RAM contents during sleep, and replace it with an empty folder to prevent it from being recreated:
+We also remove the sleep image, which preserves RAM contents during sleep, and replace it with an empty folder to prevent it from being recreated (saving a couple of GB of disk space in the process):
 
 ```bash
 sudo rm /var/vm/sleepimage
@@ -440,7 +440,7 @@ macOS does not automatically enable TRIM for non-Apple SSDs, even if it is insta
 sudo trimforce enable
 ```
 
-Ignore the warning message and proceed anyway. There are no known SATA SSD drives that have issues with macOS, including TRIM support.
+Ignore the warning message and proceed anyway. There are no known SATA SSD drives that have issues with macOS and TRIM support.
 
 ### Restoring Graphics Acceleration
 
@@ -634,7 +634,7 @@ Optional: open `WifiLocFix.kext/Contents/Info.plist` in a plain text editor and 
 </dict>
 ```
 
-If you opted to install Broadcom card in your ProBook, head over to a [dedicated section](#enabling-broadcom-wireless) for your wireless configuration. Otherwise, make sure to remove Broadcom kexts from your `config.plist` if they are present.
+If you opted to install Broadcom card in your ProBook, head over to the [dedicated section](#enabling-broadcom-wireless) for your wireless configuration. Otherwise, make sure to remove Broadcom kexts from your `config.plist` if they are present.
 
 ### Enabling SD Card Reader
 
@@ -726,7 +726,7 @@ Like other SSDTs, it needs to be activated in `config.plist`:
 The final step to setting up your new hackintosh laptop is generating unique serial number and system UUID. You can skip this step if you don‘t plan to use App Store or connect with Apple, otherwise it is required to make iCloud or iMessage work.
 
 > [!IMPORTANT]
-> If you don‘t own any real Apple product, such as an iPhone or iPad, registering in iServices with a hackintosh system would likely trigger a security check instantly, putting your new account on hold. In this case it is recommended to keep iCloud and iMessage disabled and limit your online Apple interactions to App Store only.
+> If you don‘t own any real Apple product, such as an iPhone or iPad, registering with iServices through a hackintosh system would likely trigger a security check instantly, putting your new account on hold. In this case it is recommended to keep iCloud and iMessage disabled and limit your online Apple interactions to App Store only.
 
 First, you need to choose the Mac SMBIOS product name that resembles your hardware most closely. For this laptop model it would be `MacBookPro8,1`. If you opted to upgrade your ProBook with quad-core CPU (against [my advice](#processor)), `MacBookPro8,2` would be a preferred choice, – but see a note below for USB port mapping adjustment. Now you can use `macserial` tool from OpenCore utilities to generate serials (`SystemSerialNumber` and `MLB`, or motherboard serial number):
 
@@ -960,7 +960,7 @@ OpenCore does not come with graphical or audio resources out of the box. They mu
 
 After enabling graphical boot picker we can go one step further and add a better icon for the newly installed macOS. The location from where OpenCore picker reads custom boot entry icons is not obvious though.
 
-  * Grab the [custom icon](https://github.com/ubihazard/probook-4x30s-oc/releases/latest) files from assets.
+  * Grab the [custom drive icon](https://github.com/ubihazard/probook-4x30s-oc/releases/latest) files from assets.
 
   * For Catalina and Mojave: mount the Preboot volume. Use `diskutil list` to find out the correct disk identifier and mount it manually. In this case the volume would be mounted under `/Volumes`. Starting with Big Sur Preboot volume is mounted automatically under `/System/Volumes`.
 
@@ -1003,7 +1003,7 @@ Next time you reboot the macOS boot entry will change to a new icon and label.
 Enabling Broadcom Wireless
 --------------------------
 
-As already [mentioned](#opencore-for-legacy-probook), ProBook 4530s suffers from a dreaded Wi-Fi BIOS whitelist preventing you from changing wireless adapter to a native Broadcom card. Fortunately, there’s a two-step solution to this problem. First, a simple hardware mod must be performed on a card.
+As already [mentioned](#opencore-for-legacy-probook), ProBook 4530s suffers from a dreaded Wi-Fi BIOS whitelist preventing you from changing wireless adapter to a better supported Broadcom card. Fortunately, there’s a two-step solution to this problem. First, a simple hardware mod must be performed on a card.
 
 ### Hardware Mod
 
@@ -1012,7 +1012,7 @@ You will need to mask certain PCB contacts with tiny pieces of kapton tape to pr
 ![BCM94352HMB hardware hack](Images/bcm94352hmb-whitelist-hack.jpg)
 
 > [!NOTE]
-> This guide assumes you are using Broadcom BCM94352HMB, which is the best wireless module you can put in your ProBook laptop. If you’ve got another compatible Broadcom adapter the pin out might be different. In that case you need to find a datasheet for your card and determine where equivalent contacts are located.
+> This guide assumes you are using Broadcom BCM94352HMB, which is the best wireless module you can put in your ProBook laptop. If you’ve got another compatible Broadcom adapter the pin out might be different. In that case you need to consult the datasheet for your card and determine where equivalent contacts are located.
 
 ### Defeating 30s Series Wi-Fi Whitelist
 
@@ -1385,7 +1385,7 @@ Depending on a version of macOS you would choose to install, you might also need
 
 Chances are you already have a compatible Atheros AR9285 adapter so you can just install Big Sur without bothering with hardware modding. If not, you can try installing a compatible Atheros card and [rebrand it](https://web.archive.org/web/20230315063103/https://www.tonymacx86.com/threads/rebranding-the-atheros-928x-cards-the-guide.115110/) to pass whitelist check.
 
-However, at this point a much better alternative would be going for Broadcom BCM94352HMB module. Although it would need BIOS Wi-Fi whitelist [bypass hack](#defeating-30s-series-wi-fi-whitelist) and a [hardware mod](#hardware-mod) on a card itself, it would allow you to bump installed macOS version to Monterey, which offers better compatibility with software.
+However, at this point a much better approach would be going for Broadcom BCM94352HMB module. Although it would need BIOS Wi-Fi whitelist [bypass hack](#defeating-30s-series-wi-fi-whitelist) and a [hardware mod](#hardware-mod) on a card itself, it would allow you to bump installed macOS version to Monterey, which offers better compatibility with software.
 
 Alternatively, Intel Wi-Fi modules had recently become a viable option with [itlwm](https://github.com/OpenIntelWireless/itlwm "macOS Intel wireless kexts"). Refer to its GitHub project page for installation and configuration instructions for different macOS versions.
 
