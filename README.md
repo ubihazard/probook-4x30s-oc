@@ -1323,7 +1323,7 @@ Unfortunately, Intel HD 3000 isn’t exactly the best fit for a hackintosh syste
 
 Intel HD 3000 on non-Apple hardware is known to be plagued by graphical artifacts. They can occur even with 8GB+ of RAM installed and are manifested in the form of grey lines or blocks suddenly popping around. Most annoyingly, the system eventually freezes and becomes completely unresponsive, except mouse cursor still moving on the screen.
 
-Unfortunately, there’s no working fix for this issue and the only way to recover is a hard system reset.
+Unfortunately, there’s no working fix for this issue and the only way to recover is a hard system reset. There were foolish and erroneous reports shared on various hackintosh forums with fake solutions, like resetting EC, using Mac Fan Control app, which I also [fell a victim](https://github.com/dortania/bugtracker/issues/332) of, but I can state for certain now that all these solutions *do not work*. Sooner or later the driver memory for HD 3000 iGPU gets corrupted and graphics fail.
 
 ### VRAM Patch
 
@@ -1395,7 +1395,7 @@ Whatever your choice of card would be, it must be of *half-size mini PCIe* form 
 
 One of the coolest upgrades you can perform on 15 inch ProBook 4530s or 4540s is equipping it with a higher quality full HD aftermarket LCD panel, replacing the ugly stock 1366x768 screen with poor color reproduction that it comes with. This upgrade is quite hard to perform as it requires full laptop disassembly, which is not easy at all on these old laptops, and you will also need a compatible dual-link LVDS LCD cable from 4730s or 4740s respectively, but the result is very much worth it. Some full HD screens with wider color gamut can completely transform how machine looks and feels.
 
-The details of this upgrade are beyond the scope of this guide but you can find all necessary information on relevant hackintosh forums. If you do manage to install full HD screen, don’t forget to [adjust iGPU device properties](#hd-and-full-hd-screens) to enable dual-link operation or you will experience broken image.
+The details of this upgrade are beyond the scope of this guide but you can find all necessary information on relevant hackintosh discussion boards. If you do manage to install full HD screen, don’t forget to [adjust iGPU device properties](#hd-and-full-hd-screens) to enable dual-link operation or you will experience broken image.
 
 Once you are done with upgrades it’s time to [start the installation process](#installation).
 
