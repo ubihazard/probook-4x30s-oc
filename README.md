@@ -1040,7 +1040,7 @@ Next, enable BIOS Wi-Fi whitelist bypass EFI driver in `UEFI/Drivers`:
 > [!IMPORTANT]
 > **Do not use this module with any other laptop other than ProBook 30s series: doing so can brick your device!**
 
-The laptop firmware will still warn you about incompatible wireless card installed, but it would no longer be actually disabled, despite what the warning says (just skip it with <kbd>Enter</kbd>).
+The laptop firmware will still warn you about incompatible wireless card installed, but it would no longer be actually disabled, despite what the warning message says (just skip it with <kbd>Enter</kbd>).
 
 ### Broadcom Configuration
 
@@ -1310,7 +1310,7 @@ Add Broadcom configuration parameters to `boot-args` under `NVRAM/Add/7C436110-A
 
 Optional: add your country code with `brcmfx-country=US` parameter. In my experience this parameter is not needed and is actually harmful because adding it causes Wi-Fi to loose 5 GHz band networks.
 
-If you don‘t get Wi-Fi you can try to experiment with different values for `brcmfx-driver` parameter or your card might need a firmware uploader. Check out the [official docs](https://github.com/acidanthera/BrcmPatchRAM) for further assistance in configuration.
+If you don‘t get Wi-Fi you can try experimenting with different values for `brcmfx-driver` parameter or your card might need a firmware uploader. Check out the [official docs](https://github.com/acidanthera/BrcmPatchRAM) for further assistance in configuration.
 
 Now continue with [other post-install tasks](#configuring-tackpad).
 
@@ -1327,7 +1327,7 @@ Unfortunately, there’s no working fix for this issue and the only way to recov
 
 ### VRAM Patch
 
-With HD 3000 it is possible to change the maximum amount of video ram macOS allocates for the GPU. The patch must be applied manually by hex-editing `AppleIntelSNBGraphicsFB.kext` (“Sandy Bridge graphics framebuffer”). Additionally, the `AppleIntelHD3000Graphics` kext `Contents/Info.plist` has to be [modified](https://github.com/ubihazard/macos-scripts/tree/main/Scripts#root-patching "Root patching guide") to complete the patch:
+With HD 3000 it is possible to change the maximum amount of video memory macOS allocates for iGPU. The patch must be applied manually by hex-editing `AppleIntelSNBGraphicsFB.kext` (“Sandy Bridge graphics framebuffer”). Additionally, the `AppleIntelHD3000Graphics` kext `Contents/Info.plist` has to be [modified](https://github.com/ubihazard/macos-scripts/tree/main/Scripts#root-patching "Root patching guide") to complete the patch:
 
 ```xml
 <key>VRAMOverride</key>
@@ -1369,7 +1369,7 @@ Swapping the hard disk for a solid-state drive should be your first upgrade. Thi
 
 ### Memory
 
-It is highly recommended that you install at least 8 GB of RAM. This is the minimum amount required for macOS to operate smoothly. ProBooks based on Sandy Bridge CPUs use DDR3 RAM which, luckily, isn’t affected much by the RAM crisis and can still be found relatively for cheap.
+It is highly recommended that you install at least 8 GB of RAM. This is the minimum amount required for macOS to operate smoothly. ProBooks based on Sandy Bridge and Ivy Bridge CPUs use DDR3 RAM which, luckily, isn’t affected much by the RAM crisis and can still be found relatively for cheap.
 
 ### Processor
 
@@ -1381,11 +1381,11 @@ For reference, my dual-core Core i7-2640M with high-quality TIM applied hits **9
 
 ### Wireless
 
-Depending on a version of macOS you would choose to install, you might also need to change your wireless adapter to a compatible one. This is not going to be easy because ProBook 30s series suffer from a dreaded BIOS Wi-Fi whitelist. Luckily, there are workarounds.
+Depending on a version of macOS you would choose to install, you might also need to change your wireless adapter to a compatible one. This is not going to be easy because ProBook 30s series suffer from a dreaded BIOS Wi-Fi whitelist. Luckily, there are workarounds (and 40s series have no whitelist at all).
 
 Chances are you already have a compatible Atheros AR9285 adapter so you can just install Big Sur without bothering with hardware modding. If not, you can try installing a compatible Atheros card and [rebrand it](https://web.archive.org/web/20230315063103/https://www.tonymacx86.com/threads/rebranding-the-atheros-928x-cards-the-guide.115110/) to pass whitelist check.
 
-However, at this point a much better approach would be going for Broadcom BCM94352HMB module. Although it would need BIOS Wi-Fi whitelist [bypass hack](#defeating-30s-series-wi-fi-whitelist) and a [hardware mod](#hardware-mod) on a card itself, it would allow you to bump installed macOS version to Monterey, which offers better compatibility with software.
+However, at this point a much better approach would be going for Broadcom BCM94352HMB module. Although it would need BIOS Wi-Fi whitelist [bypass hack](#defeating-30s-series-wi-fi-whitelist) and a [hardware mod](#hardware-mod) on a card itself, it would allow you to bump installed macOS version to Monterey, which offers better compatibility with software, better support by OCLP, and overall is just more stable.
 
 Alternatively, Intel Wi-Fi modules had recently become a viable option with [itlwm](https://github.com/OpenIntelWireless/itlwm "macOS Intel wireless kexts"). Refer to its GitHub project page for installation and configuration instructions for different macOS versions.
 
