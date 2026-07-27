@@ -38,7 +38,7 @@ So this is the configuration[^1] we are going to work with:
 | **OpenCore** | [1.0.6-0cc8c81](https://github.com/ubihazard/OpenCorePkg-ProBook-Legacy/releases/tag/v1.0.6-0cc8c81) for legacy ProBook
 | **OCLP** | [2.4.1](https://github.com/dortania/OpenCore-Legacy-Patcher/releases/tag/2.4.1)
 
-[^1]: Webcam works up to Mojave. USB 3.0 works up to Catalina. USB 2.0, Bluetooth and webcam need proper [USB port mapping](#fixing-usb).
+[^1]: Webcam works up to Mojave. USB 3.0 works up to Catalina. USB 2.0, Bluetooth and webcam need proper [USB port mapping](#fixing-usb). SD card reader kext can sometimes hang on file operations due to being very old and outdated.
 
 Although this laptop is very old, macOS works surprisingly well on it with pretty much full compatibility. You can expect relatively smooth web browsing experience, word processing, and coding light projects in VS Code (nothing too demanding). Don‘t expect running XCode with iOS simulator on it though. It can also help you manage your iThings if you don‘t already have a Mac.
 
@@ -665,7 +665,7 @@ The official [installer](https://github.com/chris1111/JMicron-Card-Reader) for J
 
 Reboot to use the card reader.
 
-The kext description makes it seem like it works only up to Ventura but it actually functions just fine on Sonoma and Sequoia.
+The kext description makes it seem like it works only up to Ventura but it actually functions just fine on Sonoma and Sequoia. The real problem though is that sometimes the card reader kext will cause file operation on SD card to hang to the point that a reboot is required to recover. This is unfortunate but given the old age of this kext such hiccups are to be expected.
 
 ### Configuring Trackpad
 
