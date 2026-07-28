@@ -1305,8 +1305,10 @@ Add Broadcom configuration parameters to `boot-args` under `NVRAM/Add/7C436110-A
 
 ```xml
 <key>boot-args</key>
-<string>... brcmfx-driver=1</string>
+<string>... brcmfx-driver=1 brcmfx-delay=15000 ...</string>
 ```
+
+`brcmfx-delay` parameter is recommended for Monterey to fix randomly disappearing Wi-Fi on boot.
 
 Optional: add your country code with `brcmfx-country=US` parameter. In my experience this parameter is not needed and is actually harmful because adding it causes Wi-Fi to loose 5 GHz band networks.
 
