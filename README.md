@@ -791,6 +791,21 @@ Now we can fill this information under `PlatformInfo/Generic`:
 > [!IMPORTANT]
 > If you change your SMBIOS name for whatever reason `USBMap.kext` must be adjusted because it depends on it. Open `USBMap.kext/Contents/Info.plist` in a plain text editor and replace all instances of `MacBookPro8,1` with SMBIOS name of your choice. (There’s an additional `USBMap.kext` in `Legacy` subfolder for older macOS.)
 
+### Disable Spotlight Indexing
+
+Spotlight is a global macOS search tool that relies on index to perform content-based searches and answer various queries. Its background indexing service will be a significant burden on such an old machine and it is recommended to disable it.
+
+```bash
+sudo mdutil -a -i off
+sudo mdutil -a -E
+```
+
+The second command discards already built index freeing some disk space.
+
+Disabling Spotlight will limit macOS search to file system level only using Finder, so you can still look up files or folders by their name. [EasyFind](https://www.devontechnologies.com/apps/freeware) is recommended as a simple viable substitute for Spotlight and plain Finder search.
+
+You can also try a [debloater](https://github.com/Wamphyre/macOS_Silverback-Debloater) to disable some unnecessary macOS services, like telemetry or game center, and squeeze last bits of performance. Make sure to *not* disable iCloud with this tool because it causes error popups when performing file operations.
+
 ### Windows Dual-boot Issues
 
 OpenCore does quite a good job pretending you are using a real Mac. This is obviously good for macOS but can present problems if you boot other operating systems through OC. Because your system is literally masquerading as a MacBook Pro, Windows will attempt to install drivers belonging to an actual Mac Book, which is definitely not what we want. Official driver packages from HP would likely fail to install for the same reason.
