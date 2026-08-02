@@ -793,7 +793,7 @@ Now we can fill this information under `PlatformInfo/Generic`:
 
 ### Disable Spotlight Indexing
 
-Spotlight is a global macOS search tool that relies on index to perform content-based searches and answer various queries. Its background indexing service will be a significant burden on such an old machine and it is recommended to disable it.
+Spotlight is a global macOS search tool that relies on index to perform content-based searches and answer various queries. Its background indexing service will be a significant burden on such an old machine and it is recommended to fully disable it.
 
 ```bash
 sudo mdutil -a -i off
