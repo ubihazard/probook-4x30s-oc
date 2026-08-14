@@ -47,12 +47,14 @@ OpenCore for Legacy ProBook
 
 This guide now uses a [custom build](https://github.com/ubihazard/OpenCorePkg-ProBook-Legacy/releases) of OpenCore put together by me specifically for use with legacy ProBook laptops. It includes two EFI modules for ProBook 4x30s.
 
-  * `ProBookFanReset.efi` resets fan control from macOS back to automatic BIOS management. This needs to be done every time after using quiet fan patch to restore embedded controller state, and the best place to do it is during boot up.
+  * `ProBookFanReset.efi` resets fan control from macOS back to automatic BIOS management. This needs to be done every time after using quiet fan patch to restore embedded controller state, and the best place to do it is during boot up. Note: you got to be careful with this, see below.
 
   * `ProBookWifiUnblock.efi` is necessary if you plan to install a [non-whitelisted](#enabling-broadcom-wireless) (not approved by HP) Wi-Fi card in your ProBook 4x30s laptop. Thankfully, this module *is not needed* for 4x40s because in an unusual move by HP they did not cripple 40s series laptops with a BIOS Wi-Fi whitelist.
 
 > [!IMPORTANT]
 > **Do not use these EFI modules with any other laptop other than ProBook 30s or 40s series. Doing so can brick your device!**
+>
+> To disable quiet fan patch, configure it to use `SSDT-FANREAD.aml` first, reboot in macOS and disable both `SSDT-FANREAD.aml` and `ProBookFanReset.efi`. Read more in the [dedicated section](#quiet-fan-patch).
 
 Converting from Clover
 ----------------------
@@ -835,7 +837,29 @@ Add `ipc_control_port_options=0` to `boot-args` config section:
 
 ### Quiet Fan Patch
 
+> [!IMPORTANT]
+> Using fan patch requires always booting through OpenCore, even if you aren’t booting into macOS. This is required so that `ProBookFanReset.efi` can reset embedded controller for other operating systems to use. If you skip OpenCore bootloader screen your fan will be stuck at minimal speed leading to CPU overheating at load.
+>
+> To disable quiet fan patch, configure it to use `SSDT-FANREAD.aml` first instead of custom fan curve, reboot in macOS and disable both `SSDT-FANREAD.aml` and `ProBookFanReset.efi`.
+
 The default HP BIOS fan curve for ProBook is configured to increase fan speed way too early, causing laptop fan to constantly spin up and down at slightest load, which is quite annoying. Fortunately, an intelligent fan control was developed by RehabMan based on ACPI hack approach used by similar projects on other OSes for SMSC KBC-1126 Super I/O chip employed in ProBooks. It consists of a support kext and ACPI code which injects custom fan curve for much better fan behavior.
+
+First, and most important, enable the `ProBookFanReset.efi` module in `UEFI/Drivers`:
+
+```xml
+<dict>
+    <key>Arguments</key>
+    <string></string>
+    <key>Comment</key>
+    <string>Restore automatic BIOS fan control on boot</string>
+    <key>Enabled</key>
+    <true/>
+    <key>LoadEarly</key>
+    <false/>
+    <key>Path</key>
+    <string>ProBookFanReset.efi</string>
+</dict>
+```
 
 Enable the `ACPIPoller.kext`:
 
