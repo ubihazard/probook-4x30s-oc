@@ -903,7 +903,7 @@ Apply the custom fan curve with `SSDT-FANUBI.aml`:
 
 There are several fan behaviors available for choice:
 
-  * `SSDT-FANREAD.aml`: Readings only, useless because there is no monitoring software which supports it.
+  * `SSDT-FANREAD.aml`: Readings only. Use this table to disable custom fan curve before disabling fan patch altogether. Otherwise there is no monitoring software to support it.
   * `SSDT-FANORIG.aml`: Copy the default behavior.
   * `SSDT-FANQ.aml`: Original quiet fan patch by RehabMan.
   * `SSDT-FANRM.aml`: Alternative version by RehabMan.
