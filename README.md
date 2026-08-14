@@ -840,7 +840,9 @@ Add `ipc_control_port_options=0` to `boot-args` config section:
 > [!IMPORTANT]
 > Using fan patch requires always booting through OpenCore, even if you aren’t booting into macOS. This is required so that `ProBookFanReset.efi` can reset embedded controller for other operating systems to use. If you skip OpenCore bootloader screen your fan will be stuck at minimal speed leading to CPU overheating at load.
 >
-> To disable quiet fan patch, configure it to use `SSDT-FANREAD.aml` first instead of custom fan curve, reboot in macOS and disable both `SSDT-FANREAD.aml` and `ProBookFanReset.efi`.
+> To disable quiet fan patch, configure it to use `SSDT-FANREAD.aml` first instead of custom fan curve, reboot in macOS and disable both `SSDT-FANREAD.aml` and `ProBookFanReset.efi`. You can also simply load OpenCore with `ProBookFanReset.efi` enabled and avoid booting into macOS. Loading OpenCore menu screen is enough to reset the fan. **Don’t forget to perform this step before uninstalling OpenCore and macOS!**
+>
+> If you do forget, you can reset your embedded controller manually by removing the battery, disconnecting AC power and holding the power button for around 30 seconds. This will drain the capacitors and force the EC reset.
 
 The default HP BIOS fan curve for ProBook is configured to increase fan speed way too early, causing laptop fan to constantly spin up and down at slightest load, which is quite annoying. Fortunately, an intelligent fan control was developed by RehabMan based on ACPI hack approach used by similar projects on other OSes for SMSC KBC-1126 Super I/O chip employed in ProBooks. It consists of a support kext and ACPI code which injects custom fan curve for much better fan behavior.
 
