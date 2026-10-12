@@ -437,7 +437,7 @@ sudo mkdir /var/vm/sleepimage
 ### Enabling TRIM
 
 > [!NOTE]
-> Recent versions of OpenCore apply the TRIM patch automatically. You can verify it in System Information report (Hardware > SATA). Today this command is only relevant for real Macs running natively supported macOS version without OpenCore.
+> Recent versions of OpenCore apply the TRIM patch automatically. You can verify if TRIM is enabled in System Information report (Hardware > SATA). Today this command is only relevant for real Macs running natively supported macOS version without OpenCore.
 
 macOS does not automatically enable TRIM for non-Apple SSDs, even if it is installed on such. Using an SSD without TRIM will result in suboptimal performance and reduce its lifespan. We must force enable TRIM with the following command:
 
