@@ -666,7 +666,7 @@ The official [installer](https://github.com/chris1111/JMicron-Card-Reader) for J
         sudo cp -r /EFI/EFI/OC/Kexts/JMB38X.kext /Library/Extensions
         sudo cp -r /EFI/EFI/OC/Kexts/HSSDBlockStorage.kext /Library/Extensions
         ```
-      * Approve new kexts in System Preferences when prompted.
+      * Approve new kexts in System Preferences when prompted. If there’s no security prompt and kexts aren’t working, run the [installer](https://github.com/chris1111/JMicron-Card-Reader/blob/main/JMicron-Card-Reader.pkg.zip) directly.
 
 Reboot to use the card reader.
 
